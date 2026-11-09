@@ -37,7 +37,7 @@ Ruta de Figma → minúsculas, espacios a guion, `%` fuera. `Colors/Accent/accen
 ## Sombras y estilos de texto
 
 - Sombras: lista de capas `{color, offsetX, offsetY, blur, spread, inset}` en **orden CSS**. Figma las guarda en el orden inverso y el export lo corrige.
-- Texto: cada estilo referencia las variables `typography.*` del theme. En CSS salen como `--text-style-1-regular: 300 12px/16px SF Pro` y `…-letter-spacing`.
+- Texto: cada estilo referencia las variables `typography.*` del theme. En CSS salen como `--text-style-1-regular: 300 12px/16px Inter` y `…-letter-spacing`.
 
 ## Cómo volver a exportar
 

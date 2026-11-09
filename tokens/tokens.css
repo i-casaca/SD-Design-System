@@ -1053,13 +1053,13 @@
   --overlays-white-alpha-10: #ffffffcc;
   --overlays-white-alpha-11: #ffffffe5;
   --overlays-white-alpha-12: #fffffff2;
-  --typography-font-family-text: SF Pro;
+  --typography-font-family-text: Inter;
   --typography-font-family-code: Menlo;
   --typography-font-family-emphasis: Times New Roman;
   --typography-font-family-quote: Times New Roman;
   --typography-font-weight-light: 300;
   --typography-font-weight-regular: 400;
-  --typography-font-weight-medium: 510;
+  --typography-font-weight-medium: 500;
   --typography-font-weight-bold: 700;
   --typography-font-size-1: 12px;
   --typography-font-size-2: 14px;
