@@ -106,10 +106,10 @@
       "name": "highContrast",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, refuerza el contraste: usa el paso 12 de la escala en lugar del 9/11. En Figma el eje se llama «highConstrast» (errata del archivo).",
+      "description": "Si es true, refuerza el contraste: usa el paso 12 de la escala en lugar del 9/11.",
       "bindings": {
         "figma": {
-          "property": "highConstrast",
+          "property": "highContrast",
           "type": "VARIANT",
           "value": "true"
         }
@@ -221,7 +221,7 @@
     "root": {
       "element": "button",
       "description": "Elemento interactivo raíz. Siempre un <button> nativo.",
-      "figmaLayer": "Button (cada variante del component set)"
+      "figmaLayer": "Button (cada variante de los sets Button/<variant>)"
     },
     "focusRing": {
       "element": "css",
@@ -238,7 +238,7 @@
       "element": "slot",
       "description": "Hueco para el icono inicial. Se oculta si no hay icono.",
       "optional": true,
-      "figmaLayer": "Design / blending-mode (primera instancia)",
+      "figmaLayer": "icon",
       "figmaToggle": {
         "property": "iconStart",
         "type": "BOOLEAN",
@@ -258,7 +258,7 @@
     "label": {
       "element": "span",
       "description": "Texto de la etiqueta.",
-      "figmaLayer": "Button (capa de texto)",
+      "figmaLayer": "label",
       "content": {
         "prop": "children"
       }
@@ -267,7 +267,7 @@
       "element": "slot",
       "description": "Hueco para el icono final.",
       "optional": true,
-      "figmaLayer": "Design / blending-mode (segunda instancia)",
+      "figmaLayer": "iconEnd",
       "figmaToggle": {
         "property": "iconEnd",
         "type": "BOOLEAN",
@@ -288,7 +288,7 @@
       "element": "svg",
       "description": "Spinner de 8 hojas. Solo con loading=true; sustituye a icono y etiqueta.",
       "optional": true,
-      "figmaLayer": "Spinner"
+      "figmaLayer": "spinner"
     }
   },
   "composition": {
@@ -748,8 +748,20 @@
   },
   "anchors": {
     "figma": {
-      "file": "https://www.figma.com/design/pTGbM1i9PKc6858ef7498a/Radix-Themes--Community-",
-      "node": "1230:17452"
+      "file": "https://www.figma.com/design/zljuuqX4X2LAFNuWB4SQj7/SDD-Library",
+      "node": "24:2421",
+      "sets": {
+        "classic": "24:5962",
+        "solid": "24:4785",
+        "soft": "24:7139",
+        "surface": "24:8316",
+        "outline": "24:9493",
+        "ghost": "24:10670"
+      },
+      "reference": {
+        "file": "https://www.figma.com/design/pTGbM1i9PKc6858ef7498a/Radix-Themes--Community-",
+        "node": "1230:17452"
+      }
     },
     "code": {
       "importPath": "@/components/button/button",
@@ -765,8 +777,9 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "Figma marca los valores por defecto con ✦ («solid ✦», «2 ✦», «default ✦»): el valor real es el que va sin marca en el contrato. El default del component set en Figma es `classic`, pero el ✦ está en `solid`.",
-      "El eje de Figma se llama «highConstrast» (errata); en código es highContrast.",
+      "Dibujado en SDD Library desde este contrato (2026-11-09): un COMPONENT_SET por valor de variant (Button/classic … Button/ghost, #19), 120 variantes cada uno (color × size × highContrast × state, más loading=true solo con state=disable). anchors.figma.node es la Section; anchors.figma.sets, cada set. Lectura original en Radix: anchors.figma.reference.",
+      "En SDD Library el eje se llama highContrast (sin la errata «highConstrast» de Radix) y los valores por defecto no llevan ✦: el default es la primera variante (solid · accent · 2 · false · default · false).",
+      "Spinner: helper _spinner de 8 hojas con opacidades 1/8…8/8 sin token (dibujo de referencia, no animado).",
       "loading=true solo existe en Figma junto a state=disable (144 variantes): el diseño de loading hereda el aspecto de disabled. En código, decidir si loading debe verse como disabled.",
       "classic usa dos capas de degradado (blanco → transparente) sin variable, y una al 20% en hover. No están en tokens.",
       "opacity en hover/active (0.88, 0.82, 0.92) está fijo en Figma, sin variable. Es el único caso en que el contrato usa opacity; disabled nunca.",

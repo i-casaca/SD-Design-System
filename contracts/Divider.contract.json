@@ -76,13 +76,18 @@
     "wcag": ["1.3.1 Información y relaciones"]
   },
   "anchors": {
+    "figma": {
+      "file": "https://www.figma.com/design/zljuuqX4X2LAFNuWB4SQj7/SDD-Library",
+      "node": "24:2399",
+      "section": "24:2384"
+    },
     "code": { "importPath": "@/components/divider/divider", "export": "Divider" }
   },
   "meta": {
     "source": "ejemplo didáctico",
     "derivableFromSource": ["props.type"],
     "needsReview": [
-      "Ejemplo pensado para aprender el formato: no está leído de ningún archivo de Figma. Antes de usarlo en producción, dibujar el componente y enlazar `anchors.figma`."
+      "Dibujado en SDD Library desde este contrato (2026-11-09). El grosor (1px) no tiene token: es valor fijo del contrato."
     ]
   }
 }
