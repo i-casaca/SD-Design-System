@@ -55,11 +55,11 @@ No genera código de componentes. Eso lo hace otra tarea que *lee* el contrato.
 
 ### C. Contrato → Figma
 
-Lee `references/contract-to-figma.md` y el skill `figma-use` (obligatorio antes de escribir en Figma). Antes de crear, comprueba que el archivo de destino tiene las variables y los componentes que el contrato cita; si no, para y dilo. Revisa al final que todo esté enlazado a variables.
+Lee `references/contract-to-figma.md` y el skill `figma-use` (obligatorio antes de escribir en Figma). Antes de crear, comprueba que el archivo de destino tiene las variables y los componentes que el contrato cita; si no, para y dilo. Revisa al final que todo esté enlazado a variables. Último paso: invoca la skill `component-spec` para generar la Spec del componente dibujado.
 
 ### D. Comparar y sincronizar
 
-Lee Figma como en A, compara con el contrato y lista: (1) propiedades de Figma que faltan, (2) props sin propiedad en Figma, (3) capas que no están en `anatomy`, (4) valores sin variable, (5) tokens distintos. No cambies nada hasta que elijan cuál manda. Al aplicar, sube `version` (patch: texto; minor: prop o estado nuevo; major: renombrar o quitar).
+Lee Figma como en A, compara con el contrato y lista: (1) propiedades de Figma que faltan, (2) props sin propiedad en Figma, (3) capas que no están en `anatomy`, (4) valores sin variable, (5) tokens distintos. No cambies nada hasta que elijan cuál manda. Al aplicar, sube `version` (patch: texto; minor: prop o estado nuevo; major: renombrar o quitar). Si el cambio se aplicó también en Figma, termina invocando `component-spec` para regenerar la Spec con la nueva versión.
 
 ## Al terminar
 

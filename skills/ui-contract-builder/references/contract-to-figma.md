@@ -25,4 +25,5 @@ Genera o completa el componente en Figma a partir del contrato. Es el modo más 
 1. Lee de vuelta el componente con el modo D (comparar) y lista diferencias contra el contrato.
 2. Comprueba que no haya valores sin variable.
 3. Actualiza el contrato: `anchors.figma.node` con el nodo nuevo y `meta.needsReview` con lo no resuelto.
-4. Pide revisión visual: la composición y el pulido fino los hace la persona.
+4. **Spec:** invoca la skill `component-spec` (contrato válido con `check.mjs` → datos de Figma → dibujos → Spec → releer con `getContent`). Es el último paso del modo C y del modo D cuando se aplica un cambio.
+5. Pide revisión visual: la composición y el pulido fino los hace la persona.
