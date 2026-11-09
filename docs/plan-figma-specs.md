@@ -87,6 +87,39 @@ Ya existe en `tokens/tokens.json`: primitivos (`colors`, `spacing`, `radius`…)
 - [ ] Push al fork `i-casaca/SD-Design-System` → solo con OK.
 - [ ] PR hacia `mokkapp-studio/SD-Design-System` → solo con OK y como paso aparte.
 
+## Modelo de página y Spec (2026-11-09, ticket «Plantilla de la Spec»)
+
+Sustituye al esquema de Fase 1 y a la lista de Fase 2 (que quedan como histórico).
+
+**Página de componente en SDD Library** (una Section por componente, ancho = columna + Spec):
+
+```
+Section «<Componente>»
+├─ _sdd-header      oscuro (#1C2024), ancho completo de la Section: eyebrow, título, descripción, versión, enlace al contrato
+├─ column-bg        fondo gris, a la izquierda, de la altura de la Section
+├─ component        el COMPONENT_SET (blanco sobre el gris)
+├─ examples         ejemplos (blanco sobre el gris)
+└─ Documentation    SPEC_BLOCK a la derecha de la columna (x = ancho columna + 60, y = bajo el header)
+```
+
+- Al terminar de generar la Spec se **restituye el alto de la Section** = max(Spec, columna) + 80 y se ensancha el header al ancho de la Section. El botón «full size» de la Spec no tiene API: se hace a mano en la UI.
+- Los **building blocks** de la documentación (`_anatomy`, `_specs`, solo los dibujos que se exportan a imagen) viven aparte, en la página «Helpers», en una Section «Building blocks · <Componente>». Nada de láminas sueltas dentro de la Section del componente.
+
+**Spec «Documentation»** (un solo documento; cabeceras en inglés, contenido en el idioma del contrato; bloque sin dato = se omite):
+
+```
+# Documentation
+## Overview            Definition · Usage Guidelines (+ Label) · Behavior and Interactions
+## Anatomy             Component Breakdown · Specs · Properties (+ #### Code) · Tokens · Breakpoints · Motion
+## Accessibility       incluye el contraste medido de la variante dibujada
+## History             git log
+```
+
+- **Solo son imagen los dibujos**: anatomía con marcadores (fondo oscuro, magenta) y cotas de Specs (azul, bandas verdes de padding y naranjas de espacio). **Todo dato es Markdown** (tablas GFM): partes con valor, token y cadena de alias; Layout and spacing; tokens por size; All properties; Tokens con `var(--…)`. Así lo lee una máquina.
+- Los datos salen **extraídos del componente en Figma** (variables enlazadas, alias resueltos, estilos de texto), no de los números del contrato. Los valores sin token se marcan «sin token».
+- `#### Code` dentro de Properties: contrato condensado (props + `base` + `bySize`; Divider entero) y `tsx` de uso, más enlace al contrato completo.
+- Referencia de estilo: Dynamic Handoff (datos) y Hovercard (dibujo de cotas). Dynamic Handoff se usa solo para contrastar; no se deja su salida en el archivo.
+
 ## Decisiones (2026-11-08)
 
 1. Iconos: **Phosphor**.
@@ -94,3 +127,5 @@ Ya existe en `tokens/tokens.json`: primitivos (`colors`, `spacing`, `radius`…)
 3. Primer componente: **Divider**.
 4. Bloque ```json: **versión de consulta** (props + tokens).
 5. `build-spec.mjs` se ejecuta **desde la skill** al terminar el dibujado (modo C/D), sin hook.
+6. Página de componente: header oscuro a todo el ancho, columna gris con componente y ejemplos, Spec a la derecha; alto de Section restituido al terminar; building blocks aparte en «Helpers».
+7. Spec: dibujos como imagen, todos los datos como Markdown; añade «Tokens» al esqueleto de #20.
