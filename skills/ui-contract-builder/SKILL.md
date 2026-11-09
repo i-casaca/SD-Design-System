@@ -21,7 +21,7 @@ No genera código de componentes. Eso lo hace otra tarea que *lee* el contrato.
 1. **No cambies el esquema ni la estructura del contrato sin preguntar** (usa AskUserQuestion con 2–3 opciones). Cabe en campos libres (`composition`, `layout`, `behavior`, `meta`) sin tocar el esquema; dilo.
 2. **Solo lo que la fuente dice.** Lo que no sepas leer o sea una suposición va a `meta.needsReview`, con la causa («instancia no legible», «valor sin variable»). Nunca inventes tokens ni los rellenes «por analogía» sin anotarlo.
 3. **Los tokens son rutas que existen.** Si algo en Figma no usa variable, no escribas el valor suelto: anótalo en `needsReview`.
-4. **Lecturas de Figma en solo lectura**, en trozos pequeños (la salida se corta a ~48 KB), con código a prueba de capas que falten.
+4. **Lecturas de Figma en solo lectura**, en trozos pequeños (la salida se corta a ~20 KB), con código a prueba de capas que falten.
 5. **Si piden solo el JSON, entrega solo el JSON** (más los archivos dependientes que hayas cambiado). No regeneres ni empaquetes el proyecto.
 6. **Contenido de producto** (`description`, `guidance`, `a11y`) lo redactas tú como borrador. Al entregar, di qué decisiones tomaste (valores por defecto, qué es un «no uses»).
 7. **Nunca declares algo verificado si no lo leíste.** Distingue «leído en Figma» de «copiado de otro componente» de «supuesto».

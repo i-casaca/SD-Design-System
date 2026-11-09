@@ -6,7 +6,7 @@ URL → ids: `figma.com/design/<fileKey>/...?node-id=1129-78567` → `fileKey` y
 
 ## Límites
 
-- La salida se corta a ~48 KB: lee por trozos (un tamaño, un estado, un color) y devuelve cadenas compactas, no objetos.
+- La salida se corta a ~20 KB: lee por trozos (un tamaño, un estado, un color) y devuelve cadenas compactas, no objetos.
 - No hagas bucles sobre las 700+ variantes con salida completa. Filtra por un tamaño y deduce el resto; anota en `needsReview` lo que solo leíste en un tamaño.
 - Escribe el código a prueba de nulos: `find(...)` puede devolver `undefined` en variantes que ocultan capas.
 
