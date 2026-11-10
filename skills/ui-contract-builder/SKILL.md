@@ -1,78 +1,78 @@
 ---
 name: ui-contract-builder
-description: Crea, actualiza y valida contratos de componentes UI (JSON) para un sistema de diseño, desde un componente de Figma o desde una mini-spec. Úsala cuando pidan "crea el contrato de <componente>", "contrato desde este nodo de Figma", "contrato de un componente nuevo (Navbar…)", "compara Figma con el contrato" o "genera el componente en Figma desde el contrato".
+description: Creates, updates and validates UI component contracts (JSON) for a design system, from a Figma component or from a mini-spec. Use it when asked to "create the contract for <component>", "contract from this Figma node", "contract for a new component (Navbar…)", "compare Figma with the contract" or "generate the component in Figma from the contract".
 ---
 
 # ui-contract-builder
 
-Un **contrato** es un JSON por componente: el acuerdo neutral entre Figma y código (props, estados, anatomía, tokens, accesibilidad, guía de uso). Esta skill lo crea y lo mantiene, en cualquier proyecto.
+A **contract** is one JSON per component: the neutral agreement between Figma and code (props, states, anatomy, tokens, accessibility, usage guidance). This skill creates and maintains it, in any project.
 
-No genera código de componentes. Eso lo hace otra tarea que *lee* el contrato.
+It does not generate component code. Another task does that by *reading* the contract.
 
-## Paso 0 — Localizar el sistema de diseño
+## Step 0 — Locate the design system
 
-1. Busca la carpeta con `contracts/component.schema.json` (en el directorio actual, en `design-system/` o en la que indique la persona). Es la **raíz del sistema**.
-2. Si no existe, pregunta si quieres crearla: copia `assets/component.schema.json` y `assets/_template.contract.json` a `<raíz>/contracts/` y `scripts/check.mjs` a `<raíz>/check.mjs`.
-3. Lee, si existen: `<raíz>/AGENTS.md`, `<raíz>/docs/components.md` (vocabulario de props, índice), `<raíz>/tokens/` (para saber qué tokens hay).
-4. Si la raíz es un submódulo o una copia dentro de otro proyecto, **los contratos se escriben en la raíz del sistema**, no en el proyecto que lo consume. Avísalo.
+1. Look for the folder with `contracts/component.schema.json` (in the current directory, in `design-system/`, or in the one the user points to). That is the **system root**.
+2. If it does not exist, ask whether to create it: copy `assets/component.schema.json` and `assets/_template.contract.json` to `<root>/contracts/` and `scripts/check.mjs` to `<root>/check.mjs`.
+3. Read, if they exist: `<root>/AGENTS.md`, `<root>/docs/components.md` (props vocabulary, index), `<root>/tokens/` (to know which tokens exist).
+4. If the root is a submodule or a copy inside another project, **contracts are written in the system root**, not in the project that consumes it. Say so.
 
-## Reglas que no se negocian
+## Non-negotiable rules
 
-1. **No cambies el esquema ni la estructura del contrato sin preguntar** (usa AskUserQuestion con 2–3 opciones). Cabe en campos libres (`composition`, `layout`, `behavior`, `meta`) sin tocar el esquema; dilo.
-2. **Solo lo que la fuente dice.** Lo que no sepas leer o sea una suposición va a `meta.needsReview`, con la causa («instancia no legible», «valor sin variable»). Nunca inventes tokens ni los rellenes «por analogía» sin anotarlo.
-3. **Los tokens son rutas que existen.** Si algo en Figma no usa variable, no escribas el valor suelto: anótalo en `needsReview`.
-4. **Lecturas de Figma en solo lectura**, en trozos pequeños (la salida se corta a ~20 KB), con código a prueba de capas que falten.
-5. **Si piden solo el JSON, entrega solo el JSON** (más los archivos dependientes que hayas cambiado). No regeneres ni empaquetes el proyecto.
-6. **Contenido de producto** (`description`, `guidance`, `a11y`) lo redactas tú como borrador. Al entregar, di qué decisiones tomaste (valores por defecto, qué es un «no uses»).
-7. **Nunca declares algo verificado si no lo leíste.** Distingue «leído en Figma» de «copiado de otro componente» de «supuesto».
-8. Idioma del contenido: el del proyecto (por defecto, español). Los nombres de props, ids y tokens, tal cual.
+1. **Do not change the schema or the contract structure without asking** (use AskUserQuestion with 2–3 options). It fits in free fields (`composition`, `layout`, `behavior`, `meta`) without touching the schema; say so.
+2. **Only what the source says.** Anything you cannot read or that is an assumption goes to `meta.needsReview`, with the cause ("instance not readable", "value without variable"). Never invent tokens or fill them in "by analogy" without noting it.
+3. **Tokens are paths that exist.** If something in Figma does not use a variable, do not write the loose value: note it in `needsReview`.
+4. **Figma reads are read-only**, in small chunks (output is cut off at ~20 KB), with code that tolerates missing layers.
+5. **If only the JSON is requested, deliver only the JSON** (plus any dependent files you changed). Do not regenerate or package the project.
+6. **Product content** (`description`, `guidance`, `a11y`) is drafted by you. When delivering, state the decisions you made (default values, what counts as a "don't use").
+7. **Never declare something verified if you did not read it.** Distinguish "read in Figma" from "copied from another component" from "assumed".
+8. Content language: the project's (English by default). Prop names, ids and tokens stay as they are.
 
-## Elige el modo
+## Choose the mode
 
-| La persona dice… | Modo |
+| The user says… | Mode |
 | --- | --- |
-| «Contrato de este componente» + enlace de Figma | **A. Figma → contrato** |
-| «Contrato de un componente nuevo» + mini-spec o descripción | **B. Spec → contrato** |
-| «Crea/dibuja el componente en Figma desde el contrato» | **C. Contrato → Figma** |
-| «¿Coincide Figma con el contrato?» / «Actualiza el contrato» | **D. Comparar y sincronizar** |
+| "Contract for this component" + Figma link | **A. Figma → contract** |
+| "Contract for a new component" + mini-spec or description | **B. Spec → contract** |
+| "Create/draw the component in Figma from the contract" | **C. Contract → Figma** |
+| "Does Figma match the contract?" / "Update the contract" | **D. Compare and sync** |
 
-### A. Figma → contrato
+### A. Figma → contract
 
-1. Extrae `fileKey` y `nodeId` del enlace (`node-id=1129-78567` → `1129:78567`). Ver `references/figma-reading.md`.
-2. Lee, por este orden: tipo y propiedades del component set → una variante de ejemplo (árbol de capas) → tokens por variante, estado y tamaño → medidas.
-3. Copia la plantilla y rellena con `references/contract-format.md`. Si es parecido a uno existente, ábrelo antes y reutiliza su estructura (`assets/example.*`).
-4. Valores por defecto de Figma marcados con ✦: usa el valor sin marca.
-5. Sigue con **Al terminar**.
+1. Extract `fileKey` and `nodeId` from the link (`node-id=1129-78567` → `1129:78567`). See `references/figma-reading.md`.
+2. Read, in this order: type and properties of the component set → a sample variant (layer tree) → tokens per variant, state and size → measurements.
+3. Copy the template and fill it in following `references/contract-format.md`. If it is similar to an existing one, open that first and reuse its structure (`assets/example.*`).
+4. Figma default values marked with ✦: use the value without the mark.
+5. Continue with **When done**.
 
-### B. Spec → contrato (componente nuevo)
+### B. Spec → contract (new component)
 
-1. Pide la mini-spec (`references/mini-spec.md`). Si falta, no la inventes: pide como mínimo propósito, contenido obligatorio, responsive y la acción principal.
-2. Reutiliza componentes que ya tengan contrato (`composition.nestedComponents`, `slot.allowedComponents`). Si dependes de uno que no existe, díselo.
-3. Si es compuesto (Navbar, Tabs, Table…), lee `references/composite-components.md`.
-4. Deja `anchors.figma.node` en `—` y `bindings.figma` en `null` hasta que exista en Figma. `status: draft`.
-5. Todo lo que decidas por tu cuenta va a `meta.needsReview` como «decisión propuesta: …», y la sección «Decisiones abiertas» de la spec se devuelve como preguntas.
-6. Sigue con **Al terminar**.
+1. Ask for the mini-spec (`references/mini-spec.md`). If it is missing, do not invent it: ask for at least purpose, required content, responsive behavior and the main action.
+2. Reuse components that already have a contract (`composition.nestedComponents`, `slot.allowedComponents`). If you depend on one that does not exist, say so.
+3. If it is composite (Navbar, Tabs, Table…), read `references/composite-components.md`.
+4. Leave `anchors.figma.node` as `—` and `bindings.figma` as `null` until it exists in Figma. `status: draft`.
+5. Everything you decide on your own goes to `meta.needsReview` as "proposed decision: …", and the spec's "Open decisions" section is returned as questions.
+6. Continue with **When done**.
 
-### C. Contrato → Figma
+### C. Contract → Figma
 
-Lee `references/contract-to-figma.md` y el skill `figma-use` (obligatorio antes de escribir en Figma). Antes de crear, comprueba que el archivo de destino tiene las variables y los componentes que el contrato cita; si no, para y dilo. Revisa al final que todo esté enlazado a variables. Último paso: invoca la skill `component-spec` para generar la Spec del componente dibujado.
+Read `references/contract-to-figma.md` and the `figma-use` skill (mandatory before writing to Figma). Before creating, check that the target file has the variables and components the contract cites; if not, stop and say so. At the end, check that everything is bound to variables. Last step: invoke the `component-spec` skill to generate the Spec of the drawn component.
 
-### D. Comparar y sincronizar
+### D. Compare and sync
 
-Lee Figma como en A, compara con el contrato y lista: (1) propiedades de Figma que faltan, (2) props sin propiedad en Figma, (3) capas que no están en `anatomy`, (4) valores sin variable, (5) tokens distintos. No cambies nada hasta que elijan cuál manda. Al aplicar, sube `version` (patch: texto; minor: prop o estado nuevo; major: renombrar o quitar). Si el cambio se aplicó también en Figma, termina invocando `component-spec` para regenerar la Spec con la nueva versión.
+Read Figma as in A, compare with the contract and list: (1) missing Figma properties, (2) props without a Figma property, (3) layers that are not in `anatomy`, (4) values without a variable, (5) differing tokens. Change nothing until they choose which one wins. When applying, bump `version` (patch: text; minor: new prop or state; major: rename or remove). If the change was also applied in Figma, finish by invoking `component-spec` to regenerate the Spec with the new version.
 
-## Al terminar
+## When done
 
-1. **Valida:** `node <ruta-skill>/scripts/check.mjs <raíz>`; debe dar 0 errores. Corrige y repite. Añade una prueba negativa rápida (un token falso) si el contrato tiene tokens nuevos.
-2. **Arregla los dependientes:** `guidance.related` de otros contratos, `composition.nestedComponents`, `docs/components.md`, README y el orden de componentes en los prompts. Si algún aviso de «related sin contrato» desaparece, bien.
-3. **Entrega:** el contrato (y los archivos dependientes cambiados). Resume en 5–8 líneas: qué se leyó de Figma, qué decisiones tomaste, qué hay que revisar a mano (`needsReview`), y si cambiaste algo fuera del contrato.
+1. **Validate:** `node <skill-path>/scripts/check.mjs <root>`; it must give 0 errors. Fix and repeat. Add a quick negative test (a fake token) if the contract has new tokens.
+2. **Fix dependents:** `guidance.related` in other contracts, `composition.nestedComponents`, `docs/components.md`, README and the component order in the prompts. If a "related without contract" warning disappears, good.
+3. **Deliver:** the contract (and the dependent files changed). Summarize in 5–8 lines: what was read from Figma, what decisions you made, what needs manual review (`needsReview`), and whether you changed anything outside the contract.
 
-## Referencias (léelas solo cuando toque)
+## References (read them only when needed)
 
-- `references/contract-format.md` — bloques, qué va en cada uno, nombres, convenciones de enlace Figma ↔ código y de tokens. **Siempre al escribir un contrato.**
-- `references/figma-reading.md` — cómo leer un componente con `use_figma`, snippets, y las rarezas de Figma que ya conocemos.
-- `references/composite-components.md` — componentes compuestos (slots, subcomponentes, responsive).
-- `references/mini-spec.md` — plantilla para pedir/rellenar la spec.
-- `references/contract-to-figma.md` — generar el componente en Figma desde el contrato.
-- `references/project-setup.md` — instalar la skill en otro proyecto o en un proyecto Next.js.
-- `assets/example.Link.contract.json` (simple), `assets/example.IconButton.contract.json` (matriz variant × color × estado con `tokens.scales`).
+- `references/contract-format.md` — blocks, what goes in each, names, Figma ↔ code binding and token conventions. **Always when writing a contract.**
+- `references/figma-reading.md` — how to read a component with `use_figma`, snippets, and the Figma quirks we already know.
+- `references/composite-components.md` — composite components (slots, subcomponents, responsive).
+- `references/mini-spec.md` — template to request/fill in the spec.
+- `references/contract-to-figma.md` — generating the component in Figma from the contract.
+- `references/project-setup.md` — installing the skill in another project or in a Next.js project.
+- `assets/example.Link.contract.json` (simple), `assets/example.IconButton.contract.json` (variant × color × state matrix with `tokens.scales`).

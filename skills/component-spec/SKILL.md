@@ -1,38 +1,38 @@
 ---
 name: component-spec
-description: Genera la Spec («Documentation») de un componente ya dibujado en Figma a partir de su contrato JSON, y la publica como Spec nativa de Figma. Úsala al terminar de dibujar o cambiar un componente, o cuando pidan «genera/actualiza la Spec de <Componente>». No dibuja el componente.
+description: Generates the Spec ("Documentation") of a component already drawn in Figma from its JSON contract, and publishes it as a native Figma Spec. Use it after drawing or changing a component, or when asked to "generate/update the Spec of <Component>". It does not draw the component.
 ---
 
 # component-spec
 
-Entrada: `contracts/<Componente>.contract.json` + el componente ya dibujado en Figma. Salida: un documento Spec en la página del componente. La Spec se **genera**; la edición a mano se pierde en la siguiente pasada.
+Input: `contracts/<Component>.contract.json` + the component already drawn in Figma. Output: a Spec document on the component's page. The Spec is **generated**; manual edits are lost on the next run.
 
-Los **datos** (tablas de props, tokens, medidas) son Markdown, para que los lea una máquina. Solo los **dibujos** (anatomía, cotas) son imagen.
+The **data** (props tables, tokens, measurements) is Markdown, so a machine can read it. Only the **drawings** (anatomy, measurements) are images.
 
-## Antes de empezar
+## Before starting
 
-- La **raíz** del sistema es la carpeta con `contracts/component.schema.json` y `check.mjs`. Sin ellas, para y dilo.
-- Confirma con la persona el archivo de Figma (nombre y clave) y el nodo del componente antes de leer o escribir. Sin componente dibujado, para: esta skill no lo crea.
-- Carga el skill `figma-use` antes de cada `use_figma`.
-- No cambies el esquema ni el contenido del contrato. Todo desajuste se informa, nunca se corrige aquí.
+- The **system root** is the folder with `contracts/component.schema.json` and `check.mjs`. Without them, stop and say so.
+- Confirm the Figma file (name and key) and the component node with the user before reading or writing. If the component is not drawn, stop: this skill does not create it.
+- Load the `figma-use` skill before every `use_figma`.
+- Do not change the schema or the contract content. Every mismatch is reported, never fixed here.
 
-## Pasos
+## Steps
 
-Cada paso termina cuando se cumple su criterio; no pases al siguiente antes.
+Each step ends when its criterion is met; do not move on before that.
 
-1. **Contrato válido.** `node <raíz>/check.mjs <raíz>` → **0 errores**. Con errores, para y repórtalos.
-2. **Datos de Figma.** Ejecuta `scripts/figma/extract-variables.js` (solo lectura; edita `NODE_ID`) y guarda la salida como `figma.json`. Criterio: el JSON trae `layers` y cada color/medida es una variable (`token`) o queda marcada «sin token». Lee `references/figma-reading.md` si la salida se corta o falta una capa.
-3. **Avisos de desajuste.** `node scripts/build-spec.mjs <raíz> <Componente> --compare figma.json`. Criterio: cada aviso reportado a la persona con su capa o propiedad. No cambies nada en contrato ni Figma.
-4. **Dibujos.** Ejecuta `scripts/figma/draw-anatomy.js` y `scripts/figma/draw-specs.js` (escriben en la página de building blocks; edita sus parámetros con `anatomy.<parte>.figmaLayer`). Exporta cada lámina con `exportAsync` (PNG, 2x). Criterio: una imagen de anatomía con todas las partes numeradas y una de cotas; revisa las dos con una captura.
-5. **Markdown.** `node scripts/build-spec.mjs <raíz> <Componente> --figma figma.json > spec.md`. Sustituye `<!-- image:anatomy -->` e `<!-- image:specs -->` por `![alt](data:image/png;base64,…)` y rellena o borra `<!-- contrast: -->` con el contraste medido de la variante dibujada. Criterio: ningún marcador `<!-- … -->` en el texto.
-6. **Publicar.** Localiza el SPEC_BLOCK del componente (contrato `meta`/`anchors.figma.spec` o la Section del componente). Si no existe, `figma.spec.createOnCanvasAsync`; si existe, `figma.spec.setContent` con la Spec entera (si falla por tablas, ver el truco en `references/spec-template.md`). Estructura de página y límites de la API en `references/spec-template.md`.
-7. **Verificar.** Relee con `getContent`, guarda el texto como `reread.md` y ejecuta `node scripts/build-spec.mjs <raíz> <Componente> --verify reread.md`. Criterio: salida `✓`. Con `✗`, corrige y repite desde el paso 5.
+1. **Valid contract.** `node <root>/check.mjs <root>` → **0 errors**. With errors, stop and report them.
+2. **Figma data.** Run `scripts/figma/extract-variables.js` (read-only; edit `NODE_ID`) and save the output as `figma.json`. Criterion: the JSON has `layers` and every color/measurement is a variable (`token`) or is marked "no token". Read `references/figma-reading.md` if the output is cut off or a layer is missing.
+3. **Mismatch warnings.** `node scripts/build-spec.mjs <root> <Component> --compare figma.json`. Criterion: every warning reported to the user with its layer or property. Change nothing in the contract or Figma.
+4. **Drawings.** Run `scripts/figma/draw-anatomy.js` and `scripts/figma/draw-specs.js` (they write to the building blocks page; edit their parameters with `anatomy.<part>.figmaLayer`). Export each sheet with `exportAsync` (PNG, 2x). Criterion: one anatomy image with all parts numbered and one measurements image; check both with a screenshot.
+5. **Markdown.** `node scripts/build-spec.mjs <root> <Component> --figma figma.json > spec.md`. Replace `<!-- image:anatomy -->` and `<!-- image:specs -->` with `![alt](data:image/png;base64,…)` and fill in or delete `<!-- contrast: -->` with the measured contrast of the drawn variant. Criterion: no `<!-- … -->` marker left in the text.
+6. **Publish.** Find the component's SPEC_BLOCK (contract `meta`/`anchors.figma.spec` or the component's Section). If it does not exist, `figma.spec.createOnCanvasAsync`; if it exists, `figma.spec.setContent` with the whole Spec (if it fails because of tables, see the trick in `references/spec-template.md`). Page structure and API limits in `references/spec-template.md`.
+7. **Verify.** Re-read with `getContent`, save the text as `reread.md` and run `node scripts/build-spec.mjs <root> <Component> --verify reread.md`. Criterion: output `✓`. With `✗`, fix and repeat from step 5.
 
-## Al terminar
+## When done
 
-Informa en 5–8 líneas: versión del contrato publicada, avisos del paso 3 (todos), qué dibujos se hicieron, valores «sin token», y lo que no pudiste comprobar. Declara «verificado» solo lo releído.
+Report in 5–8 lines: published contract version, all warnings from step 3, which drawings were made, "no token" values, and what you could not check. Declare "verified" only what was re-read.
 
-## Referencias (léelas cuando toque)
+## References (read them when needed)
 
-- `references/spec-template.md` — esqueleto de la Spec, de dónde sale cada bloque del contrato, página y Section en Figma.
-- `references/figma-reading.md` — leer Figma por trozos, límites de salida, rarezas.
+- `references/spec-template.md` — Spec skeleton, where each block comes from in the contract, page and Section in Figma.
+- `references/figma-reading.md` — reading Figma in chunks, output limits, quirks.

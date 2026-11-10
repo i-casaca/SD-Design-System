@@ -1,14 +1,14 @@
-// SOLO LECTURA. Extrae de un componente dibujado en Figma los datos que usa la Spec:
-// variables enlazadas (con su cadena de alias), estilos de texto, padding, gap, radio y tamaños.
-// Ejecutar con use_figma / figma_execute. Edita solo los parámetros.
-// Salida: una cadena JSON compacta; guárdala como figma.json y pásala a build-spec.mjs --figma.
-const NODE_ID = 'PON_AQUI_EL_ID';   // COMPONENT_SET o COMPONENT, con ":" (no "-")
-const VARIANT = '';                 // texto que debe contener el nombre de la variante a medir; '' = la del defaultVariant
+// READ-ONLY. Extracts from a component drawn in Figma the data the Spec uses:
+// bound variables (with their alias chain), text styles, padding, gap, radius and sizes.
+// Run with use_figma / figma_execute. Edit only the parameters.
+// Output: a compact JSON string; save it as figma.json and pass it to build-spec.mjs --figma.
+const NODE_ID = 'PUT_ID_HERE';   // COMPONENT_SET or COMPONENT, with ":" (not "-")
+const VARIANT = '';                 // text the name of the variant to measure must contain; '' = the contract's defaultVariant
 
 const hex = (c, a = 1) => '#' + [c.r, c.g, c.b].map((v) => Math.round(v * 255).toString(16).padStart(2, '0')).join('') + (a < 1 ? ' @' + Math.round(a * 100) + '%' : '');
 const vcache = {};
 const getVar = async (id) => (vcache[id] ??= await figma.variables.getVariableByIdAsync(id));
-// Sigue los alias hasta el valor final en el primer modo de cada colección.
+// Follows aliases down to the final value in the first mode of each collection.
 const resolve = async (id) => {
   const chain = []; let v = await getVar(id); let value = null;
   for (let i = 0; v && i < 10; i++) {
@@ -36,7 +36,7 @@ const numInfo = async (node, field) => {
 };
 
 const root = await figma.getNodeByIdAsync(NODE_ID);
-if (!root) return JSON.stringify({ error: 'Nodo no encontrado: ' + NODE_ID });
+if (!root) return JSON.stringify({ error: 'Node not found: ' + NODE_ID });
 let comp = root;
 if (root.type === 'COMPONENT_SET') {
   comp = (VARIANT && root.children.find((c) => c.name.includes(VARIANT))) || root.defaultVariant;

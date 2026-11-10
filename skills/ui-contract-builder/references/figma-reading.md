@@ -1,16 +1,16 @@
-# Leer un componente de Figma
+# Reading a component from Figma
 
-Herramienta: `use_figma` del MCP de Figma, **solo lectura**. Antes de la primera llamada, carga el skill `figma-use` (obligatorio). Parámetros típicos: `fileKey`, `description`, `skillNames: "resource:figma-use"`, `code`.
+Tool: `use_figma` from the Figma MCP, **read-only**. Before the first call, load the `figma-use` skill (mandatory). Typical parameters: `fileKey`, `description`, `skillNames: "resource:figma-use"`, `code`.
 
-URL → ids: `figma.com/design/<fileKey>/...?node-id=1129-78567` → `fileKey` y `nodeId = 1129:78567` (el guion pasa a dos puntos). En una URL con `/branch/<branchKey>/` usa `branchKey` como `fileKey`.
+URL → ids: `figma.com/design/<fileKey>/...?node-id=1129-78567` → `fileKey` and `nodeId = 1129:78567` (the hyphen becomes a colon). For a URL with `/branch/<branchKey>/` use `branchKey` as `fileKey`.
 
-## Límites
+## Limits
 
-- La salida se corta a ~20 KB: lee por trozos (un tamaño, un estado, un color) y devuelve cadenas compactas, no objetos.
-- No hagas bucles sobre las 700+ variantes con salida completa. Filtra por un tamaño y deduce el resto; anota en `needsReview` lo que solo leíste en un tamaño.
-- Escribe el código a prueba de nulos: `find(...)` puede devolver `undefined` en variantes que ocultan capas.
+- The output is cut off at ~20 KB: read in chunks (one size, one state, one color) and return compact strings, not objects.
+- Do not loop over the 700+ variants with full output. Filter by one size and deduce the rest; note in `needsReview` what you only read at one size.
+- Write null-safe code: `find(...)` can return `undefined` in variants that hide layers.
 
-## Lectura 1 — estructura y propiedades
+## Read 1 — structure and properties
 
 ```js
 const n = await figma.getNodeByIdAsync('NODE_ID');
@@ -27,11 +27,11 @@ if (n.type === 'COMPONENT_SET') {
 return JSON.stringify(out);
 ```
 
-De aquí salen: `props` (con `bindings.figma`), el número de variantes, `anatomy` (capas) y qué capas se activan con BOOLEAN (`figmaToggle`).
+From this you get: `props` (with `bindings.figma`), the number of variants, `anatomy` (layers) and which layers are toggled by BOOLEAN (`figmaToggle`).
 
-## Lectura 2 — tokens por variante
+## Read 2 — tokens per variant
 
-Resuelve variables por id, con caché, y usa nombres cortos para que quepa.
+Resolve variables by id, with a cache, and use short names so it fits.
 
 ```js
 const cache = {};
@@ -43,23 +43,23 @@ const paint = async (arr) => { if (!arr || !arr.length) return '-'; const o = []
     o.push(b ? await vn(b.id) : p.type === 'SOLID' ? '#raw' : p.type); } return o.join('>'); };
 ```
 
-Por cada variante: `fills`, `strokes`, `strokeWeight`, `effectStyleId` (estilo de sombra), `opacity`, radio (`boundVariables.topLeftRadius`), `textStyleId`. Un valor `#raw` o sin variable = no enlazado → `needsReview`.
+For each variant: `fills`, `strokes`, `strokeWeight`, `effectStyleId` (shadow style), `opacity`, radius (`boundVariables.topLeftRadius`), `textStyleId`. A `#raw` value or one without a variable = not bound → `needsReview`.
 
-Texto: `textStyleId` → `(await figma.getStyleByIdAsync(id)).name` (p. ej. `Typography/3/Regular` → `text-style.3.regular`).
+Text: `textStyleId` → `(await figma.getStyleByIdAsync(id)).name` (e.g. `Typography/3/Regular` → `text-style.3.regular`).
 
-## Rarezas conocidas (compruébalas siempre)
+## Known quirks (always check them)
 
-- **Dónde está el color.** A menudo el nodo raíz tiene un relleno vacío «crudo» y el color real está en un hijo (`content-container`). Lee el hijo, no solo la raíz.
-- **Instancias opacas.** Iconos y otras instancias no dejan leer sus rellenos internos en algunas variantes. Confirma solo los casos legibles y marca el resto como supuesto.
-- **✦ en los valores por defecto** (`solid ✦`, `2 ✦`, `default ✦`): el nombre real es sin marca. Y el default del component set puede no ser el ✦ (`defaultVariant`).
-- **Erratas de nombre** (`highConstrast`): `bindings.figma.property` va como está en Figma; la prop de código con el nombre correcto. Verifica cada componente, no copies la errata.
-- **Variantes que solo existen con un estado** (p. ej. `loading=true` solo con `state=disable`): anótalo en `needsReview`.
-- **Opacity de hover/active y degradados** suelen estar fijos, sin variable. No inventes token.
-- **Tamaños sin variable** (alto, ancho, tamaño de icono): se anotan como valores y se señala la coincidencia con tokens existentes solo si el valor coincide.
-- **Alpha del color enlazado**: `paint.opacity` ya trae el alfa de la variable; no lo trates como opacidad aparte.
-- **Estados no diseñados** (hover, foco): `states.native` los lista, pero `needsReview` dice «sin diseño en Figma».
-- **Espacio entre iconos y texto, padding**: si no hay variable ligada, no pongas `spacing.N` por intuición; compara el valor con la escala y di que es por coincidencia.
+- **Where the color is.** The root node often has an empty "raw" fill and the real color is on a child (`content-container`). Read the child, not just the root.
+- **Opaque instances.** Icons and other instances do not let you read their inner fills in some variants. Confirm only the readable cases and mark the rest as assumed.
+- **✦ in default values** (`solid ✦`, `2 ✦`, `default ✦`): the real name has no mark. And the component set's default may not be the ✦ one (`defaultVariant`).
+- **Name typos** (`highConstrast`): `bindings.figma.property` goes as it is in Figma; the code prop gets the correct name. Verify each component, do not copy the typo.
+- **Variants that only exist with one state** (e.g. `loading=true` only with `state=disable`): note it in `needsReview`.
+- **Hover/active opacity and gradients** are usually fixed, without a variable. Do not invent a token.
+- **Sizes without a variable** (height, width, icon size): noted as values, and the match with existing tokens is pointed out only if the value matches.
+- **Alpha of the bound color**: `paint.opacity` already carries the variable's alpha; do not treat it as a separate opacity.
+- **Undesigned states** (hover, focus): `states.native` lists them, but `needsReview` says "no design in Figma".
+- **Space between icons and text, padding**: if no variable is bound, do not put `spacing.N` by intuition; compare the value with the scale and say it is by coincidence.
 
-## Qué NO se saca de Figma
+## What is NOT taken from Figma
 
-`description`, `guidance`, `a11y`, `events`, `testing`, `anchors.code`. Redáctalos tú y marca las decisiones.
+`description`, `guidance`, `a11y`, `events`, `testing`, `anchors.code`. Draft them yourself and mark the decisions.

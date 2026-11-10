@@ -1,13 +1,13 @@
-// ESCRIBE en Figma. Dibuja la lámina «_anatomy»: componente sobre fondo oscuro con marcadores numerados
-// (magenta) que apuntan a cada parte. Es una imagen: se exporta con exportAsync y va a la Spec.
-// Ejecutar con use_figma / figma_execute tras confirmar archivo y página. Edita solo los parámetros.
-const COMPONENT_ID = 'PON_AQUI_EL_ID';          // COMPONENT_SET o COMPONENT ya dibujado
-const COMPONENT_NAME = 'PON_AQUI_EL_NOMBRE';    // contract.name
-const HELPERS_PAGE = 'Helpers';                 // página donde viven los building blocks
+// WRITES to Figma. Draws the "_anatomy" sheet: component on a dark background with numbered markers
+// (magenta) pointing at each part. It is an image: exported with exportAsync and placed in the Spec.
+// Run with use_figma / figma_execute after confirming file and page. Edit only the parameters.
+const COMPONENT_ID = 'PUT_ID_HERE';          // COMPONENT_SET or COMPONENT already drawn
+const COMPONENT_NAME = 'PUT_NAME_HERE';    // contract.name
+const HELPERS_PAGE = 'Helpers';                 // page where the building blocks live
 const SECTION_NAME = 'Building blocks · ' + COMPONENT_NAME;
-// Una entrada por parte de anatomy (contrato): n = número del marcador; layer = nombre de la capa (anatomy.<parte>.figmaLayer, sin explicaciones).
-// props = propiedades de la instancia para que la parte sea visible (p. ej. { iconStart: true }). Una fila de panel por cada VARIANT_SHOTS.
-const VARIANT_SHOTS = [{ label: 'Default variant', props: {}, parts: [{ n: 1, layer: 'PON_AQUI_LA_CAPA' }] }];
+// One entry per anatomy part (contract): n = marker number; layer = layer name (anatomy.<part>.figmaLayer, without explanations).
+// props = instance properties that make the part visible (e.g. { iconStart: true }). One panel row per VARIANT_SHOTS entry.
+const VARIANT_SHOTS = [{ label: 'Default variant', props: {}, parts: [{ n: 1, layer: 'PUT_LAYER_HERE' }] }];
 
 const C = { bg: [27, 27, 27], panel: [34, 44, 44], surface: [250, 250, 250], marker: [196, 15, 224], dim: [172, 172, 172] };
 const rgb = (a) => ({ r: a[0] / 255, g: a[1] / 255, b: a[2] / 255 });
@@ -16,7 +16,7 @@ for (const st of ['Regular', 'Medium', 'Semi Bold']) await figma.loadFontAsync({
 const text = (chars, size, style, color, parent, x, y) => { const t = figma.createText(); t.fontName = { family: 'Inter', style }; t.fontSize = size; t.characters = chars; t.fills = solid(color); parent.appendChild(t); t.x = x; t.y = y; return t; };
 
 const page = figma.root.children.find((p) => p.name.includes(HELPERS_PAGE));
-if (!page) return 'Falta la página ' + HELPERS_PAGE;
+if (!page) return 'Missing page ' + HELPERS_PAGE;
 await page.loadAsync(); await figma.setCurrentPageAsync(page);
 let section = page.children.find((n) => n.type === 'SECTION' && n.name === SECTION_NAME);
 if (!section) { section = figma.createSection(); section.name = SECTION_NAME; page.appendChild(section); section.x = 0; section.y = 0; }
@@ -44,7 +44,7 @@ for (const shot of VARIANT_SHOTS) {
   const ix = inst.absoluteTransform[0][2], iy = inst.absoluteTransform[1][2];
   for (const part of shot.parts) {
     const layer = inst.findOne((n) => n.name === part.layer);
-    if (!layer) { text('⚠ capa no encontrada: ' + part.layer, 12, 'Regular', C.marker, frame, ox + 64, TOP + PH - 30); continue; }
+    if (!layer) { text('⚠ layer not found: ' + part.layer, 12, 'Regular', C.marker, frame, ox + 64, TOP + PH - 30); continue; }
     const cx = layer.absoluteTransform[0][2] - ix + inst.x + layer.width / 2, top = layer.absoluteTransform[1][2] - iy + inst.y;
     const m = figma.createFrame(); m.name = 'marker-' + part.n; m.fills = solid(C.marker); m.cornerRadius = 12; m.resize(24, 24); frame.appendChild(m);
     m.layoutMode = 'HORIZONTAL'; m.primaryAxisAlignItems = 'CENTER'; m.counterAxisAlignItems = 'CENTER';

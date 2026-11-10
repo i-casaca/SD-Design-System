@@ -1,50 +1,50 @@
-# Plantilla de la Spec
+# Spec template
 
-Cabeceras en inglés; contenido en el idioma del contrato. Un bloque sin dato en el contrato se omite.
+Headers in English; content in the contract's language (English by default). A block with no data in the contract is omitted.
 
 ```
 # Documentation
 ## Overview        Definition · Usage Guidelines (+ Label) · Behavior and Interactions
 ## Anatomy         Component Breakdown · Specs · Properties (+ #### Code) · Tokens · Breakpoints · Motion
-## Accessibility   incluye el contraste medido de la variante dibujada
-## History         git log del contrato
+## Accessibility   includes the measured contrast of the drawn variant
+## History         git log of the contract
 ```
 
-## De dónde sale cada bloque
+## Where each block comes from
 
-| Bloque | Contrato | Figma (`figma.json`) |
+| Block | Contract | Figma (`figma.json`) |
 | --- | --- | --- |
 | Definition | `description` | — |
 | Usage Guidelines | `guidance.dos`, `donts`, `related`; `content.label` | — |
 | Behavior and Interactions | `states`, `events`, `behavior.loading`, `behavior.overflow` | — |
-| Component Breakdown | `anatomy` (+ imagen de anatomía) | relleno, borde, radio y estilo de texto por capa, con su cadena de alias |
-| Specs | `layout` (+ imagen de cotas) | padding, gap y tamaño medidos |
+| Component Breakdown | `anatomy` (+ anatomy image) | fill, stroke, radius and text style per layer, with their alias chain |
+| Specs | `layout` (+ measurements image) | measured padding, gap and size |
 | Properties | `props` | — |
-| Code | `props` + `tokens.bindings` (JSON de consulta) y `tsx` de uso; enlace al contrato completo | — |
-| Tokens | `tokens.bindings` con `var(--…)` | — |
+| Code | `props` + `tokens.bindings` (condensed JSON) and a usage `tsx`; link to the full contract | — |
+| Tokens | `tokens.bindings` with `var(--…)` | — |
 | Breakpoints, Motion | `behavior.responsive`, `behavior.motion` | — |
-| Accessibility | `a11y` | contraste medido (paso 5) |
-| History | `git log` de `contracts/<Componente>.contract.json` | — |
+| Accessibility | `a11y` | measured contrast (step 5) |
+| History | `git log` of `contracts/<Component>.contract.json` | — |
 
-## Reglas de los datos
+## Data rules
 
-- El enlace al contrato es un **permalink de GitHub** (remoto + SHA), nunca una ruta local. Sin remoto GitHub, el script deja un comentario para añadirlo a mano.
-- Un valor de Figma sin variable se escribe `valor · sin token`; no se sustituye por un token supuesto.
-- «Code» lleva el JSON condensado (props, y `tokens.bindings` si caben en 6 KB). El contrato entero queda en el enlace.
+- The link to the contract is a **GitHub permalink** (remote + SHA), never a local path. Without a GitHub remote, the script leaves a comment to add it by hand.
+- A Figma value without a variable is written `value · no token`; it is not replaced by an assumed token.
+- "Code" carries the condensed JSON (props, and `tokens.bindings` if they fit in 6 KB). The whole contract stays behind the link.
 
-## Imágenes
+## Images
 
-- Anatomía: fondo oscuro, marcadores magenta numerados que coinciden con la columna `#` de Component Breakdown.
-- Specs: cotas azules (ancho/alto), banda verde = padding, banda naranja = espacio entre partes.
-- Se exportan con `exportAsync({ format: 'PNG', constraint: { type: 'SCALE', value: 2 } })` y entran como `![alt](data:image/png;base64,…)`. Es una foto: se regenera con la Spec.
-- Los dibujos viven en una Section «Building blocks · <Componente>» de la página de utilidades (parámetro `HELPERS_PAGE` de los scripts), fuera de la Section del componente.
+- Anatomy: dark background, numbered magenta markers matching the `#` column of Component Breakdown.
+- Specs: blue measurements (width/height), green band = padding, orange band = space between parts.
+- They are exported with `exportAsync({ format: 'PNG', constraint: { type: 'SCALE', value: 2 } })` and included as `![alt](data:image/png;base64,…)`. It is a snapshot: it is regenerated with the Spec.
+- The drawings live in a "Building blocks · <Component>" Section of the utilities page (`HELPERS_PAGE` parameter of the scripts), outside the component's Section.
 
-## Publicar
+## Publishing
 
-- Primera vez: `figma.spec.createOnCanvasAsync({ title, content })`; devuelve `{ specNodeId }`.
-- Regenerar: `figma.spec.setContent({ specNodeId, content })` con la Spec entera. `editContent` solo sirve para cambios puntuales (cada `oldText` debe coincidir una vez).
-- Si `setContent` falla con «ambiguous table column correspondence» (las tablas nuevas cambian de columnas respecto a las actuales), vacía antes: `setContent({ specNodeId, content: '# Documentation\n' })` y escribe la Spec completa en una segunda llamada.
-- Exporta los PNG y codifícalos (`figma.base64Encode`) dentro del mismo script que escribe la Spec; el base64 no debe pasar por tu contexto.
-- Relectura: `figma.spec.getContent({ specNodeId })` → `.markdown`. Devuelve las imágenes como URL (`…/image/<sha>?w=&h=`) y las tablas normalizadas (`|---|`); `--verify` lo admite.
-- Alto de la Section del componente = max(Spec, columna) + 80.
-- El botón «full size» de la Spec no tiene API: se pulsa a mano en la UI.
+- First time: `figma.spec.createOnCanvasAsync({ title, content })`; returns `{ specNodeId }`.
+- Regenerate: `figma.spec.setContent({ specNodeId, content })` with the whole Spec. `editContent` is only for targeted changes (each `oldText` must match exactly once).
+- If `setContent` fails with "ambiguous table column correspondence" (the new tables have different columns from the current ones), empty it first: `setContent({ specNodeId, content: '# Documentation\n' })` and write the full Spec in a second call.
+- Export the PNGs and encode them (`figma.base64Encode`) inside the same script that writes the Spec; the base64 must not pass through your context.
+- Re-read: `figma.spec.getContent({ specNodeId })` → `.markdown`. It returns images as URLs (`…/image/<sha>?w=&h=`) and tables normalized (`|---|`); `--verify` accepts that.
+- Height of the component's Section = max(Spec, column) + 80.
+- The Spec's "full size" button has no API: press it by hand in the UI.

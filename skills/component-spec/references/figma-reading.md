@@ -1,12 +1,12 @@
-# Leer Figma para la Spec
+# Reading Figma for the Spec
 
-Solo lectura salvo los scripts `draw-*`. Antes de leer, confirma archivo (nombre y clave) con la persona.
+Read-only except for the `draw-*` scripts. Before reading, confirm the file (name and key) with the user.
 
-- La salida de `use_figma` / `figma_execute` se corta hacia 20 KB. `extract-variables.js` mide **una variante** (`VARIANT` filtra por nombre); para otra, vuelve a ejecutarlo con otro texto.
-- Pega el script con los parámetros ya editados; no lo partas: usa `return` y `await` en el nivel superior.
-- Variables: se resuelven por id y siguen los alias hasta el valor final del primer modo de cada colección (`token` → `via` → `value`). `token: null` = valor sin variable.
-- `fills: []` en la raíz del set es normal: el color suele estar en una capa hija.
-- Instancias (iconos) no se recorren; mide su capa contenedora.
-- Estilos de texto y de efecto se leen por nombre (`text.style`, `effectStyle`).
-- Un valor por defecto de Figma puede llevar ✦ en el nombre; el contrato guarda el valor sin marca.
-- `--compare` casa tokens de Figma con los del contrato: un placeholder `{…}` casa con cualquier tramo, así que puede dejar pasar un token equivocado. Con duda, mira la capa.
+- The output of `use_figma` / `figma_execute` is cut off around 20 KB. `extract-variables.js` measures **one variant** (`VARIANT` filters by name); for another, run it again with different text.
+- Paste the script with the parameters already edited; do not split it: use top-level `return` and `await`.
+- Variables: resolved by id, following aliases to the final value of the first mode of each collection (`token` → `via` → `value`). `token: null` = value without a variable.
+- `fills: []` on the set root is normal: the color is usually on a child layer.
+- Instances (icons) are not traversed; measure their container layer.
+- Text and effect styles are read by name (`text.style`, `effectStyle`).
+- A Figma default value may carry ✦ in its name; the contract stores the value without the mark.
+- `--compare` matches Figma tokens with the contract's: a `{…}` placeholder matches any segment, so it can let a wrong token through. When in doubt, look at the layer.

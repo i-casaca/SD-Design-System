@@ -1,29 +1,29 @@
-# Contrato → Figma (modo C)
+# Contract → Figma (mode C)
 
-Genera o completa el componente en Figma a partir del contrato. Es el modo más delicado: escribe en el archivo de la persona.
+Generates or completes the component in Figma from the contract. This is the most delicate mode: it writes to the user's file.
 
-## Antes de empezar
+## Before starting
 
-1. Carga el skill `figma-use` (obligatorio antes de `use_figma`) y, para crear una librería, `figma-generate-library`.
-2. Confirma con la persona **en qué archivo y en qué página** se crea. No crees en un archivo que no te hayan indicado.
-3. Comprueba que ese archivo tiene lo que el contrato cita:
-   - las **variables** de `tokens.bindings` (búscalas por nombre; en una librería remota, impórtalas);
-   - los **componentes** de `composition.nestedComponents` y `slot.allowedComponents`.
-   Si falta algo, **para y dilo**: nunca lo sustituyas por valores sueltos ni por rectángulos.
-4. Con `search_design_system` busca componentes y variables existentes y reutilízalos.
+1. Load the `figma-use` skill (mandatory before `use_figma`) and, to create a library, `figma-generate-library`.
+2. Confirm with the user **in which file and on which page** to create it. Do not create in a file you were not told about.
+3. Check that the file has what the contract cites:
+   - the **variables** in `tokens.bindings` (search by name; in a remote library, import them);
+   - the **components** in `composition.nestedComponents` and `slot.allowedComponents`.
+   If anything is missing, **stop and say so**: never replace it with loose values or rectangles.
+4. Use `search_design_system` to find existing components and variables and reuse them.
 
-## Qué se crea
+## What is created
 
-- Un `COMPONENT_SET` con nombre `name` y propiedades según `props[].bindings.figma` (mismo nombre, tipo y `value`).
-- Capas con los nombres de `anatomy[*].figmaLayer`, con auto layout según `layout.autoLayout`.
-- Slots e instance swap según `anatomy.<parte>.slot.figmaProp`.
-- Cada relleno, borde, sombra, radio y texto **enlazado a la variable** o estilo del contrato. Si el contrato no tiene token para algo, no lo pintes: pregunta.
-- Variantes para cada combinación de `props` de tipo VARIANT; ✦ en el valor por defecto si el archivo lo usa.
+- A `COMPONENT_SET` named `name` with properties from `props[].bindings.figma` (same name, type and `value`).
+- Layers named after `anatomy[*].figmaLayer`, with auto layout per `layout.autoLayout`.
+- Slots and instance swap per `anatomy.<part>.slot.figmaProp`.
+- Every fill, stroke, shadow, radius and text **bound to the variable** or style from the contract. If the contract has no token for something, do not paint it: ask.
+- Variants for each combination of VARIANT-type `props`; ✦ on the default value if the file uses it.
 
-## Al terminar
+## When done
 
-1. Lee de vuelta el componente con el modo D (comparar) y lista diferencias contra el contrato.
-2. Comprueba que no haya valores sin variable.
-3. Actualiza el contrato: `anchors.figma.node` con el nodo nuevo y `meta.needsReview` con lo no resuelto.
-4. **Spec:** invoca la skill `component-spec` (contrato válido con `check.mjs` → datos de Figma → dibujos → Spec → releer con `getContent`). Es el último paso del modo C y del modo D cuando se aplica un cambio.
-5. Pide revisión visual: la composición y el pulido fino los hace la persona.
+1. Read the component back with mode D (compare) and list differences against the contract.
+2. Check that there are no values without a variable.
+3. Update the contract: `anchors.figma.node` with the new node and `meta.needsReview` with what is unresolved.
+4. **Spec:** invoke the `component-spec` skill (valid contract with `check.mjs` → Figma data → drawings → Spec → re-read with `getContent`). It is the last step of mode C and of mode D when a change is applied.
+5. Ask for visual review: composition and fine polish are done by the user.

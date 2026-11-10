@@ -1,67 +1,67 @@
 ---
 name: contract-to-component
-description: Implementa un componente React + TypeScript (tsx y CSS Module) a partir de su contrato JSON de sistema de diseño y verifica que el código cumple el contrato. Úsala cuando pidan "crea el componente <X> desde su contrato", "implementa el contrato de <X> en tsx", "comprueba que <X> cumple el contrato" o "actualiza el componente tras cambiar el contrato".
+description: Implements a React + TypeScript component (tsx and CSS Module) from its design system JSON contract and verifies that the code conforms to the contract. Use it when asked to "create the <X> component from its contract", "implement the <X> contract in tsx", "check that <X> conforms to the contract" or "update the component after the contract changed".
 ---
 
 # contract-to-component
 
-Convierte `contracts/<Nombre>.contract.json` en código y **demuestra** que lo cumple. El contrato manda: si el código y el contrato discrepan, el error está en el código, o hay que cambiar primero el contrato.
+Turns `contracts/<Name>.contract.json` into code and **proves** it conforms. The contract rules: if code and contract disagree, the error is in the code, or the contract must be changed first.
 
-La skill hermana `ui-contract-builder` crea los contratos. Esta solo los consume; no modifica el sistema de diseño.
+The sibling skill `ui-contract-builder` creates the contracts. This one only consumes them; it does not modify the design system.
 
-## Qué garantiza y qué no
+## What it guarantees and what it does not
 
-- **Garantiza (se comprueba con script):** mismas props, tipos y defaults; mismas partes (`data-part`); mismos estados y atributos ARIA; **solo** los tokens del contrato, ni colores ni medidas sueltas, sin opacity en disabled; copia del contrato idéntica al original.
-- **No garantiza:** que el render sea pixel a pixel como Figma (fuentes, geometría del anillo de foco, degradados sin variable, spinner). Eso se revisa con `references/parity.md`.
+- **Guarantees (checked by script):** same props, types and defaults; same parts (`data-part`); same states and ARIA attributes; **only** the contract's tokens, no loose colors or measurements, no opacity on disabled; contract copy identical to the original.
+- **Does not guarantee:** that the render is pixel-for-pixel like Figma (fonts, focus ring geometry, gradients without a variable, spinner). That is reviewed with `references/parity.md`.
 
-## Paso 0 — Localizar
+## Step 0 — Locate
 
-1. **Contrato:** `<sistema>/contracts/<Nombre>.contract.json` (el sistema suele estar en `design-system/`). Si no existe, **para y pregunta**; no lo inventes (puedes proponer usar `ui-contract-builder`).
-2. **Reglas del proyecto:** lee `AGENTS.md` del proyecto (`AGENTS.nextjs.md` es su plantilla). Manda sobre los valores por defecto de abajo.
-3. **Stack:** `package.json` (React 18 o 19, `radix-ui`, `lucide-react`), alias `@/`, dónde está `components/`, si `tokens.css` está importado en `globals.css`.
-4. **Valores por defecto** si el proyecto no dice otra cosa: Next.js App Router, TypeScript estricto, CSS Modules, estados con atributos `data-*`, carpeta `src/components/<id>/`.
+1. **Contract:** `<system>/contracts/<Name>.contract.json` (the system is usually in `design-system/`). If it does not exist, **stop and ask**; do not invent it (you can suggest using `ui-contract-builder`).
+2. **Project rules:** read the project's `AGENTS.md` (`AGENTS.nextjs.md` is its template). It overrides the defaults below.
+3. **Stack:** `package.json` (React 18 or 19, `radix-ui`, `lucide-react`), `@/` alias, where `components/` is, whether `tokens.css` is imported in `globals.css`.
+4. **Defaults** if the project says nothing else: Next.js App Router, strict TypeScript, CSS Modules, states with `data-*` attributes, folder `src/components/<id>/`.
 
-## Reglas que no se negocian
+## Non-negotiable rules
 
-1. **Props exactamente como el contrato.** Nombre, tipo, default y obligatoriedad. No añadas ni quites. Props solo de código (`bindings.figma: null`) también se implementan.
-2. **Valores solo de `tokens.bindings`.** Variables CSS con la regla `colors.accent.accent.9` → `var(--colors-accent-accent-9)`. Ni hex, ni px sueltos (salvo los números del contrato: `layout`, anchos de borde), ni `style={{}}`.
-3. **Disabled nunca con opacity.** Opacity solo con los valores numéricos del contrato (hover/active).
-4. **Partes y ref:** cada clave de `anatomy` (salvo `element: "css"`) lleva `data-part="<clave>"`. El `ref` va en `semantics.refTarget`.
-5. **Estados:** los `native` con CSS (`:hover`, `:focus-visible`, `:active`); los `controlled` son props con su atributo ARIA/HTML.
-6. **`meta.needsReview` no se rellena con suposiciones.** Lo que afecte al código: pregunta, o impleméntalo marcado con `TODO(contract): <motivo>` y cuéntalo en el resumen.
-7. **Dependencias:** reutiliza los componentes que pida `composition.nestedComponents` o `slot.allowedComponents` y que ya existan. Si no existe alguno, **para y lista lo que falta**; no lo recrees dentro.
-8. **Contrato primero.** Si algo del contrato es imposible, contradictorio o está mal, no lo corrijas en el código: propón el cambio de contrato (con la versión que sube) y espera.
-9. **No toques el sistema de diseño** (`design-system/`), ni `tokens.css`. No instales librerías sin preguntar.
-10. **Comportamiento accesible complejo** (Checkbox, RadioGroup, Switch, AlertDialog…): primitivos de `radix-ui` + nuestros estilos con `data-*`. No reimplementes foco ni teclado.
+1. **Props exactly as in the contract.** Name, type, default and required-ness. Do not add or remove. Code-only props (`bindings.figma: null`) are implemented too.
+2. **Values only from `tokens.bindings`.** CSS variables with the rule `colors.accent.accent.9` → `var(--colors-accent-accent-9)`. No hex, no loose px (except the contract's numbers: `layout`, border widths), no `style={{}}`.
+3. **Disabled never with opacity.** Opacity only with the contract's numeric values (hover/active).
+4. **Parts and ref:** every `anatomy` key (except `element: "css"`) carries `data-part="<key>"`. The `ref` goes on `semantics.refTarget`.
+5. **States:** `native` ones with CSS (`:hover`, `:focus-visible`, `:active`); `controlled` ones are props with their ARIA/HTML attribute.
+6. **`meta.needsReview` is not filled with assumptions.** For what affects the code: ask, or implement it marked with `TODO(contract): <reason>` and mention it in the summary.
+7. **Dependencies:** reuse the components required by `composition.nestedComponents` or `slot.allowedComponents` that already exist. If one does not exist, **stop and list what is missing**; do not recreate it inside.
+8. **Contract first.** If something in the contract is impossible, contradictory or wrong, do not fix it in the code: propose the contract change (with the version that goes up) and wait.
+9. **Do not touch the design system** (`design-system/`), nor `tokens.css`. Do not install libraries without asking.
+10. **Complex accessible behavior** (Checkbox, RadioGroup, Switch, AlertDialog…): `radix-ui` primitives + our styles with `data-*`. Do not reimplement focus or keyboard.
 
-## Procedimiento
+## Procedure
 
-1. **Leer** el contrato entero, `docs/components.md` (vocabulario) y `meta.needsReview`. Apunta cuáles afectan al código.
-2. **Comprobar dependencias** (regla 7). Si faltan, parar.
-3. **Plan corto** (solo si lo piden, o si el componente tiene comportamiento complejo o Radix): props, partes→elementos, qué primitivo, qué `needsReview` te afecta, dudas. Espera el visto bueno.
-4. **Crear la carpeta** `src/components/<id>/` con:
-   - `<id>.contract.json`: copia exacta (`cp`), sin tocar.
-   - `<id>.module.css`: ver paso 5.
-   - `<id>.tsx`: empieza con `/** @contract <Nombre>@<versión> */`; `export function <Nombre>` y `export interface <Nombre>Props`; `"use client"` solo si hay estado, eventos propios o hooks. Mira `references/implementation-map.md` y `assets/example/icon-button/` (componente real que pasa el verificador).
-5. **CSS de tokens:**
-   - Si el contrato tiene `byVariant`, `bySize`, `byHighContrast` o `byState`: **genera** el bloque, no lo escribas a mano:
-     `node <skill>/scripts/gen-css.mjs <contrato> --ds <sistema> --write src/components/<id>/<id>.module.css`
-     Escribe entre `/* @generated:start */` y `/* @generated:end */`; lo demás del archivo es tuyo. Si el script avisa de «claves sin traducir», esas las escribes tú desde el contrato (ver implementation-map).
-   - Escribe a mano solo lo que el contrato no tiene como token: reinicio del elemento, tamaño del icono (`layout.iconSize`), foco, carga.
-6. **Verificar:** `node <skill>/scripts/conformance.mjs src/components/<id> --ds <sistema>`. Debe dar **0 errores**. Si falla, arregla el código (regla 8 si es el contrato). Repite.
-7. **Verificar el proyecto:** `tsc --noEmit` (o `npm run build`), `npm run lint`. Añade el componente al playground con todas sus variantes, tamaños y estados.
-8. **Paridad con Figma:** si lo piden, o si el componente es crítico, `references/parity.md`.
-9. **Resumen** (corto): archivos creados; reglas del contrato aplicadas; puntos de `needsReview` / `TODO(contract)` que quedan; resultado del verificador; cómo probarlo (ruta del playground).
+1. **Read** the whole contract, `docs/components.md` (vocabulary) and `meta.needsReview`. Note which items affect the code.
+2. **Check dependencies** (rule 7). If any are missing, stop.
+3. **Short plan** (only if asked, or if the component has complex behavior or Radix): props, parts→elements, which primitive, which `needsReview` items affect you, doubts. Wait for approval.
+4. **Create the folder** `src/components/<id>/` with:
+   - `<id>.contract.json`: exact copy (`cp`), untouched.
+   - `<id>.module.css`: see step 5.
+   - `<id>.tsx`: starts with `/** @contract <Name>@<version> */`; `export function <Name>` and `export interface <Name>Props`; `"use client"` only if there is state, own events or hooks. See `references/implementation-map.md` and `assets/example/icon-button/` (a real component that passes the verifier).
+5. **Token CSS:**
+   - If the contract has `byVariant`, `bySize`, `byHighContrast` or `byState`: **generate** the block, do not write it by hand:
+     `node <skill>/scripts/gen-css.mjs <contract> --ds <system> --write src/components/<id>/<id>.module.css`
+     It writes between `/* @generated:start */` and `/* @generated:end */`; the rest of the file is yours. If the script warns about "untranslated keys", write those yourself from the contract (see implementation-map).
+   - Write by hand only what the contract does not have as a token: element reset, icon size (`layout.iconSize`), focus, loading.
+6. **Verify:** `node <skill>/scripts/conformance.mjs src/components/<id> --ds <system>`. It must give **0 errors**. If it fails, fix the code (rule 8 if it is the contract). Repeat.
+7. **Verify the project:** `tsc --noEmit` (or `npm run build`), `npm run lint`. Add the component to the playground with all its variants, sizes and states.
+8. **Parity with Figma:** if asked, or if the component is critical, `references/parity.md`.
+9. **Summary** (short): files created; contract rules applied; `needsReview` / `TODO(contract)` items that remain; verifier result; how to try it (playground route).
 
-## Actualizar un componente cuando cambia el contrato
+## Updating a component when the contract changes
 
-1. Compara la versión de `@contract` del tsx con la del contrato.
-2. Vuelve a copiar el contrato, regenera el bloque con `gen-css`, ajusta el tsx (props nuevas, partes, estados), sube el comentario `@contract`.
-3. Ejecuta el verificador; cualquier error es una diferencia real entre código y contrato.
+1. Compare the tsx's `@contract` version with the contract's.
+2. Copy the contract again, regenerate the block with `gen-css`, adjust the tsx (new props, parts, states), bump the `@contract` comment.
+3. Run the verifier; any error is a real difference between code and contract.
 
-## Referencias
+## References
 
-- `references/implementation-map.md` — de cada bloque del contrato a su código (con patrones de tsx y CSS, Radix, React 18/19).
-- `references/parity.md` — qué significa «idéntico a Figma», cómo comprobarlo y qué queda fuera.
-- `assets/example/icon-button/` — IconButton completo: contrato, tsx, CSS con bloque generado.
-- `scripts/gen-css.mjs`, `scripts/conformance.mjs`, `scripts/lib.mjs` — Node 18+, sin dependencias.
+- `references/implementation-map.md` — from each contract block to its code (with tsx and CSS patterns, Radix, React 18/19).
+- `references/parity.md` — what "identical to Figma" means, how to check it and what is left out.
+- `assets/example/icon-button/` — complete IconButton: contract, tsx, CSS with generated block.
+- `scripts/gen-css.mjs`, `scripts/conformance.mjs`, `scripts/lib.mjs` — Node 18+, no dependencies.

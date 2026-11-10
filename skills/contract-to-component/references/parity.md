@@ -1,52 +1,52 @@
-# Paridad diseño ↔ código
+# Design ↔ code parity
 
-«Exactamente iguales» tiene tres niveles. Los dos primeros se comprueban con script; el tercero se revisa.
+"Exactly the same" has three levels. The first two are checked by script; the third is reviewed.
 
-## Nivel 1 — Contrato ↔ código (automático)
+## Level 1 — Contract ↔ code (automatic)
 
-`scripts/conformance.mjs`. Garantiza que el código dice lo mismo que el contrato: props, partes, estados, atributos ARIA, tokens permitidos, ausencia de valores sueltos y de opacity en disabled, copia idéntica del contrato. Se ejecuta siempre.
+`scripts/conformance.mjs`. Guarantees that the code says the same as the contract: props, parts, states, ARIA attributes, allowed tokens, absence of loose values and of opacity on disabled, identical copy of the contract. Always run.
 
-## Nivel 2 — Tokens ↔ valores finales (automático, opcional)
+## Level 2 — Tokens ↔ final values (automatic, optional)
 
-El contrato fija *qué token va en cada sitio*; `tokens.css` fija su valor. Si ambos son los de Figma, los valores coinciden. Para comprobarlo en el navegador, con el playground abierto:
+The contract fixes *which token goes where*; `tokens.css` fixes its value. If both are Figma's, the values match. To check it in the browser, with the playground open:
 
-1. Para cada combinación (variante × color × tamaño × estado) lee `getComputedStyle` del elemento (`background-color`, `color`, `border-color`, `box-shadow`, `height`, `border-radius`).
-2. Compara con el valor que resulta de resolver el token del contrato en `tokens.css` (modo claro y oscuro).
-3. Las diferencias son bugs de CSS (especificidad, orden, propiedad equivocada).
+1. For each combination (variant × color × size × state) read the element's `getComputedStyle` (`background-color`, `color`, `border-color`, `box-shadow`, `height`, `border-radius`).
+2. Compare with the value resulting from resolving the contract's token in `tokens.css` (light and dark mode).
+3. Differences are CSS bugs (specificity, order, wrong property).
 
-No hay script para esto todavía. Se puede hacer con Playwright; pídelo si lo quieres como `scripts/computed-audit.mjs`.
+There is no script for this yet. It can be done with Playwright; ask for it if you want it as `scripts/computed-audit.mjs`.
 
-## Nivel 3 — Render ↔ Figma (revisión visual)
+## Level 3 — Render ↔ Figma (visual review)
 
-Qué puede diferir aunque el contrato se cumpla, y qué hacer:
+What can differ even if the contract is met, and what to do:
 
-| Diferencia posible | Por qué | Qué hacer |
+| Possible difference | Why | What to do |
 | --- | --- | --- |
-| Fuente (SF Pro en Figma, otra en el navegador) | Figma usa la fuente del archivo; el código, `typography.font-family` | Instala la misma fuente o acepta la diferencia y anótala |
-| Anillo de foco | La geometría está en `needsReview` | Comparar con Figma y fijar en el contrato |
-| Degradados de `classic` | Capas sin variable en Figma | Ver `needsReview`; no se pueden generar desde tokens |
-| Opacity de hover/active | Fija en Figma, valores del contrato | Igual; revisar que se aplican |
-| Spinner | Sin contrato propio | Usar el componente real cuando exista |
-| Anti-aliasing, subpíxeles | Motor de render | Tolerancia de 1 px |
+| Font (SF Pro in Figma, another in the browser) | Figma uses the file's font; code uses `typography.font-family` | Install the same font or accept the difference and note it |
+| Focus ring | The geometry is in `needsReview` | Compare with Figma and fix it in the contract |
+| `classic` gradients | Layers without a variable in Figma | See `needsReview`; they cannot be generated from tokens |
+| Hover/active opacity | Fixed in Figma, contract values | Same; check they are applied |
+| Spinner | No contract of its own | Use the real component when it exists |
+| Anti-aliasing, subpixels | Render engine | 1 px tolerance |
 
-**Procedimiento:**
+**Procedure:**
 
-1. En Figma, `get_screenshot` del nodo `anchors.figma.node` (o de variantes concretas).
-2. En el navegador, captura el playground del mismo componente, mismo estado y tamaño.
-3. Compara por pares: mismo tamaño en px, mismos colores, mismo radio, mismo peso de texto.
-4. Cada diferencia real: ¿es del código (corrígelo), del contrato (cámbialo primero) o de Figma (anótalo en `meta.needsReview`)?
+1. In Figma, `get_screenshot` of the node `anchors.figma.node` (or of specific variants).
+2. In the browser, capture the playground of the same component, same state and size.
+3. Compare in pairs: same size in px, same colors, same radius, same text weight.
+4. Each real difference: is it the code's (fix it), the contract's (change it first) or Figma's (note it in `meta.needsReview`)?
 
-## Cuándo hacer qué
+## When to do what
 
-| Situación | Nivel |
+| Situation | Level |
 | --- | --- |
-| Siempre | 1 |
-| Componente con muchas variantes (Button, IconButton, Link) o antes de publicar el sistema | 1 y 2 |
-| Componente crítico, nuevo en producción o tras cambiar tokens | 1, 2 y 3 |
+| Always | 1 |
+| Component with many variants (Button, IconButton, Link) or before publishing the system | 1 and 2 |
+| Critical component, new in production or after changing tokens | 1, 2 and 3 |
 
-## Para que la paridad se mantenga
+## To keep parity over time
 
-- El contrato es el único sitio donde se cambia la intención: **contrato primero**, versión nueva, luego código.
-- La copia del contrato junto al componente y el comentario `@contract` permiten detectar código atrasado: el verificador falla si no coinciden con el original.
-- Ejecuta el verificador en CI para todos los componentes:
+- The contract is the only place where intent changes: **contract first**, new version, then code.
+- The contract copy next to the component and the `@contract` comment make it possible to detect outdated code: the verifier fails if they do not match the original.
+- Run the verifier in CI for all components:
   `for d in src/components/*/; do node design-system/skills/contract-to-component/scripts/conformance.mjs "$d" --ds design-system || exit 1; done`

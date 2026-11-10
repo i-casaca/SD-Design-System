@@ -1,11 +1,11 @@
-// Utilidades comunes de gen-css.mjs y conformance.mjs. Sin dependencias.
+// Shared utilities for gen-css.mjs and conformance.mjs. No dependencies.
 import fs from 'node:fs';
 import path from 'node:path';
 
 export const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 export const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
 
-// Raíz del sistema de diseño: la dada, o la primera carpeta con contracts/ subiendo desde cwd (también design-system/)
+// Design system root: the given one, or the first folder with contracts/ going up from cwd (also design-system/)
 export function findRoot(arg) {
   if (arg) return path.resolve(arg);
   let dir = process.cwd();
@@ -17,7 +17,7 @@ export function findRoot(arg) {
   }
 }
 
-// Nombres de token existentes ("colors.accent.accent.9") a partir de tokens/tokens.json
+// Existing token names ("colors.accent.accent.9") from tokens/tokens.json
 export function loadTokenNames(root) {
   const names = new Set();
   const dir = path.join(root, 'tokens');
@@ -31,7 +31,7 @@ export function loadTokenNames(root) {
 export const toVarName = (token) => '--' + token.split('.').join('-');
 export const toVar = (token) => `var(${toVarName(token)})`;
 
-// Enums por prop: { variant: ['classic', ...], size: ['1', ...] } y props booleanas
+// Enums per prop: { variant: ['classic', ...], size: ['1', ...] } and boolean props
 export function propInfo(contract) {
   const enums = {}; const bools = new Set();
   for (const p of contract.props ?? []) {
@@ -42,25 +42,25 @@ export function propInfo(contract) {
   return { enums, bools };
 }
 
-// Placeholders de una cadena: [{ph:'{color.step}', prop:'color', key:'step'}]
+// Placeholders in a string: [{ph:'{color.step}', prop:'color', key:'step'}]
 export const placeholders = (s) => [...String(s).matchAll(/\{(\w+)(?:\.(\w+))?\}/g)].map((m) => ({ ph: m[0], prop: m[1], key: m[2] }));
 
-// Resuelve una cadena con una combinación { color:'accent', size:'2' }. Devuelve null si una escala dice null.
+// Resolves a string with a combination { color:'accent', size:'2' }. Returns null if a scale says null.
 export function resolve(s, combo, scales) {
   let out = s;
   for (const { ph, prop, key } of placeholders(s)) {
     const v = combo[prop];
-    if (v === undefined) throw new Error(`falta valor de «${prop}» para ${s}`);
+    if (v === undefined) throw new Error(`missing value for "${prop}" for ${s}`);
     if (!key) { out = out.replace(ph, v); continue; }
     const sc = scales?.[v]?.[key];
-    if (sc === undefined) throw new Error(`tokens.scales.${v}.${key} no existe (${s})`);
+    if (sc === undefined) throw new Error(`tokens.scales.${v}.${key} does not exist (${s})`);
     if (sc === null) return null;
     out = out.replace(ph, sc);
   }
   return out;
 }
 
-// Todos los tokens que el contrato permite usar en CSS (strings de tokens.bindings, expandidos)
+// All tokens the contract allows in CSS (tokens.bindings strings, expanded)
 export function boundTokens(contract) {
   const { enums } = propInfo(contract);
   const scales = contract.tokens?.scales ?? {};
@@ -76,7 +76,7 @@ export function boundTokens(contract) {
   return set;
 }
 
-// Números sueltos permitidos (px) y opacity del contrato
+// Loose numbers allowed (px) and opacity from the contract
 export function numericValues(contract) {
   const px = new Set([0]); const opacity = new Set();
   const walk = (o, key = '') => {

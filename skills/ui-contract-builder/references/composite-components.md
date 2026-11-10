@@ -1,38 +1,38 @@
-# Componentes compuestos (Navbar, Tabs, Table, Menu…)
+# Composite components (Navbar, Tabs, Table, Menu…)
 
-Un componente compuesto se hace con otros componentes del sistema. Regla: **un contrato por componente que se use por su cuenta**; las piezas internas que solo existen dentro de él se describen en su contrato.
+A composite component is built from other components in the system. Rule: **one contract per component that is used on its own**; internal pieces that exist only inside it are described in its contract.
 
-## Cuándo es un contrato y cuándo varios
+## When it is one contract and when several
 
-| Situación | Qué hacer |
+| Situation | What to do |
 | --- | --- |
-| La pieza se usa también fuera (Button, IconButton, Link) | Contrato propio. El compuesto la cita en `composition.nestedComponents` o `slot.allowedComponents` |
-| La pieza solo existe dentro (NavbarItem, TabsTrigger) | Parte en `anatomy` del compuesto; si tiene props propias, `composition.codeParts` |
-| Varias piezas con API compuesta en código (Root, List, Item…) | Un solo contrato; `composition.codeParts` describe cada parte |
+| The piece is also used outside (Button, IconButton, Link) | Its own contract. The composite cites it in `composition.nestedComponents` or `slot.allowedComponents` |
+| The piece exists only inside (NavbarItem, TabsTrigger) | Part in the composite's `anatomy`; if it has its own props, `composition.codeParts` |
+| Several pieces with a compound API in code (Root, List, Item…) | A single contract; `composition.codeParts` describes each part |
 
-## Pasos
+## Steps
 
-1. **Inventario de dependencias.** Lista los componentes que necesita y comprueba cuáles tienen contrato (`contracts/`). Para los que faltan, avisa antes de seguir: propón crearlos primero o dejarlos como `slot.allowedComponents` abierto.
-2. **Slots.** Cada zona libre es un slot en `anatomy.<zona>.slot` con `allowedComponents`, `minItems`, `maxItems`, `mandatory`. Ejemplo (Navbar): `brand` (1, obligatorio), `nav` (1–7 Link), `actions` (0–3 Button/IconButton).
-3. **Reglas de composición.** `composition.allowedChildren` / `forbiddenChildren`: qué cabe y qué nunca (p. ej. un Navbar no contiene otro Navbar; el slot `actions` no admite más de un Button con variante solid/classic).
-4. **Responsive.** En `behavior.responsive`: lista de `{ breakpoint, change }`. Cada cambio debe ser concreto: «por debajo de 768 px `nav` pasa a un menú desplegable abierto por un IconButton con aria-label “Abrir menú”». Los breakpoints deben existir como token si el sistema los define; si no, valor suelto + `needsReview`.
-5. **Estados propios.** Abierto/cerrado, seleccionado, activo. Los que persisten son `states.controlled` con su `aria` (`aria-expanded`, `aria-current="page"`).
-6. **Teclado y foco.** Un compuesto casi siempre necesita `a11y.keyboard` extenso (flechas, Escape, Tab) y orden de foco. No lo dejes en blanco.
-7. **Semántica.** `semantics.element` del contenedor (`nav`, `ul`…) y `a11y.name` (landmark con `aria-label`).
-8. **Tokens.** Solo los propios del contenedor (fondo, borde, espacios, alturas). Los de las piezas internas ya están en sus contratos: no los dupliques.
-9. **Layout.** Alto, anchos máximos, auto layout del contenedor, y cómo se reparte el espacio entre slots (`gap` por tamaño).
-10. **Dependencias en doble sentido.** Añade el compuesto a `guidance.related` de las piezas (relación `contained-by`) y las piezas al suyo (`contains`).
+1. **Dependency inventory.** List the components it needs and check which have a contract (`contracts/`). For the ones that are missing, warn before continuing: propose creating them first or leaving them as an open `slot.allowedComponents`.
+2. **Slots.** Each free zone is a slot in `anatomy.<zone>.slot` with `allowedComponents`, `minItems`, `maxItems`, `mandatory`. Example (Navbar): `brand` (1, mandatory), `nav` (1–7 Link), `actions` (0–3 Button/IconButton).
+3. **Composition rules.** `composition.allowedChildren` / `forbiddenChildren`: what fits and what never does (e.g. a Navbar does not contain another Navbar; the `actions` slot does not admit more than one Button with solid/classic variant).
+4. **Responsive.** In `behavior.responsive`: list of `{ breakpoint, change }`. Each change must be concrete: "below 768 px `nav` becomes a dropdown menu opened by an IconButton with aria-label “Open menu”". Breakpoints must exist as a token if the system defines them; otherwise, loose value + `needsReview`.
+5. **Own states.** Open/closed, selected, active. Those that persist are `states.controlled` with their `aria` (`aria-expanded`, `aria-current="page"`).
+6. **Keyboard and focus.** A composite almost always needs extensive `a11y.keyboard` (arrows, Escape, Tab) and focus order. Do not leave it blank.
+7. **Semantics.** `semantics.element` of the container (`nav`, `ul`…) and `a11y.name` (landmark with `aria-label`).
+8. **Tokens.** Only the container's own (background, border, spacing, heights). The internal pieces' tokens are already in their contracts: do not duplicate them.
+9. **Layout.** Height, maximum widths, the container's auto layout, and how space is distributed between slots (`gap` per size).
+10. **Two-way dependencies.** Add the composite to the pieces' `guidance.related` (relation `contained-by`) and the pieces to its own (`contains`).
 
-## Ejemplo de esqueleto (Navbar)
+## Skeleton example (Navbar)
 
 ```json
 "anatomy": {
-  "root":    { "element": "header", "description": "Contenedor de la barra." },
+  "root":    { "element": "header", "description": "Bar container." },
   "brand":   { "element": "slot", "slot": { "key": "brand", "allowedComponents": ["Link"], "minItems": 1, "maxItems": 1, "mandatory": true } },
   "nav":     { "element": "slot", "slot": { "key": "nav", "allowedComponents": ["Link"], "minItems": 1, "maxItems": 7, "mandatory": true } },
   "actions": { "element": "slot", "optional": true, "slot": { "key": "actions", "allowedComponents": ["Button", "IconButton"], "minItems": 0, "maxItems": 3, "mandatory": false } },
-  "menuToggle": { "element": "slot", "description": "Solo en móvil.", "slot": { "key": "menuToggle", "allowedComponents": ["IconButton"], "minItems": 1, "maxItems": 1, "mandatory": false } }
+  "menuToggle": { "element": "slot", "description": "Mobile only.", "slot": { "key": "menuToggle", "allowedComponents": ["IconButton"], "minItems": 1, "maxItems": 1, "mandatory": false } }
 }
 ```
 
-Es un esqueleto de forma, no un diseño: cada decisión (cuántos enlaces, qué colapsa) viene de la mini-spec.
+It is a shape skeleton, not a design: each decision (how many links, what collapses) comes from the mini-spec.

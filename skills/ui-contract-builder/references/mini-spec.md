@@ -1,63 +1,63 @@
-# Mini-spec de componente
+# Component mini-spec
 
-Se usa en el modo B (componente nuevo). Rellénala la persona; Claude no decide por ella. Todo lo que falte va a «Decisiones abiertas».
+Used in mode B (new component). The user fills it in; Claude does not decide for them. Anything missing goes to "Open decisions".
 
 ```markdown
-# Mini-spec: <NombreComponente>
+# Mini-spec: <ComponentName>
 
-## 1. Propósito
-Una frase: qué problema resuelve y para quién.
+## 1. Purpose
+One sentence: what problem it solves and for whom.
 
-## 2. Cuándo usarlo / cuándo no
-- Úsalo cuando:
-- No lo uses cuando (y qué usar en su lugar):
+## 2. When to use it / when not to
+- Use it when:
+- Don't use it when (and what to use instead):
 
-## 3. Contenido
-- Obligatorio:
-- Opcional:
-- Componentes del sistema que reutiliza:
+## 3. Content
+- Required:
+- Optional:
+- System components it reuses:
 
-## 4. Variantes y tamaños
-Qué cambia visualmente y por qué. Solo lo necesario.
+## 4. Variants and sizes
+What changes visually and why. Only what is necessary.
 
-## 5. Estados
-Hover, foco, activo, deshabilitado, cargando, seleccionado, vacío, error… Marca cuáles aplican.
+## 5. States
+Hover, focus, active, disabled, loading, selected, empty, error… Mark which ones apply.
 
-## 6. Comportamiento
-- Interacción principal:
-- Teclado:
-- Animación o transición (si hay):
+## 6. Behavior
+- Main interaction:
+- Keyboard:
+- Animation or transition (if any):
 
 ## 7. Responsive
-Qué cambia, a qué ancho y cómo (colapsa, apila, oculta, scroll).
+What changes, at what width and how (collapses, stacks, hides, scrolls).
 
-## 8. Accesibilidad
-- Elemento/rol semántico:
-- Nombre accesible:
-- Orden de tabulación:
+## 8. Accessibility
+- Semantic element/role:
+- Accessible name:
+- Tab order:
 
-## 9. Contenido y textos
-Límites de longitud, tono, textos largos.
+## 9. Content and copy
+Length limits, tone, long texts.
 
-## 10. Decisiones abiertas
-Lo que aún no sabes.
+## 10. Open decisions
+What you do not know yet.
 ```
 
-## Cómo se convierte en contrato
+## How it becomes a contract
 
-| Sección | Bloque del contrato |
+| Section | Contract block |
 | --- | --- |
-| 1 Propósito | `description` |
-| 2 Cuándo usar | `guidance.dos`, `guidance.donts`, `guidance.related` |
-| 3 Contenido | `anatomy`, `composition`, `props` (slots y children) |
-| 4 Variantes y tamaños | `props` (`variant`, `size`…), `tokens.bindings.byVariant/bySize` |
-| 5 Estados | `states.native` / `states.controlled` |
-| 6 Comportamiento | `events`, `behavior`, `a11y.keyboard` |
+| 1 Purpose | `description` |
+| 2 When to use | `guidance.dos`, `guidance.donts`, `guidance.related` |
+| 3 Content | `anatomy`, `composition`, `props` (slots and children) |
+| 4 Variants and sizes | `props` (`variant`, `size`…), `tokens.bindings.byVariant/bySize` |
+| 5 States | `states.native` / `states.controlled` |
+| 6 Behavior | `events`, `behavior`, `a11y.keyboard` |
 | 7 Responsive | `behavior.responsive` |
-| 8 Accesibilidad | `semantics`, `a11y` |
-| 9 Textos | `content` |
-| 10 Abiertas | `meta.needsReview` (como preguntas, no como decisiones) |
+| 8 Accessibility | `semantics`, `a11y` |
+| 9 Copy | `content` |
+| 10 Open | `meta.needsReview` (as questions, not as decisions) |
 
-Los tokens de un componente nuevo no salen de la spec: o los eliges de los existentes (`tokens/`) con la persona, o los dejas como `needsReview` hasta que exista el diseño.
+The tokens of a new component do not come from the spec: either you choose them from the existing ones (`tokens/`) with the user, or you leave them as `needsReview` until the design exists.
 
-Si faltan 1, 3, 7 o la acción principal, pide esas respuestas antes de escribir el contrato.
+If 1, 3, 7 or the main action are missing, ask for those answers before writing the contract.

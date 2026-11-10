@@ -31,7 +31,7 @@ export function IconButton({
   ref,
   ...rest
 }: IconButtonProps) {
-  const blocked = disabled || loading; // en Figma loading solo existe con state=disable (ver meta.needsReview)
+  const blocked = disabled || loading; // in Figma, loading only exists with state=disable (see meta.needsReview)
   return (
     <button
       {...rest}
@@ -50,7 +50,7 @@ export function IconButton({
       onClick={blocked ? undefined : onPress}
     >
       {loading ? (
-        // TODO(contract): el spinner no tiene contrato propio; este es un marcador sencillo
+        // TODO(contract): the spinner has no contract of its own; this is a simple placeholder
         <span data-part="spinner" className={styles.spinner} aria-hidden="true" />
       ) : (
         <span data-part="icon" className={styles.icon} aria-hidden="true">

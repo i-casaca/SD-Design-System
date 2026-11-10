@@ -1,12 +1,12 @@
-// ESCRIBE en Figma. Dibuja la lámina «_specs»: cotas del componente (padding en verde, espacio entre partes
-// en naranja, ancho y alto en azul con etiqueta). Es una imagen; los datos van como tabla en la Spec.
-// Las medidas se leen de la instancia (auto layout); una medida con variable enlazada lleva su nombre,
-// la que no, lleva «sin token». Ejecutar tras confirmar archivo y página. Edita solo los parámetros.
-const COMPONENT_ID = 'PON_AQUI_EL_ID';
-const COMPONENT_NAME = 'PON_AQUI_EL_NOMBRE';
+// WRITES to Figma. Draws the "_specs" sheet: component measurements (padding in green, space between parts
+// in orange, width and height in blue with a label). It is an image; the data goes as a table in the Spec.
+// Measurements are read from the instance (auto layout); a measurement with a bound variable shows its name,
+// one without shows "no token". Run after confirming file and page. Edit only the parameters.
+const COMPONENT_ID = 'PUT_ID_HERE';
+const COMPONENT_NAME = 'PUT_NAME_HERE';
 const HELPERS_PAGE = 'Helpers';
 const SECTION_NAME = 'Building blocks · ' + COMPONENT_NAME;
-const SHOTS = [{ label: 'default', props: {} }];   // una cota por cada caso que quieras mostrar
+const SHOTS = [{ label: 'default', props: {} }];   // one measurement sheet per case you want to show
 
 const C = { bg: [27, 27, 27], surface: [250, 250, 250], pad: [22, 122, 0], gap: [200, 71, 10], dim: [26, 112, 224], dimText: [111, 168, 255], grey: [172, 172, 172] };
 const rgb = (a) => ({ r: a[0] / 255, g: a[1] / 255, b: a[2] / 255 });
@@ -19,7 +19,7 @@ const bound = async (n, field) => { const b = n.boundVariables && n.boundVariabl
 const size = (n, axis) => { const m = axis === 'h' ? n.layoutSizingHorizontal : n.layoutSizingVertical; return m === 'FILL' ? 'fill' : m === 'HUG' ? 'hug' : null; };
 
 const page = figma.root.children.find((p) => p.name.includes(HELPERS_PAGE));
-if (!page) return 'Falta la página ' + HELPERS_PAGE;
+if (!page) return 'Missing page ' + HELPERS_PAGE;
 await page.loadAsync(); await figma.setCurrentPageAsync(page);
 let section = page.children.find((n) => n.type === 'SECTION' && n.name === SECTION_NAME);
 if (!section) { section = figma.createSection(); section.name = SECTION_NAME; page.appendChild(section); section.x = 0; section.y = 0; }
@@ -45,12 +45,12 @@ for (const shot of SHOTS) {
   frame.insertChild(frame.children.indexOf(inst), surf);
   inst.x = surf.x + 40; inst.y = surf.y + 40;
   const pads = { top: inst.paddingTop || 0, right: inst.paddingRight || 0, bottom: inst.paddingBottom || 0, left: inst.paddingLeft || 0 };
-  // padding (verde, translúcido sobre el componente)
+  // padding (green, translucent over the component)
   if (pads.left) rect(frame, inst.x, inst.y, pads.left, h, C.pad, 0.45, 'pad-left');
   if (pads.right) rect(frame, inst.x + w - pads.right, inst.y, pads.right, h, C.pad, 0.45, 'pad-right');
   if (pads.top) rect(frame, inst.x + pads.left, inst.y, w - pads.left - pads.right, pads.top, C.pad, 0.45, 'pad-top');
   if (pads.bottom) rect(frame, inst.x + pads.left, inst.y + h - pads.bottom, w - pads.left - pads.right, pads.bottom, C.pad, 0.45, 'pad-bottom');
-  // espacio entre partes visibles (naranja)
+  // space between visible parts (orange)
   if (inst.layoutMode !== 'NONE' && inst.itemSpacing) {
     const kids = inst.children.filter((k) => k.visible && k.layoutPositioning !== 'ABSOLUTE');
     for (let k = 0; k < kids.length - 1; k++) {
@@ -59,13 +59,13 @@ for (const shot of SHOTS) {
       else rect(frame, inst.x + a.x, inst.y + a.y + a.height, a.width, b.y - a.y - a.height, C.gap, 0.55, 'gap-' + (k + 1));
     }
   }
-  // cotas de alto (derecha) y ancho (abajo)
+  // height (right) and width (bottom) dimensions
   const hTok = await bound(inst, 'height'), wTok = await bound(inst, 'width');
   const hx = inst.x + w + 28, wy = inst.y + h + 28;
   rect(frame, hx, inst.y, 2, h, C.dim, 1, 'dim-h'); rect(frame, hx - 8, inst.y - 1, 18, 2, C.dim); rect(frame, hx - 8, inst.y + h - 1, 18, 2, C.dim);
-  chip(frame, 'height: ' + (size(inst, 'v') || Math.round(h)) + (hTok ? ' · ' + hTok : ' · sin token'), hx + 16, inst.y + h / 2 - 12);
+  chip(frame, 'height: ' + (size(inst, 'v') || Math.round(h)) + (hTok ? ' · ' + hTok : ' · no token'), hx + 16, inst.y + h / 2 - 12);
   rect(frame, inst.x, wy, w, 2, C.dim, 1, 'dim-w'); rect(frame, inst.x - 1, wy - 8, 2, 18, C.dim); rect(frame, inst.x + w - 1, wy - 8, 2, 18, C.dim);
-  chip(frame, 'width: ' + (size(inst, 'h') || Math.round(w)) + (wTok ? ' · ' + wTok : ' · sin token'), inst.x + w / 2 - 60, wy + 16);
+  chip(frame, 'width: ' + (size(inst, 'h') || Math.round(w)) + (wTok ? ' · ' + wTok : ' · no token'), inst.x + w / 2 - 60, wy + 16);
   text(shot.label, 13, 'Regular', C.grey, frame, ox + 64, CH + LEG - 30);
 }
 return JSON.stringify({ frame: frame.id, section: section.id });
