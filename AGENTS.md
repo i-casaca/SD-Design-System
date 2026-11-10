@@ -1,33 +1,33 @@
 # AGENTS.md
 
-Reglas para cualquier agente de IA que trabaje con este sistema de diseño.
+Rules for any AI agent working with this design system.
 
-## Antes de crear o modificar un componente
+## Before creating or modifying a component
 
-1. Lee `contracts/<Componente>.contract.json`. Si no existe, **no lo inventes**: pídelo o créalo desde `contracts/_template.contract.json` y espera confirmación.
-2. Lee los tokens en `tokens/` (la fuente es `tokens/tokens.json`; en código, las variables CSS de `tokens/tokens.css`, que se genera desde ella).
-3. Consulta `docs/components.md` para el vocabulario de props y los componentes relacionados.
+1. Read `contracts/<Component>.contract.json`. If it does not exist, **do not invent it**: ask for it, or create it from `contracts/_template.contract.json` and wait for confirmation.
+2. Read the tokens in `tokens/` (the source is `tokens/tokens.json`; in code, the CSS variables in `tokens/tokens.css`, which is generated from it).
+3. Check `docs/components.md` for the props vocabulary and related components.
 
-## Reglas
+## Rules
 
-- **`description` y `guidance.donts`:** si la petición cae en un don't, avisa y propone el componente de `useInstead`.
-- **Props:** nombres, tipos y valores por defecto exactamente como en `props`. No añadas props que no estén.
-- **Estados:** los `states.native` se resuelven con CSS (`:hover`, `:focus-visible`, `:active`). Los `states.controlled` son props y llevan el atributo `aria` indicado.
-- **Anatomía:** cada clave de `anatomy` es una parte; ponle `data-part="<clave>"`. El `ref` va en `semantics.refTarget`.
-- **Slots:** respeta `slot.allowedComponents`, `minItems`, `maxItems` y `mandatory`. Un slot es una prop o `children`, según el contrato.
-- **Composición:** nunca pongas dentro lo que esté en `composition.forbiddenChildren`.
-- **Tokens:** usa solo lo definido en `tokens.bindings`, y solo categorías de `tokens.policy.allowed`. Nada de `tokens.policy.forbidden`, ni colores hex, ni px sueltos.
-- **Modos:** nunca escribas valores distintos para dark; usa la variable CSS y el modo cambia solo (`[data-theme="dark"]`).
-- **Tokens generados:** no edites `tokens.css`; cambia el JSON y ejecuta `npm run tokens:build`.
-- **Disabled:** con los tokens `*.disabled`. Nunca con `opacity`.
-- **Accesibilidad:** cumple `a11y` (nombre, teclado, foco visible, área mínima, contraste).
-- **Si algo no está en el contrato:** pregunta. No rellenes huecos con suposiciones.
+- **`description` and `guidance.donts`:** if the request falls under a don't, warn and suggest the `useInstead` component.
+- **Props:** names, types and default values exactly as in `props`. Do not add props that are not there.
+- **States:** `states.native` are resolved with CSS (`:hover`, `:focus-visible`, `:active`). `states.controlled` are props and carry the indicated `aria` attribute.
+- **Anatomy:** each key in `anatomy` is a part; give it `data-part="<key>"`. The `ref` goes on `semantics.refTarget`.
+- **Slots:** respect `slot.allowedComponents`, `minItems`, `maxItems` and `mandatory`. A slot is a prop or `children`, depending on the contract.
+- **Composition:** never put inside anything listed in `composition.forbiddenChildren`.
+- **Tokens:** use only what is defined in `tokens.bindings`, and only categories from `tokens.policy.allowed`. Nothing from `tokens.policy.forbidden`, and no hex colors or loose px values.
+- **Modes:** never write different values for dark; use the CSS variable and the mode changes on its own (`[data-theme="dark"]`).
+- **Generated tokens:** do not edit `tokens.css`; change the JSON and run `npm run tokens:build`.
+- **Disabled:** with the `*.disabled` tokens. Never with `opacity`.
+- **Accessibility:** comply with `a11y` (name, keyboard, visible focus, minimum target size, contrast).
+- **If something is not in the contract:** ask. Do not fill gaps with assumptions.
 
-## Al terminar
+## When finished
 
-1. Ejecuta `node check.mjs` si has tocado contratos o tokens.
-2. Responde con una lista corta: qué reglas del contrato has aplicado y qué has dejado fuera o dudado.
+1. Run `node check.mjs` if you touched contracts or tokens.
+2. Reply with a short list: which contract rules you applied and what you left out or were unsure about.
 
-## Cambios
+## Changes
 
-Si el componente tiene que cambiar, se cambia **primero el contrato** (y su `version`), después el código.
+If the component has to change, change the **contract first** (and its `version`), then the code.

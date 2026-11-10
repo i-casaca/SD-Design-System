@@ -1,178 +1,178 @@
-# Prompts para trabajar en Next.js
+# Prompts for working in Next.js
 
-Plantillas para pedirle al agente (Claude Code) que construya componentes y páginas desde los contratos. Sustituye lo que va entre `<…>`.
+Templates for asking the agent (Claude Code) to build components and pages from the contracts. Replace what is between `<…>`.
 
-Reglas generales:
-- **Una tarea por sesión** (un componente, una página). Sesiones cortas rinden más.
-- **Plan primero, código después** para componentes nuevos: pide el plan, léelo, y entonces di «adelante».
-- **Rutas explícitas**: nombra siempre el contrato y la carpeta.
-- **Un componente por commit.**
+General rules:
+- **One task per session** (one component, one page). Short sessions perform better.
+- **Plan first, code later** for new components: ask for the plan, read it, and then say "go ahead".
+- **Explicit paths**: always name the contract and the folder.
+- **One component per commit.**
 
 ---
 
-## 0. Preparar el proyecto (una vez)
+## 0. Prepare the project (once)
 
 ```
-Lee AGENTS.md. Prepara el proyecto Next.js para usar el sistema de diseño de design-system/:
+Read AGENTS.md. Prepare the Next.js project to use the design system in design-system/:
 
-1. En src/app/globals.css importa design-system/tokens/tokens.css al principio.
-2. En src/app/layout.tsx añade data-theme="light" al <html>.
-3. Añade a package.json los scripts:
+1. In src/app/globals.css, import design-system/tokens/tokens.css at the top.
+2. In src/app/layout.tsx, add data-theme="light" to the <html>.
+3. Add these scripts to package.json:
    "ds:check": "node design-system/check.mjs"
    "ds:tokens": "node design-system/scripts/build-tokens.mjs"
-4. Crea src/components/ y src/app/playground/page.tsx (una página vacía con el título «Playground»).
-5. Comprueba que `npm run dev` arranca y que `npm run ds:check` pasa.
+4. Create src/components/ and src/app/playground/page.tsx (an empty page with the title "Playground").
+5. Check that `npm run dev` starts and that `npm run ds:check` passes.
 
-No crees ningún componente todavía. Resume lo que has cambiado.
+Do not create any component yet. Summarize what you changed.
 ```
 
-## 1. Crear un componente (con plan previo)
+## 1. Create a component (with a prior plan)
 
-**Paso A: plan**
-
-```
-Lee AGENTS.md y design-system/contracts/<Componente>.contract.json.
-Todavía no escribas código. Dame un plan en esta forma:
-
-- Props del componente (tabla: nombre, tipo, default).
-- Partes de la anatomía y qué elemento HTML usa cada una.
-- Cómo implementarás el comportamiento (¿primitivo de Radix o código propio?, ¿necesita "use client"?).
-- Qué tokens usarás y cómo se convierten en variables CSS.
-- Qué parte de meta.needsReview te afecta y qué harás con ella.
-- Dudas o decisiones que necesites de mí.
-```
-
-**Paso B: construir**
+**Step A: plan**
 
 ```
-Adelante con el plan, con estos ajustes: <ajustes o «ninguno»>.
+Read AGENTS.md and design-system/contracts/<Component>.contract.json.
+Do not write code yet. Give me a plan in this form:
 
-1. Crea src/components/<nombre>/ con <nombre>.tsx y <nombre>.module.css.
-2. Copia el contrato a src/components/<nombre>/<nombre>.contract.json (sin modificarlo).
-3. Añade el componente al playground con todas sus variantes, tamaños y estados.
-4. Ejecuta `npm run build` y `npm run lint`. Corrige lo que falle.
-
-Termina con el resumen de AGENTS.md.
+- Component props (table: name, type, default).
+- Anatomy parts and which HTML element each one uses.
+- How you will implement the behavior (Radix primitive or custom code? does it need "use client"?).
+- Which tokens you will use and how they become CSS variables.
+- Which part of meta.needsReview affects you and what you will do about it.
+- Doubts or decisions you need from me.
 ```
 
-## 1b. Crear un componente con la skill
+**Step B: build**
 
 ```
-Con contract-to-component, crea el componente <Componente> desde design-system/contracts/<Componente>.contract.json.
-Sigue AGENTS.md. Si faltan dependencias o hay puntos de meta.needsReview que afecten al código, pregúntame antes.
-Termina con el resultado del verificador y el resumen de AGENTS.md.
+Go ahead with the plan, with these adjustments: <adjustments or "none">.
+
+1. Create src/components/<name>/ with <name>.tsx and <name>.module.css.
+2. Copy the contract to src/components/<name>/<name>.contract.json (without modifying it).
+3. Add the component to the playground with all its variants, sizes and states.
+4. Run `npm run build` and `npm run lint`. Fix whatever fails.
+
+Finish with the summary from AGENTS.md.
 ```
 
-## 2. Revisar un componente contra su contrato (solo lectura)
+## 1b. Create a component with the skill
 
 ```
-Revisa src/components/<nombre>/ contra design-system/contracts/<Componente>.contract.json.
-No cambies nada. Lista, en tablas separadas:
-
-- Props que faltan, sobran o no coinciden en tipo o default.
-- Partes de anatomy sin data-part, y refTarget.
-- Tokens del contrato que no se usan y valores del CSS que no salen del contrato (hex, px sueltos).
-- Estados (native y controlled) no implementados y atributos ARIA que faltan.
-- Incumplimientos de a11y (teclado, foco, área mínima, nombre accesible).
-Marca cada hallazgo como error o aviso.
+With contract-to-component, create the <Component> component from design-system/contracts/<Component>.contract.json.
+Follow AGENTS.md. If dependencies are missing or there are meta.needsReview points that affect the code, ask me first.
+Finish with the verifier's result and the summary from AGENTS.md.
 ```
 
-## 3. Generar la documentación
+## 2. Review a component against its contract (read-only)
 
 ```
-Lee src/components/<nombre>/<nombre>.contract.json y genera src/components/<nombre>/<nombre>.md con:
-descripción, do's y don'ts, tabla de props, estados, anatomía (con slots), tokens y accesibilidad,
-y un ejemplo de uso en TSX.
-No inventes nada que no esté en el contrato. Incluye los puntos de meta.needsReview como «Pendiente».
+Review src/components/<name>/ against design-system/contracts/<Component>.contract.json.
+Do not change anything. List, in separate tables:
+
+- Props that are missing, extra or do not match in type or default.
+- Anatomy parts without data-part, and refTarget.
+- Contract tokens that are not used and CSS values that do not come from the contract (hex, loose px).
+- States (native and controlled) not implemented and missing ARIA attributes.
+- a11y violations (keyboard, focus, minimum target size, accessible name).
+Mark each finding as error or warning.
 ```
 
-## 4. Componente compuesto (RadioGroup, AlertDialog…)
+## 3. Generate the documentation
 
 ```
-Lee AGENTS.md y design-system/contracts/<Componente>.contract.json.
-El contrato es de un componente compuesto: mira composition.codeParts y composition.item.
-Antes de escribir código dime:
-- Qué partes exportarás (por ejemplo <Componente>.Root y <Componente>.Item).
-- Qué componentes que ya existen en src/components/ reutilizarás.
-- Si falta algún componente que el contrato necesita (slot.allowedComponents) y no existe.
-Si falta alguno, pregúntame antes de seguir.
+Read src/components/<name>/<name>.contract.json and generate src/components/<name>/<name>.md with:
+description, do's and don'ts, props table, states, anatomy (with slots), tokens and accessibility,
+and a usage example in TSX.
+Do not invent anything that is not in the contract. Include the meta.needsReview points as "Pending".
 ```
 
-## 5. Crear una página o formulario
+## 4. Compound component (RadioGroup, AlertDialog…)
 
 ```
-Crea la página src/app/<ruta>/page.tsx: <descripción: p. ej. formulario de acceso con correo, contraseña, «recordarme» y botón de enviar>.
-
-Reglas:
-- Usa solo componentes de src/components/. Si necesitas uno que no existe, no lo crees: dime cuál falta.
-- Layout con CSS Module propio (page.module.css) y tokens (var(--spacing-*)). Sin valores sueltos.
-- Cada campo con su label; el formulario con aria-label o título.
-- Server Component por defecto; "use client" solo en el formulario si tiene estado.
-Termina con la lista de componentes usados y los que faltan.
+Read AGENTS.md and design-system/contracts/<Component>.contract.json.
+The contract is for a compound component: look at composition.codeParts and composition.item.
+Before writing code, tell me:
+- Which parts you will export (for example <Component>.Root and <Component>.Item).
+- Which components that already exist in src/components/ you will reuse.
+- Whether any component the contract needs (slot.allowedComponents) is missing and does not exist.
+If any is missing, ask me before continuing.
 ```
 
-## 6. Cambió el contrato
+## 5. Create a page or form
 
 ```
-design-system/contracts/<Componente>.contract.json ha cambiado (versión <x.y.z>).
-1. Vuelve a copiarlo a src/components/<nombre>/<nombre>.contract.json.
-2. Compara el contrato nuevo con el código actual y dime qué hay que cambiar. No cambies código todavía.
-3. Cuando te lo confirme, aplícalo, regenera <nombre>.md y actualiza el playground.
+Create the page src/app/<route>/page.tsx: <description: e.g. a login form with email, password, "remember me" and a submit button>.
+
+Rules:
+- Use only components from src/components/. If you need one that does not exist, do not create it: tell me which one is missing.
+- Layout with its own CSS Module (page.module.css) and tokens (var(--spacing-*)). No loose values.
+- Each field with its label; the form with an aria-label or title.
+- Server Component by default; "use client" only on the form if it has state.
+Finish with the list of components used and the ones that are missing.
 ```
 
-## 7. Cambiaron los tokens
+## 6. The contract changed
 
 ```
-He actualizado design-system/ (tokens). Ejecuta `npm run ds:check`.
-Busca en src/components/ cualquier token que ya no exista (variables --… que no estén en tokens.css) y dime qué componentes se rompen. No cambies nada hasta que te lo confirme.
+design-system/contracts/<Component>.contract.json has changed (version <x.y.z>).
+1. Copy it again to src/components/<name>/<name>.contract.json.
+2. Compare the new contract with the current code and tell me what has to change. Do not change code yet.
+3. When I confirm, apply it, regenerate <name>.md and update the playground.
 ```
 
-## 8. Cuando el agente se desvía
+## 7. The tokens changed
 
-| Síntoma | Qué decirle |
+```
+I have updated design-system/ (tokens). Run `npm run ds:check`.
+Search src/components/ for any token that no longer exists (--… variables that are not in tokens.css) and tell me which components break. Do not change anything until I confirm.
+```
+
+## 8. When the agent strays
+
+| Symptom | What to tell it |
 | --- | --- |
-| Inventa una prop o variante | «Esa prop no está en el contrato. Quítala o pregúntame.» |
-| Usa un color o px suelto | «Sustituye ese valor por el token del contrato (`tokens.bindings…`).» |
-| Reimplementa el teclado a mano | «Usa el primitivo de Radix para el comportamiento (AGENTS.md).» |
-| Opacity en disabled | «Disabled usa `byState.disabled`, nunca opacity.» |
-| Crea un componente sin contrato | «No hay contrato. Para y dime qué falta.» |
+| Invents a prop or variant | "That prop is not in the contract. Remove it or ask me." |
+| Uses a loose color or px | "Replace that value with the contract token (`tokens.bindings…`)." |
+| Reimplements the keyboard by hand | "Use the Radix primitive for behavior (AGENTS.md)." |
+| Opacity on disabled | "Disabled uses `byState.disabled`, never opacity." |
+| Creates a component without a contract | "There is no contract. Stop and tell me what is missing." |
 
-## 9. Iconos
+## 9. Icons
 
-**Instalar (una vez):**
+**Install (once):**
 
 ```
-Lee AGENTS.md y design-system/docs/icons.md. Instala los iconos de Lucide:
+Read AGENTS.md and design-system/docs/icons.md. Install the Lucide icons:
 1. npm install lucide-react
-2. Añade a package.json el script "ds:icons": "node design-system/scripts/build-icons.mjs src/components/icon/icons.ts" y ejecútalo.
-3. Crea src/components/icon/ con icon.tsx y icon.module.css desde design-system/contracts/Icon.contract.json, y copia el contrato.
-4. Añade al playground una fila con todos los iconos de design-system/icons/registry.json a los tamaños 14, 16, 18 y 20.
-No modifiques otros componentes todavía. Resume lo que has hecho.
+2. Add to package.json the script "ds:icons": "node design-system/scripts/build-icons.mjs src/components/icon/icons.ts" and run it.
+3. Create src/components/icon/ with icon.tsx and icon.module.css from design-system/contracts/Icon.contract.json, and copy the contract.
+4. Add to the playground a row with all the icons in design-system/icons/registry.json at sizes 14, 16, 18 and 20.
+Do not modify other components yet. Summarize what you did.
 ```
 
-**Conectar un componente con iconos:**
+**Connect a component with icons:**
 
 ```
-Lee design-system/contracts/<Componente>.contract.json y src/components/icon/.
-El componente tiene slots de icono (<icon, iconEnd…>). Haz que:
-- el tamaño del icono salga de layout.iconSize del contrato, por CSS según size;
-- el color se herede (currentColor);
-- el playground muestre el componente con y sin icono.
-No importes iconos dentro del componente: los recibe como nodo.
+Read design-system/contracts/<Component>.contract.json and src/components/icon/.
+The component has icon slots (<icon, iconEnd…>). Make it so that:
+- the icon size comes from the contract's layout.iconSize, via CSS according to size;
+- the color is inherited (currentColor);
+- the playground shows the component with and without an icon.
+Do not import icons inside the component: it receives them as a node.
 ```
 
-**Añadir un icono:**
+**Add an icon:**
 
 ```
-Necesito el icono «<descripción>». Búscalo en lucide.dev/icons, dime el nombre PascalCase y propón la entrada para design-system/icons/registry.json (name y use). No toques design-system/: dame solo la entrada.
+I need the icon "<description>". Look it up at lucide.dev/icons, tell me the PascalCase name and propose the entry for design-system/icons/registry.json (name and use). Do not touch design-system/: give me only the entry.
 ```
 
-## 10. Orden recomendado de componentes
+## 10. Recommended component order
 
-1. Icon (tras instalar Lucide).
-2. Button y Link (Button usa Icon; Link no tiene dependencias).
-3. IconButton (mismos tokens que Button; recibe un Icon; exige `aria-label`).
-4. Checkbox, Switch, RadioGroup (comportamiento con primitivos).
-5. TextField (usa IconButton como botón final: hazlo después de IconButton).
-6. AlertDialog (usa Button).
-7. Páginas: acceso, ajustes, formulario largo.
+1. Icon (after installing Lucide).
+2. Button and Link (Button uses Icon; Link has no dependencies).
+3. IconButton (same tokens as Button; receives an Icon; requires `aria-label`).
+4. Checkbox, Switch, RadioGroup (behavior with primitives).
+5. TextField (uses IconButton as trailing button: do it after IconButton).
+6. AlertDialog (uses Button).
+7. Pages: login, settings, long form.

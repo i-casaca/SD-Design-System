@@ -1,63 +1,63 @@
-# Llevarlo a Next.js
+# Bringing it to Next.js
 
-Objetivo: partir de un proyecto Next.js **vacío** y construir los componentes desde los contratos y los tokens, dejando el contrato como documentación al lado de cada componente.
+Goal: start from an **empty** Next.js project and build the components from the contracts and tokens, leaving the contract as documentation next to each component.
 
-## Estructura del proyecto Next.js
+## Next.js project structure
 
 ```
-mi-proyecto/
-├── AGENTS.md                       ← copia de este repo (reglas) + estructura del proyecto
-├── design-system/                  ← copia de este repo (tokens/ y contracts/)
+my-project/
+├── AGENTS.md                       ← copy from this repo (rules) + project structure
+├── design-system/                  ← copy of this repo (tokens/ and contracts/)
 │   ├── tokens/tokens.css
 │   └── contracts/
 ├── src/
 │   ├── app/
-│   │   └── globals.css             ← @import de design-system/tokens/tokens.css
+│   │   └── globals.css             ← @import of design-system/tokens/tokens.css
 │   └── components/
 │       └── button/
-│           ├── button.tsx          ← el componente
-│           ├── button.module.css   ← estilos (solo variables CSS de los tokens)
-│           ├── button.contract.json← copia del contrato: reglas para agentes
-│           └── button.md           ← documentación legible, generada desde el contrato
+│           ├── button.tsx          ← the component
+│           ├── button.module.css   ← styles (only CSS variables from the tokens)
+│           ├── button.contract.json← copy of the contract: rules for agents
+│           └── button.md           ← readable documentation, generated from the contract
 ```
 
-El contrato junto al componente permite que un agente que abra la carpeta `button/` vea las reglas sin buscar en otro sitio.
+Having the contract next to the component lets an agent that opens the `button/` folder see the rules without looking elsewhere.
 
-## Cómo traer el repo (de más simple a más estable)
+## How to bring the repo in (from simplest to most stable)
 
-1. **Copiar** la carpeta `tokens/` y `contracts/` dentro de `design-system/`. Suficiente para los ejercicios.
-2. **Git submodule** cuando quieras actualizar desde el repo del sistema: `git submodule add <url> design-system`.
-3. Más adelante, un paquete publicado. No hace falta ahora.
+1. **Copy** the `tokens/` and `contracts/` folders into `design-system/`. Enough for the exercises.
+2. **Git submodule** when you want to update from the system repo: `git submodule add <url> design-system`.
+3. Later, a published package. Not needed now.
 
-## AGENTS.md del proyecto Next.js
+## The Next.js project's AGENTS.md
 
-Mínimo: copia el `AGENTS.md` de este repo y añade:
+Minimum: copy this repo's `AGENTS.md` and add:
 
 ```md
-## Este proyecto
-- Contratos en `design-system/contracts/`, tokens en `design-system/tokens/tokens.json`.
-- Cada componente vive en `src/components/<nombre>/` con `.tsx`, `.module.css` y su contrato copiado.
-- Los estilos usan solo variables CSS definidas en `src/app/globals.css`.
-- Antes de programar algo no trivial: modo plan, y espera mi aprobación.
+## This project
+- Contracts in `design-system/contracts/`, tokens in `design-system/tokens/tokens.json`.
+- Each component lives in `src/components/<name>/` with `.tsx`, `.module.css` and its copied contract.
+- Styles use only CSS variables defined in `src/app/globals.css`.
+- Before coding anything non-trivial: plan mode, and wait for my approval.
 ```
 
-## Flujo con el agente (Claude Code)
+## Workflow with the agent (Claude Code)
 
-1. **Tokens → CSS.** En modo plan: «Lee `design-system/tokens/tokens.json` y propón cómo generar variables CSS en `globals.css`. No escribas código todavía.» Revisa el plan, aprueba.
-2. **Contrato → componente.** «Lee `design-system/contracts/Button.contract.json` y crea `src/components/button/` con `button.tsx` y `button.module.css`. Cumple `AGENTS.md`. Al final, lista las reglas del contrato que aplicaste.»
-3. **Documentar.** «Genera `button.md` desde `button.contract.json`, sin inventar nada que no esté en el contrato.»
-4. **Verificar.** Pide una página de prueba con todas las variantes y tamaños y compárala con Figma. Después: «Revisa el componente contra el contrato y lista incumplimientos.»
-5. **Siguiente componente.** Primero el contrato (en el repo del sistema), luego la copia en Next.js, luego el código.
+1. **Tokens → CSS.** In plan mode: "Read `design-system/tokens/tokens.json` and propose how to generate CSS variables in `globals.css`. Do not write code yet." Review the plan, approve.
+2. **Contract → component.** "Read `design-system/contracts/Button.contract.json` and create `src/components/button/` with `button.tsx` and `button.module.css`. Comply with `AGENTS.md`. At the end, list the contract rules you applied."
+3. **Document.** "Generate `button.md` from `button.contract.json`, without inventing anything that is not in the contract."
+4. **Verify.** Ask for a test page with all variants and sizes and compare it with Figma. Then: "Review the component against the contract and list violations."
+5. **Next component.** Contract first (in the system repo), then the copy in Next.js, then the code.
 
-## Si el componente necesita cambiar
+## If the component needs to change
 
-Cambia primero el contrato en el repo del sistema (y su `version`), copia la nueva versión, y pide al agente que ajuste el código. Nunca al revés.
+Change the contract first in the system repo (and its `version`), copy the new version, and ask the agent to adjust the code. Never the other way around.
 
-## Tokens y modo oscuro
+## Tokens and dark mode
 
 ```css
 /* src/app/globals.css */
 @import '../../design-system/tokens/tokens.css';
 ```
 
-Pon `data-theme="light"` o `"dark"` en `<html>` (o la clase `.dark`). Los componentes usan solo `var(--colors-accent-accent-9)` y similares: el modo cambia los primitivos y el resto sigue.
+Put `data-theme="light"` or `"dark"` on `<html>` (or the `.dark` class). Components use only `var(--colors-accent-accent-9)` and the like: the mode changes the primitives and the rest follows.

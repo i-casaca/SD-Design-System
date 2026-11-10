@@ -1,118 +1,118 @@
 <p align="center">
-  <img src="docs/assets/banner.svg" alt="Sistema de diseño: de Figma al código a través de tokens, contratos y agentes de IA" width="100%">
+  <img src="docs/assets/banner.svg" alt="Design system: from Figma to code through tokens, contracts and AI agents" width="100%">
 </p>
 
-<h1 align="center">Sistema de diseño</h1>
+<h1 align="center">Design system</h1>
 
 <p align="center">
-  <strong>La fuente de verdad de tu sistema de diseño, en archivos que entienden tanto las personas como los agentes de IA.</strong>
+  <strong>The source of truth for your design system, in files that both people and AI agents can understand.</strong>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Node.js-ESM-339933?logo=nodedotjs&logoColor=white" alt="Node.js">
   <img src="https://img.shields.io/badge/Figma-Variables-F24E1E?logo=figma&logoColor=white" alt="Figma">
   <img src="https://img.shields.io/badge/Next.js-App%20Router-000000?logo=nextdotjs&logoColor=white" alt="Next.js">
-  <img src="https://img.shields.io/badge/React-TypeScript-3178C6?logo=typescript&logoColor=white" alt="React y TypeScript">
+  <img src="https://img.shields.io/badge/React-TypeScript-3178C6?logo=typescript&logoColor=white" alt="React and TypeScript">
   <img src="https://img.shields.io/badge/Radix%20Themes-Tokens-3E63DD?logo=radixui&logoColor=white" alt="Radix Themes">
-  <img src="https://img.shields.io/badge/Iconos-Lucide%20%7C%20Phosphor-F97316" alt="Lucide y Phosphor">
-  <img src="https://img.shields.io/badge/Contratos-JSON-6366F1" alt="Contratos JSON">
-  <img src="https://img.shields.io/badge/Agentes-Claude%20Code-D97757" alt="Agentes de IA">
-  <img src="https://img.shields.io/badge/Git-GitHub-181717?logo=github&logoColor=white" alt="Git y GitHub">
+  <img src="https://img.shields.io/badge/Icons-Lucide%20%7C%20Phosphor-F97316" alt="Lucide and Phosphor">
+  <img src="https://img.shields.io/badge/Contracts-JSON-6366F1" alt="JSON contracts">
+  <img src="https://img.shields.io/badge/Agents-Claude%20Code-D97757" alt="AI agents">
+  <img src="https://img.shields.io/badge/Git-GitHub-181717?logo=github&logoColor=white" alt="Git and GitHub">
 </p>
 
 ---
 
-## Qué es
+## What it is
 
-Este repositorio guarda, en texto plano y versionable, todo lo que define tu sistema de diseño:
+This repository stores, in versionable plain text, everything that defines your design system:
 
-- **Tokens**: colores, espacios, tipografía y radios, con sus modos (claro y oscuro), exportados desde Figma.
-- **Contratos**: un JSON por componente que describe para qué sirve, qué props, estados, partes y tokens usa, y cómo debe comportarse en accesibilidad.
-- **Skills y reglas para IA**: instrucciones que permiten a un agente crear contratos y componentes sin inventar nada que no esté en el contrato.
-- **Utilidades**: scripts que generan el CSS de tokens, los catálogos de iconos y comprueban que todo es coherente.
+- **Tokens**: colors, spacing, typography and radii, with their modes (light and dark), exported from Figma.
+- **Contracts**: one JSON per component that describes what it is for, which props, states, parts and tokens it uses, and how it must behave for accessibility.
+- **Skills and rules for AI**: instructions that let an agent create contracts and components without inventing anything that is not in the contract.
+- **Utilities**: scripts that generate the token CSS and the icon catalogs, and check that everything is consistent.
 
-Figma y código **no se sincronizan solos**: los dos se comprueban contra el mismo contrato.
+Figma and code **do not sync on their own**: both are checked against the same contract.
 
 ```
-Figma (componentes + variables)
-        │  lo describes una vez
+Figma (components + variables)
+        │  you describe it once
         ▼
-tokens/tokens.json  +  contracts/*.contract.json     ← este repo
-        │  los lee el agente
+tokens/tokens.json  +  contracts/*.contract.json     ← this repo
+        │  the agent reads them
         ▼
-Código (Next.js: componente.tsx + CSS + contrato al lado)
+Code (Next.js: component.tsx + CSS + contract alongside)
 ```
 
-## Contenido principal
+## Main contents
 
-| Parte | Qué encontrarás |
+| Part | What you will find |
 | --- | --- |
-| `tokens/` | Variables de diseño. `tokens.json` es la única fuente; `tokens.css` se genera desde él. |
-| `contracts/` | Contratos de componentes (Button, TextField, Navbar, Footer, Form, Icon…) y una plantilla para nuevos. |
-| `skills/` | Dos skills para agentes: `ui-contract-builder` (crea contratos) y `contract-to-component` (implementa el código y lo verifica). |
-| `icons/` | Registros de iconos permitidos en código, con alternativas Lucide y Phosphor. |
-| `scripts/` | Generadores de tokens, iconos y catálogos. |
-| `docs/` | Guías: cómo escribir contratos, cómo usar Figma, Next.js, componentes y ejercicios. |
-| `AGENTS.md` | Reglas que debe seguir cualquier agente de IA que trabaje con el sistema. |
+| `tokens/` | Design variables. `tokens.json` is the only source; `tokens.css` is generated from it. |
+| `contracts/` | Component contracts (Button, TextField, Navbar, Footer, Form, Icon…) and a template for new ones. |
+| `skills/` | Two skills for agents: `ui-contract-builder` (creates contracts) and `contract-to-component` (implements the code and verifies it). |
+| `icons/` | Registries of icons allowed in code, with Lucide and Phosphor alternatives. |
+| `scripts/` | Generators for tokens, icons and catalogs. |
+| `docs/` | Guides: how to write contracts, how to use Figma, Next.js, components and exercises. |
+| `AGENTS.md` | Rules that any AI agent working with the system must follow. |
 
-## Empezar
+## Getting started
 
-**Requisitos:** [Node.js](https://nodejs.org/) para ejecutar los scripts. No hay dependencias que instalar para la comprobación.
+**Requirements:** [Node.js](https://nodejs.org/) to run the scripts. There are no dependencies to install for the check.
 
 ```bash
-# Comprobar contratos y tokens
+# Check contracts and tokens
 node check.mjs
 
-# Regenerar las variables CSS después de cambiar tokens.json
+# Regenerate the CSS variables after changing tokens.json
 npm run tokens:build
 ```
 
-Si es tu primera vez, no abras `Button.contract.json` (es el más largo). Empieza por **`contracts/Divider.contract.json`**, el contrato más corto, y sigue con `Link` e `Icon`.
+If this is your first time, do not open `Button.contract.json` (it is the longest). Start with **`contracts/Divider.contract.json`**, the shortest contract, and continue with `Link` and `Icon`.
 
-## Flujo de trabajo
+## Workflow
 
-1. **Prepara Figma**: variables por uso, auto layout y capas con nombre estable. Guía en `docs/figma.md`.
-2. **Vuelca los tokens** a `tokens/` y ejecuta `npm run tokens:build`. Guía en `docs/tokens-from-figma.md`.
-3. **Crea el contrato** desde `contracts/_template.contract.json` o con la skill `ui-contract-builder`. Guía en `docs/contract-guide.md`.
-4. **Implementa el componente** con la skill `contract-to-component` o a mano, siguiendo el contrato.
-5. **Comprueba y guarda**: `node check.mjs`, añade el componente a `docs/components.md` y haz commit. Si el componente cambia, **cambia primero el contrato** y su `version`.
+1. **Prepare Figma**: variables by usage, auto layout and layers with stable names. Guide in `docs/figma.md`.
+2. **Dump the tokens** into `tokens/` and run `npm run tokens:build`. Guide in `docs/tokens-from-figma.md`.
+3. **Create the contract** from `contracts/_template.contract.json` or with the `ui-contract-builder` skill. Guide in `docs/contract-guide.md`.
+4. **Implement the component** with the `contract-to-component` skill or by hand, following the contract.
+5. **Check and save**: `node check.mjs`, add the component to `docs/components.md` and commit. If the component changes, **change the contract first** and its `version`.
 
-## Skills y agentes
+## Skills and agents
 
-Las skills son instrucciones reutilizables que un agente de IA carga cuando la tarea encaja:
+Skills are reusable instructions that an AI agent loads when the task fits:
 
-- **`ui-contract-builder`**: crea, actualiza y valida contratos a partir de un nodo de Figma o de una mini-especificación.
-- **`contract-to-component`**: convierte un contrato en un componente React + TypeScript y demuestra que cumple lo que dice el contrato.
+- **`ui-contract-builder`**: creates, updates and validates contracts from a Figma node or a mini-specification.
+- **`contract-to-component`**: turns a contract into a React + TypeScript component and proves that it complies with what the contract says.
 
-El agente lee `AGENTS.md` antes de tocar cualquier componente, y no rellena huecos del contrato con suposiciones: si algo no está definido, pregunta.
+The agent reads `AGENTS.md` before touching any component, and does not fill gaps in the contract with assumptions: if something is not defined, it asks.
 
 ## Git
 
-Este repositorio es un punto de partida: el historial lo creas tú.
+This repository is a starting point: you create the history.
 
 ```bash
 git init -b main
 git add .
-git commit -m "Sistema de diseño: contratos, tokens y skills"
+git commit -m "Design system: contracts, tokens and skills"
 ```
 
-Para subirlo a GitHub, crea un repositorio vacío y sigue las líneas que te muestre (`git remote add origin ...` y `git push -u origin main`). A partir de ahí, cada cambio de contrato es un commit.
+To push it to GitHub, create an empty repository and follow the lines it shows you (`git remote add origin ...` and `git push -u origin main`). From then on, every contract change is a commit.
 
-## Los valores de ejemplo
+## The sample values
 
-`tokens/tokens.json` trae las variables de **Radix Themes** tal como salen de Figma. Si trabajas con tu propio Figma, sustitúyelas por las tuyas siguiendo `docs/tokens-from-figma.md`. Los contratos de ejemplo usan los nombres de Radix, así que tendrás que adaptarlos.
+`tokens/tokens.json` ships the **Radix Themes** variables as they come out of Figma. If you work with your own Figma, replace them with yours following `docs/tokens-from-figma.md`. The sample contracts use Radix names, so you will need to adapt them.
 
-## Qué no incluye (a propósito)
+## What it does not include (on purpose)
 
-CI, Storybook y generador de documentación. Se añaden cuando hagan falta.
+CI, Storybook and a documentation generator. They are added when needed.
 
-## Documentación
+## Documentation
 
-| Documento | Para qué sirve |
+| Document | What it is for |
 | --- | --- |
-| [`docs/contract-guide.md`](docs/contract-guide.md) | Cómo funciona un contrato y cómo rellenarlo |
-| [`docs/figma.md`](docs/figma.md) | Preparar Figma para que el sistema encaje |
-| [`docs/components.md`](docs/components.md) | Índice de componentes y vocabulario de props |
-| [`docs/icons.md`](docs/icons.md) | Iconos con Lucide: instalar, declarar y usar |
-| [`docs/nextjs.md`](docs/nextjs.md) | Llevar el sistema a un proyecto Next.js |
-| [`docs/ejercicios.md`](docs/ejercicios.md) | Ejercicios prácticos |
+| [`docs/contract-guide.md`](docs/contract-guide.md) | How a contract works and how to fill it in |
+| [`docs/figma.md`](docs/figma.md) | Preparing Figma so the system fits |
+| [`docs/components.md`](docs/components.md) | Component index and props vocabulary |
+| [`docs/icons.md`](docs/icons.md) | Icons with Lucide: install, declare and use |
+| [`docs/nextjs.md`](docs/nextjs.md) | Bringing the system into a Next.js project |
+| [`docs/ejercicios.md`](docs/ejercicios.md) | Practical exercises |

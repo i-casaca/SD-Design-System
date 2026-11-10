@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Genera tokens/tokens.css a partir de tokens/tokens.json (sin dependencias).
+// Generates tokens/tokens.css from tokens/tokens.json (no dependencies).
 //   node scripts/build-tokens.mjs
-// Light es el modo por defecto; Dark solo se escribe donde el valor cambia.
+// Light is the default mode; Dark is only written where the value changes.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -24,7 +24,7 @@ const varName = (p) => '--' + p.join('-');
 const names = new Map();
 for (const t of flat) {
   const n = varName(t.path);
-  if (names.has(n)) throw new Error(`Colisión de nombre CSS ${n}`);
+  if (names.has(n)) throw new Error(`CSS name collision ${n}`);
   names.set(n, t);
 }
 const known = new Set(flat.map((t) => t.path.join('.')));
@@ -41,7 +41,7 @@ const value = (t, mode) => {
   const v = mode && t.token.$extensions?.modes ? t.token.$extensions.modes[mode] : t.token.$value;
   switch (t.token.$type) {
     case 'shadow': return shadow(v);
-    case 'typography': return null; // se emite aparte
+    case 'typography': return null; // emitted separately
     default: return typeof v === 'string' ? resolve(v) : String(v);
   }
 };
@@ -64,7 +64,7 @@ for (const t of flat) {
 }
 
 const css = `/* GENERADO por scripts/build-tokens.mjs desde tokens/tokens.json. No editar a mano. */
-/* Origen: Figma Radix Themes (Community). Light por defecto; Dark con [data-theme="dark"] o .dark */
+/* Source: Figma Radix Themes (Community). Light by default; Dark with [data-theme="dark"] o .dark */
 
 :root,
 [data-theme="light"] {
@@ -80,4 +80,4 @@ ${dark.join('\n')}
 }
 `;
 fs.writeFileSync(out, css);
-console.log(`${path.relative(root, out)}: ${light.length} variables (light), ${dark.length} cambian en dark, ${typo.length / 2} estilos de texto`);
+console.log(`${path.relative(root, out)}: ${light.length} variables (light), ${dark.length} change in dark, ${typo.length / 2} text styles`);

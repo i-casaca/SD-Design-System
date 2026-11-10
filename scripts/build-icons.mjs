@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Genera el archivo de reexportación de iconos a partir de icons/registry.json (sin dependencias).
-//   node scripts/build-icons.mjs [ruta-de-salida]
+// Generates the icon re-export file from icons/registry.json (no dependencies).
+//   node scripts/build-icons.mjs [output-path]
 // Por defecto: icons/icons.ts. En un proyecto Next.js: node design-system/scripts/build-icons.mjs src/components/icon/icons.ts
 import fs from 'node:fs';
 import path from 'node:path';
@@ -12,7 +12,7 @@ const out = path.resolve(process.argv[2] ?? path.join(root, 'icons', 'icons.ts')
 
 const names = reg.icons.map((i) => i.name);
 const bad = names.filter((n) => !/^[A-Z][A-Za-z0-9]*$/.test(n));
-if (bad.length) throw new Error(`Nombres no válidos (PascalCase): ${bad.join(', ')}`);
+if (bad.length) throw new Error(`Invalid names (PascalCase): ${bad.join(', ')}`);
 if (new Set(names).size !== names.length) throw new Error('Nombres duplicados en icons/registry.json');
 const sorted = [...names].sort();
 
@@ -24,4 +24,4 @@ export { ${sorted.join(', ')} };
 `;
 fs.mkdirSync(path.dirname(out), { recursive: true });
 fs.writeFileSync(out, src);
-console.log(`${path.relative(process.cwd(), out)}: ${sorted.length} iconos`);
+console.log(`${path.relative(process.cwd(), out)}: ${sorted.length} icons`);

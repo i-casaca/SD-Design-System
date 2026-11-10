@@ -1,49 +1,49 @@
-# Ejercicios — Sección 2
+# Exercises — Section 2
 
-Cada ejercicio produce algo que se queda en el repo. Hazlos en orden.
+Each exercise produces something that stays in the repo. Do them in order.
 
-## Ejercicio 1 — Leer un contrato (20 min)
+## Exercise 1 — Read a contract (20 min)
 
-Abre `contracts/Button.contract.json` junto a un botón de tu Figma.
-- Marca con colores qué campos puedes deducir mirando Figma y cuáles no.
-- Lista 3 `donts` que añadirías a `guidance`.
-- Abre `TextField.contract.json` y localiza sus slots: ¿qué diferencia hay con un icono de Button?
-- **Entregable:** una nota con los campos «no están en Figma» (esperados: `description`, `guidance`, `a11y`, `events`).
+Open `contracts/Button.contract.json` next to a button from your Figma.
+- Mark with colors which fields you can deduce by looking at Figma and which you cannot.
+- List 3 `donts` you would add to `guidance`.
+- Open `TextField.contract.json` and locate its slots: what is the difference with an icon in Button?
+- **Deliverable:** a note with the "not in Figma" fields (expected: `description`, `guidance`, `a11y`, `events`).
 
-## Ejercicio 2 — Preparar tu componente en Figma (45 min)
+## Exercise 2 — Prepare your component in Figma (45 min)
 
-Elige **un** componente simple de tu sistema (botón, badge, input).
-- Variables con nombre por uso, no por aspecto.
-- Auto layout, propiedades y capas con nombre estable.
-- Descripción del componente.
-- **Entregable:** captura del panel de propiedades y de la lista de variables que usa.
+Pick **one** simple component from your system (button, badge, input).
+- Variables named by usage, not by appearance.
+- Auto layout, properties and layers with stable names.
+- Component description.
+- **Deliverable:** a screenshot of the properties panel and of the list of variables it uses.
 
-## Ejercicio 3 — Tokens (30 min)
+## Exercise 3 — Tokens (30 min)
 
-Busca en `tokens/tokens.json` las variables que usa ese componente y anótalas. Si trabajas con tu propio Figma, añade o sustituye las tuyas siguiendo `docs/tokens-from-figma.md`.
-- **Entregable:** la lista de rutas de token del componente (por ejemplo `colors.accent.accent.9`) y, si usas tu Figma, tu `tokens.json` con valores reales.
+Find in `tokens/tokens.json` the variables that component uses and note them down. If you work with your own Figma, add or replace yours following `docs/tokens-from-figma.md`.
+- **Deliverable:** the list of the component's token paths (for example `colors.accent.accent.9`) and, if you use your Figma, your `tokens.json` with real values.
 
-## Ejercicio 4 — Tu primer contrato, a mano (60 min)
+## Exercise 4 — Your first contract, by hand (60 min)
 
-Copia `_template.contract.json` y rellénalo con `docs/contract-guide.md`; borra los bloques opcionales que no apliquen.
-- Ejecuta `node check.mjs` hasta que no haya errores.
-- **Entregable:** `contracts/<Componente>.contract.json` sin placeholders `<...>` (salvo anchors), con `check` en verde.
+Copy `_template.contract.json` and fill it in using `docs/contract-guide.md`; delete the optional blocks that do not apply.
+- Run `node check.mjs` until there are no errors.
+- **Deliverable:** `contracts/<Component>.contract.json` with no `<...>` placeholders (except anchors), with `check` green.
 
-## Ejercicio 5 — Del contrato al código (60 min)
+## Exercise 5 — From contract to code (60 min)
 
-En un proyecto Next.js vacío, sigue `docs/nextjs.md`: tokens → CSS, contrato → componente, en modo plan.
-- **Entregable:** `components/<nombre>/` con `.tsx`, `.module.css` y el contrato copiado, más la lista de reglas que el agente dice haber aplicado.
+In an empty Next.js project, follow `docs/nextjs.md`: tokens → CSS, contract → component, in plan mode.
+- **Deliverable:** `components/<name>/` with `.tsx`, `.module.css` and the copied contract, plus the list of rules the agent says it applied.
 
-## Ejercicio 6 — Auditoría y documentación (45 min)
+## Exercise 6 — Audit and documentation (45 min)
 
-Pide al agente: «Compara el componente con su contrato y lista incumplimientos». Verifica a mano 2 de ellos. Después pide `<componente>.md` generado desde el contrato (prompt en `docs/contract-guide.md`, sección 8).
-- **Entregable:** lista de incumplimientos, qué corriges (¿el código o el contrato?) y el `.md` junto al componente.
+Ask the agent: "Compare the component with its contract and list violations". Verify 2 of them by hand. Then ask for `<component>.md` generated from the contract (prompt in `docs/contract-guide.md`, section 8).
+- **Deliverable:** a list of violations, what you fix (the code or the contract?) and the `.md` next to the component.
 
-## Ejercicio 7 — Un contenedor con slots (60 min)
+## Exercise 7 — A container with slots (60 min)
 
-Repite 2–4 con un componente con huecos (Panel, Modal, Navbar). Modela cada hueco como `slot` con `allowedComponents`, `minItems`, `maxItems` y `figmaProp`.
-- **Entregable:** contrato con slots y comparación contra Figma (`docs/figma.md`, sección 5).
+Repeat 2–4 with a component that has gaps (Panel, Modal, Navbar). Model each gap as a `slot` with `allowedComponents`, `minItems`, `maxItems` and `figmaProp`.
+- **Deliverable:** a contract with slots and a comparison against Figma (`docs/figma.md`, section 5).
 
-## Después
+## Afterwards
 
-Repite con un componente de formulario y uno de capa (bloques `form` y `overlay`). Cuando el trabajo manual se repita, ya estás listo para la skill que lo automatiza.
+Repeat with a form component and a layer component (`form` and `overlay` blocks). When the manual work becomes repetitive, you are ready for the skill that automates it.

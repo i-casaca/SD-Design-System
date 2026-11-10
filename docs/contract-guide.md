@@ -1,98 +1,98 @@
-# Guía del contrato
+# Contract guide
 
-Cómo funciona `contracts/<Componente>.contract.json`, cómo rellenarlo, ejecutarlo y documentarlo. Ábrelo junto a `Button.contract.json` (componente con acción) y `TextField.contract.json` (campo con slots).
+How `contracts/<Component>.contract.json` works, and how to fill it in, run it and document it. Open it alongside `Button.contract.json` (action component) and `TextField.contract.json` (field with slots).
 
-## 1. Qué es y qué no es
+## 1. What it is and what it is not
 
-Un contrato es **datos sobre un componente**, no código ni diseño. Responde a: ¿para qué sirve?, ¿para qué no?, ¿qué props, partes, slots y estados tiene?, ¿qué tokens puede usar y dónde?, ¿cómo se hace accesible?
+A contract is **data about a component**, not code or design. It answers: what is it for? what is it not for? which props, parts, slots and states does it have? which tokens can it use and where? how is it made accessible?
 
-Principio: el contrato guarda **lo que ni el código ni Figma pueden decir solos** (intención, límites, reglas). Lo que se puede leer del código (`props.type`, `props.default`, medidas) está marcado en `meta.derivableFromSource`: es candidato a generarse en vez de escribirse.
+Principle: the contract holds **what neither code nor Figma can say on their own** (intent, limits, rules). What can be read from code (`props.type`, `props.default`, measurements) is marked in `meta.derivableFromSource`: it is a candidate to be generated instead of written.
 
-## 2. Bloques núcleo y bloques opcionales
+## 2. Core blocks and optional blocks
 
-**Núcleo (obligatorios en todo componente):** `id`, `name`, `version`, `status`, `description`, `guidance`, `semantics`, `props`, `states`, `anatomy`, `tokens`, `a11y`.
+**Core (required in every component):** `id`, `name`, `version`, `status`, `description`, `guidance`, `semantics`, `props`, `states`, `anatomy`, `tokens`, `a11y`.
 
-**Opcionales:** quita de la plantilla los que no apliquen o déjalos en `null`.
+**Optional:** remove from the template those that do not apply, or leave them as `null`.
 
-| Tipo de componente | Añade además |
+| Component type | Also add |
 | --- | --- |
-| Acción (Button, IconButton) | `events`, `layout`, `behavior` (loading), `content` |
-| Contenedor (Panel, Modal) | `composition` + slots en `anatomy`, `layout` |
-| Campo de formulario (Input, Select, Checkbox) | `form` (control, etiqueta, validación, mensaje de error), `events` |
-| Capa (Dialog, Popover, Menu, Tooltip) | `overlay` (colocación, cierre, foco atrapado, capa z), `events` |
-| Datos (Table, List) | `data` (filas, columnas, orden, selección, vacío, carga) |
-| Media (Avatar, Image) | `media` (proporción, ajuste, fallback, texto alternativo) |
-| Navegación (Tabs, Breadcrumb) | `composition`, `events`, `a11y.keyboard` extenso |
+| Action (Button, IconButton) | `events`, `layout`, `behavior` (loading), `content` |
+| Container (Panel, Modal) | `composition` + slots in `anatomy`, `layout` |
+| Form field (Input, Select, Checkbox) | `form` (control, label, validation, error message), `events` |
+| Layer (Dialog, Popover, Menu, Tooltip) | `overlay` (placement, closing, trapped focus, z layer), `events` |
+| Data (Table, List) | `data` (rows, columns, sorting, selection, empty, loading) |
+| Media (Avatar, Image) | `media` (aspect ratio, fit, fallback, alt text) |
+| Navigation (Tabs, Breadcrumb) | `composition`, `events`, extensive `a11y.keyboard` |
 
-Con el tiempo, el contrato de un componente complejo crece; el de uno simple se queda en el núcleo.
+Over time, the contract of a complex component grows; that of a simple one stays in the core.
 
-## 3. Slots y composición
+## 3. Slots and composition
 
-- **Slot**: hueco que recibe otro componente. Va en `anatomy.<parte>.slot` con `key`, `allowedComponents` (qué componentes caben), `minItems`, `maxItems`, `mandatory` y `figmaProp` (la propiedad de Figma que lo representa).
-- **Contenido**: parte que se rellena con una prop de texto/nodo: `anatomy.<parte>.content.prop`.
-- **Componente anidado fijo**: `composition.nestedComponents` (p. ej. un spinner siempre presente).
-- **Prohibiciones**: `composition.forbiddenChildren` (Button no admite otro Button dentro).
-- En el código, cada slot suele ser una prop (`header`, `footer`) o `children`. En el contrato, la prop se enlaza con `bindings.figma.type: "SLOT"` o `"INSTANCE_SWAP"`.
+- **Slot**: a gap that receives another component. It goes in `anatomy.<part>.slot` with `key`, `allowedComponents` (which components fit), `minItems`, `maxItems`, `mandatory` and `figmaProp` (the Figma property that represents it).
+- **Content**: a part filled with a text/node prop: `anatomy.<part>.content.prop`.
+- **Fixed nested component**: `composition.nestedComponents` (e.g. a spinner that is always present).
+- **Prohibitions**: `composition.forbiddenChildren` (Button does not allow another Button inside).
+- In code, each slot is usually a prop (`header`, `footer`) or `children`. In the contract, the prop is linked with `bindings.figma.type: "SLOT"` or `"INSTANCE_SWAP"`.
 
-**Partes con nombre en Figma:** `figmaLayer` (nombre exacto de la capa) y `figmaToggle` (boolean de Figma que muestra u oculta una parte y no existe como prop en código, como `backdrop`). Así, ninguna propiedad de Figma queda sin correspondencia.
+**Parts named in Figma:** `figmaLayer` (exact layer name) and `figmaToggle` (Figma boolean that shows or hides a part and does not exist as a prop in code, like `backdrop`). This way, no Figma property is left without a match.
 
-**API de código compuesta** (Radix, Ark, shadcn: Root, Trigger, Content…): descríbela en `composition.codeParts`; el contrato sigue siendo uno por componente.
+**Compound code API** (Radix, Ark, shadcn: Root, Trigger, Content…): describe it in `composition.codeParts`; the contract is still one per component.
 
-Los tres casos se distinguen a propósito: slot (hueco), instance swap (cambiar un icono) y componente anidado (parte fija).
+The three cases are distinguished on purpose: slot (gap), instance swap (changing an icon) and nested component (fixed part).
 
-## 4. Tokens: política y enlaces
+## 4. Tokens: policy and bindings
 
-- `tokens.policy.allowed`: categorías de token que puede usar. `forbidden`: lo que nunca (`primitive`).
-- `tokens.bindings.base`: lo que no cambia. `byVariant`: color por valor de `variant`. `byState`: estados controlados (`disabled`).
-- Un token puede llevar `{prop}`: se expande con los valores de esa prop. `size.control.{size}` significa `size.control.s`, `.m` y `.l`.
-- `null` significa «no aplica» (un primary no tiene borde).
+- `tokens.policy.allowed`: token categories it may use. `forbidden`: what it never may (`primitive`).
+- `tokens.bindings.base`: what does not change. `byVariant`: color per `variant` value. `byState`: controlled states (`disabled`).
+- A token can carry `{prop}`: it is expanded with the values of that prop. `size.control.{size}` means `size.control.s`, `.m` and `.l`.
+- `null` means "does not apply" (a primary has no border).
 
-### Cuando Figma y código no coinciden en el tipo de propiedad
+### When Figma and code do not match on the property type
 
-- **Booleano en código, valor de variante en Figma** (`disabled` ↔ `state=disable`, `loading` ↔ `loading=true`): `bindings.figma` lleva `value` con el valor de Figma que equivale a `true`: `{ "property": "state", "type": "VARIANT", "value": "disable" }`.
-- **Matriz de colores** (variant × color × estado × highContrast): `tokens.scales` mapea cada valor de `color` a sus rutas de token (`step`, `alpha`, `fg`…) y los bindings usan `{color.step}.9`. `null` = no existe para ese valor. `byHighContrast` solo guarda lo que cambia con la prop. `check.mjs` expande todas las combinaciones y comprueba que cada token exista.
-- Los valores por defecto de Figma van marcados con ✦ (`solid ✦`). El contrato usa el valor sin marca.
+- **Boolean in code, variant value in Figma** (`disabled` ↔ `state=disable`, `loading` ↔ `loading=true`): `bindings.figma` carries `value` with the Figma value equivalent to `true`: `{ "property": "state", "type": "VARIANT", "value": "disable" }`.
+- **Color matrix** (variant × color × state × highContrast): `tokens.scales` maps each `color` value to its token paths (`step`, `alpha`, `fg`…) and the bindings use `{color.step}.9`. `null` = does not exist for that value. `byHighContrast` only stores what changes with the prop. `check.mjs` expands all combinations and checks that every token exists.
+- Figma default values are marked with ✦ (`solid ✦`). The contract uses the value without the mark.
 
-## 5. Rellenarlo a mano, en 8 pasos
+## 5. Filling it in by hand, in 8 steps
 
-1. Copia `_template.contract.json` a `contracts/<Componente>.contract.json`.
-2. Rellena `id`, `name`, `category`, `description`. Esto lo decides tú, no sale de Figma.
-3. Escribe `guidance`: 2–4 `dos`, 2–4 `donts` con `useInstead`, y `related`.
-4. Pasa las **propiedades de Figma** a `props`, con su `bindings.figma`. Nombres según `docs/components.md`.
-5. Pasa las **variantes de interacción** a `states.native` y el resto a `states.controlled`.
-6. Pasa las **capas** a `anatomy`. Los huecos van como `slot`.
-7. Anota los **tokens** en `tokens.bindings`. Si algo en Figma no usa variable, no inventes un token: apúntalo en `meta.needsReview` y arréglalo en Figma.
-8. Rellena `a11y` y `anchors`, borra los bloques opcionales que no uses, y ejecuta el check.
+1. Copy `_template.contract.json` to `contracts/<Component>.contract.json`.
+2. Fill in `id`, `name`, `category`, `description`. You decide this; it does not come from Figma.
+3. Write `guidance`: 2–4 `dos`, 2–4 `donts` with `useInstead`, and `related`.
+4. Move the **Figma properties** into `props`, with their `bindings.figma`. Names per `docs/components.md`.
+5. Move the **interaction variants** into `states.native` and the rest into `states.controlled`.
+6. Move the **layers** into `anatomy`. Gaps go as `slot`.
+7. Note the **tokens** in `tokens.bindings`. If something in Figma does not use a variable, do not invent a token: note it in `meta.needsReview` and fix it in Figma.
+8. Fill in `a11y` and `anchors`, delete the optional blocks you do not use, and run the check.
 
-## 6. Ejecutarlo
+## 6. Running it
 
 ```bash
-node check.mjs        # o: npm run check
+node check.mjs        # or: npm run check
 ```
 
-Sin dependencias (solo Node). Comprueba, por cada contrato:
+No dependencies (just Node). For each contract, it checks:
 
-- que están todos los bloques núcleo y que no quedan placeholders `<...>`;
-- props y propiedades de Figma sin duplicados; `content.prop` apunta a una prop real;
-- slots con `allowedComponents`; `refTarget` es una parte de `anatomy`;
-- que cada token citado existe en `tokens.json`, no es `forbidden` y está en `allowed` (expande `{size}`);
-- que los tokens de `tokens.json` apuntan a primitivos existentes.
+- that all core blocks are present and no `<...>` placeholders remain;
+- props and Figma properties have no duplicates; `content.prop` points to a real prop;
+- slots have `allowedComponents`; `refTarget` is a part of `anatomy`;
+- that every cited token exists in `tokens.json`, is not `forbidden` and is in `allowed` (expands `{size}`);
+- that the tokens in `tokens.json` point to existing primitives.
 
-Salida: errores (fallan con código 1) y avisos (`related` sin contrato, anchors pendientes). Además, `component.schema.json` valida el formato en el editor: al abrir un contrato en VS Code te marca los campos que faltan.
+Output: errors (fail with exit code 1) and warnings (`related` without a contract, pending anchors). In addition, `component.schema.json` validates the format in the editor: when you open a contract in VS Code it flags the missing fields.
 
-Sin Node, pídeselo a la IA: «Revisa `contracts/Button.contract.json` contra `tokens/tokens.json` y `AGENTS.md`. Lista errores, no cambies nada.»
+Without Node, ask the AI: "Review `contracts/Button.contract.json` against `tokens/tokens.json` and `AGENTS.md`. List errors, do not change anything."
 
-## 7. Documentarlo
+## 7. Documenting it
 
-- **El contrato es la documentación fuente.** No escribas una segunda versión a mano.
-- Para una página legible por personas, genérala: «Lee `Button.contract.json` y genera `button.md` con: descripción, do's y don'ts, tabla de props, estados, anatomía (con slots), tokens y accesibilidad. No inventes nada que no esté en el contrato.» Guárdala junto al componente en Next.js.
-- `docs/components.md` es el índice. Actualízalo al crear o cambiar de estado un componente.
-- Cada cambio: sube `version` (patch: texto; minor: prop o estado nuevo; major: renombrar o quitar) y haz commit del contrato primero.
+- **The contract is the source documentation.** Do not write a second version by hand.
+- For a page readable by people, generate it: "Read `Button.contract.json` and generate `button.md` with: description, do's and don'ts, props table, states, anatomy (with slots), tokens and accessibility. Do not invent anything that is not in the contract." Save it next to the component in Next.js.
+- `docs/components.md` is the index. Update it when you create a component or change its status.
+- Every change: bump `version` (patch: text; minor: new prop or state; major: rename or remove) and commit the contract first.
 
 ## 8. Figma
 
-Ver `docs/figma.md`.
+See `docs/figma.md`.
 
-## 9. La skill
+## 9. The skill
 
-`skills/ui-contract-builder/` hace los pasos 2–7 leyendo Figma (o una mini-spec si el componente es nuevo) y te deja claro lo que Figma no sabe (`description`, `guidance`, `a11y`) y lo que hay que revisar (`meta.needsReview`). Instalación y uso: `skills/ui-contract-builder/references/project-setup.md`.
+`skills/ui-contract-builder/` does steps 2–7 by reading Figma (or a mini-spec if the component is new) and makes clear what Figma does not know (`description`, `guidance`, `a11y`) and what needs review (`meta.needsReview`). Installation and use: `skills/ui-contract-builder/references/project-setup.md`.

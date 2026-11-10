@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-// Prepara lotes de código para crear los iconos de Lucide como componentes en Figma (vía MCP, herramienta use_figma).
-//   node scripts/build-figma-icons.mjs [selección] [--batch 40] [--stroke-variable colors.neutral.neutral.12]
-// Selección (una sola):
-//   (nada) / --registry      los iconos de icons/registry.json
-//   --all                    los 1.903 iconos del catálogo
-//   --category arrows        una categoría del catálogo
+// Prepares code batches to create the Lucide icons as components in Figma (via MCP, use_figma tool).
+//   node scripts/build-figma-icons.mjs [selection] [--batch 40] [--stroke-variable colors.neutral.neutral.12]
+// Selection (only one):
+//   (nada) / --registry      the icons in icons/registry.json
+//   --all                    all 1,903 icons in the catalog
+//   --category arrows        one catalog category
 //   --names arrow-right,plus  nombres concretos (kebab-case)
-// Salida: .cache/figma/batch-001.js, batch-002.js… (cada uno es el `code` de una llamada a use_figma).
-// Los SVG se leen de .cache/lucide (lo crea `npm run icons:catalog`). Sin dependencias.
+// Output: .cache/figma/batch-001.js, batch-002.js… (each one is the `code` of a use_figma call).
+// The SVGs are read from .cache/lucide (created by `npm run icons:catalog`). No dependencies.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,42 +20,42 @@ const strokeVar = val('--stroke-variable') ?? 'colors.neutral.neutral.12';
 
 const cat = JSON.parse(fs.readFileSync(path.join(root, 'icons', 'catalog.json'), 'utf8'));
 const svgDir = path.join(root, '.cache', 'lucide', 'icons');
-if (!fs.existsSync(svgDir)) throw new Error('Falta .cache/lucide: ejecuta antes `npm run icons:catalog`.');
+if (!fs.existsSync(svgDir)) throw new Error('Missing .cache/lucide: run first `npm run icons:catalog`.');
 
 let list;
 if (args.includes('--all')) list = cat.icons;
 else if (val('--category')) {
     const c = val('--category');
-    if (!cat.categories.some((x) => x.id === c)) throw new Error(`Categoría desconocida «${c}». Hay: ${cat.categories.map((x) => x.id).join(', ')}`);
+    if (!cat.categories.some((x) => x.id === c)) throw new Error(`Unknown category "${c}". Available: ${cat.categories.map((x) => x.id).join(', ')}`);
     list = cat.icons.filter((i) => i.categories.includes(c));
 } else if (val('--names')) {
     const ns = val('--names').split(',').map((s) => s.trim());
     const bad = ns.filter((n) => !cat.icons.some((i) => i.name === n));
-    if (bad.length) throw new Error(`No existen en el catálogo: ${bad.join(', ')}`);
+    if (bad.length) throw new Error(`Not in the catalog: ${bad.join(', ')}`);
     list = ns.map((n) => cat.icons.find((i) => i.name === n));
 } else {
     const reg = JSON.parse(fs.readFileSync(path.join(root, 'icons', 'registry.json'), 'utf8'));
     const byPascal = new Map(cat.icons.flatMap((i) => [[i.pascal, i], ...(i.aliases ?? []).map((a) => [a.split('-').map((p) => p[0].toUpperCase() + p.slice(1)).join(''), i])]));
     const miss = reg.icons.filter((i) => !byPascal.has(i.name)).map((i) => i.name);
-    if (miss.length) throw new Error(`En el registry y no en el catálogo: ${miss.join(', ')}`);
+    if (miss.length) throw new Error(`In the registry but not in the catalog: ${miss.join(', ')}`);
     list = [...new Map(reg.icons.map((i) => [byPascal.get(i.name).name, byPascal.get(i.name)])).values()];
 }
 
-// Datos mínimos por icono: nombre, categoría principal, descripción (para el buscador de Figma) y los trazos del SVG.
+// Minimal data per icon: name, main category, description (for Figma search) and the SVG strokes.
 const catTitle = Object.fromEntries(cat.categories.map((c) => [c.id, c.title]));
 const inner = (svg) => svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '').replace(/\s+/g, ' ').trim();
 const items = list.map((i) => {
     const body = inner(fs.readFileSync(path.join(svgDir, `${i.name}.svg`), 'utf8'));
     return {
         n: i.name,
-        g: catTitle[i.categories[0]] ?? 'Sin categoría',
-        d: `lucide:${i.name}\ncategorías: ${i.categories.join(', ')}\ntags: ${i.tags.join(', ')}`,
+        g: catTitle[i.categories[0]] ?? 'Uncategorized',
+        d: `lucide:${i.name}\ncategories: ${i.categories.join(', ')}\ntags: ${i.tags.join(', ')}`,
         s: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`,
     };
 });
 
-const tpl = (batch) => `// Lucide → Figma. Lote de ${batch.length} iconos. Seguro de repetir: salta los que ya existen.
-const STROKE_VARIABLE = ${JSON.stringify(strokeVar)}; // variable de color del trazo (si no existe, queda negro y se avisa)
+const tpl = (batch) => `// Lucide → Figma. Batch of ${batch.length} icons. Safe to repeat: skips the ones that already exist.
+const STROKE_VARIABLE = ${JSON.stringify(strokeVar)}; // stroke color variable (if it does not exist, it stays black and a warning is shown)
 const PAGE = 'Iconos Lucide', FRAME = 'Lucide';
 const ICONS = ${JSON.stringify(batch)};
 
@@ -106,4 +106,4 @@ for (let i = 0; i < items.length; i += batchSize) {
     fs.writeFileSync(f, tpl(items.slice(i, i + batchSize)));
 }
 const kb = Math.round(fs.statSync(path.join(outDir, 'batch-001.js')).size / 1024);
-console.log(`${items.length} iconos → ${n} lote(s) en .cache/figma/ (el primero pesa ${kb} KB). Variable de trazo: ${strokeVar}`);
+console.log(`${items.length} icons → ${n} batch(es) in .cache/figma/ (the first weighs ${kb} KB). Stroke variable: ${strokeVar}`);

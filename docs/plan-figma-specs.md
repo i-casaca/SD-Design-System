@@ -1,131 +1,131 @@
-# Plan · Orden en Figma + Specs desde el contrato
+# Plan · Order in Figma + Specs from the contract
 
-Rama: `exp/figma-specs-organizacion` · Destino Figma: **SDD Library** (`zljuuqX4X2LAFNuWB4SQj7`) · Estado: borrador
+Branch: `exp/figma-specs-organizacion` · Figma target: **SDD Library** (`zljuuqX4X2LAFNuWB4SQj7`) · Status: draft
 
-Idea: el agente del DS (skill `ui-contract-builder`, modo C) es el nodo de control. Cada vez que dibuja un componente, lo coloca en su sitio y genera su Spec. Nada se dibuja «flotando».
+Idea: the DS agent (skill `ui-contract-builder`, mode C) is the control node. Every time it draws a component, it puts it in its place and generates its Spec. Nothing is drawn "floating".
 
-## Regla de oro
+## Golden rule
 
-`contrato.json` → (Figma: section + component set) → (Figma: Spec) → `node check.mjs`.
-La Spec **se genera** desde el contrato. Nunca se escribe a mano (`docs/contract-guide.md` §7).
+`contract.json` → (Figma: section + component set) → (Figma: Spec) → `node check.mjs`.
+The Spec is **generated** from the contract. It is never written by hand (`docs/contract-guide.md` §7).
 
-## Fase 0 · Comprobaciones (solo lectura)
+## Phase 0 · Checks (read-only)
 
-- [ ] `figma_list_open_files`: confirmar SDD Library activo, con OK del usuario.
-- [ ] `whoami` (MCP oficial de Figma): ¿el plan del archivo tiene `specs_enabled: true`? Si no, la Spec nativa no existe y se usa el plan B (fase 2).
-- [ ] Mirar en Radix Themes (solo lectura) cómo son sus sections y headers para copiar el patrón, no el estilo.
+- [ ] `figma_list_open_files`: confirm SDD Library is active, with the user's OK.
+- [ ] `whoami` (official Figma MCP): does the file's plan have `specs_enabled: true`? If not, the native Spec does not exist and plan B is used (phase 2).
+- [ ] Look in Radix Themes (read-only) at what its sections and headers look like, to copy the pattern, not the style.
 
-## Fase 1 · Estructura de páginas y sections
+## Phase 1 · Page and section structure
 
-Una página por componente, con un formato propio de SDD Library (distinto de Radix):
-
-```
-Página «Button»
-└─ Section «Button»
-   ├─ Header (instancia de un componente _Header: nombre, versión, estado, ruta del contrato)
-   ├─ Section «Variants»   → el COMPONENT_SET
-   ├─ Section «Examples»   → instancias, una por variante relevante
-   └─ Spec (SPEC_BLOCK)    → la documentación
-```
-
-- [ ] Crear el componente `_Header` (local, con prefijo `_` para no publicarlo como DS). Campos de texto: `name`, `version`, `status`, `contract`.
-- [ ] Páginas fijas al principio: `Cover`, `Foundations` (tokens), `Icons`, separador `----`, y luego una por componente.
-- [ ] Añadir a `references/contract-to-figma.md` la regla: «crea o reutiliza la Section del componente y su Header antes de crear el set».
-
-## Fase 2 · Spec «estilo Zeroheight» generada desde el contrato
-
-Plantilla única (`docs/spec-template.md`) que el agente rellena desde el JSON:
-
-1. `# <name>` + línea de versión y estado
-2. `## Descripción` ← `description`
-3. `## Cuándo usarlo / no usarlo` ← `guidance`
-4. `## Props` (tabla) ← `props[]`
-5. `## Variantes y estados` ← `states`, con enlace a cada ejemplo de la Section «Examples»
-6. `## Anatomía` ← `anatomy`
-7. `## Tokens` (tabla) ← `tokens.bindings`
-8. `## Accesibilidad` ← `a11y`
-9. `## Código` → bloque ```tsx (uso del componente) y bloque ```json (el contrato, o su parte relevante)
-10. `## Fuente` → permalink de GitHub al contrato (nunca ruta local)
-
-- [ ] Script `scripts/build-spec.mjs <Componente>` que produce el Markdown. Así la Spec es reproducible y no depende del agente.
-- [ ] Bloque ```json «de consulta»: solo `props` (nombre, tipo, valores, default) y `tokens.bindings`. El contrato entero queda en el permalink de `## Fuente`.
-- [ ] El agente crea la Spec con `figma.spec.createOnCanvasAsync` la primera vez y la actualiza con `editContent` después.
-
-### Ejecución automática desde la skill
-
-El script se lanza desde `ui-contract-builder`, como último paso del **modo C (Contrato → Figma)** y del **modo D** cuando se aplica un cambio. No hace falta hook: la skill ya es el punto por el que pasa todo dibujado.
-
-- [ ] Mover el script a `skills/ui-contract-builder/scripts/build-spec.mjs` (junto a `check.mjs`) para que viaje con la skill a otros proyectos.
-- [ ] En `references/contract-to-figma.md`, añadir al final del flujo:
-  1. `node <skill>/scripts/check.mjs <raíz>` (0 errores, si no, se para).
-  2. `node <skill>/scripts/build-spec.mjs <raíz> <Componente>` → Markdown.
-  3. Buscar el `SPEC_BLOCK` de la Section del componente (`anchors.figma.spec`); si no existe, crearlo; si existe, `editContent` por secciones.
-  4. Releer con `getContent` y comprobar que la versión del contrato aparece en la Spec.
-- [ ] En `SKILL.md`, «Al terminar»: una línea que remita a ese paso.
-- Descartado por ahora: un hook de Claude Code tras `use_figma`. Se dispararía en cada escritura, no solo al terminar un componente. Se plantea si la skill se queda corta.
-- Opcional, más adelante: el bloque ```tsx como Code Layer en la Section «Examples» (está activo en el archivo).
-- [ ] **Doble dirección (versión mínima):** la Spec enlaza al contrato en GitHub y el contrato guarda el nodo de la Spec en `anchors.figma.spec`. Si el esquema no admite ese campo, va a `meta` (no tocar el esquema sin preguntar).
-- [ ] Plan B si no hay Specs: el mismo Markdown en un frame de texto dentro de la Section, marcado como «generado».
-
-## Fase 3 · Tokens e iconos como recursos
-
-Ya existe en `tokens/tokens.json`: primitivos (`colors`, `spacing`, `radius`…) y una capa semántica (`tokens.colors`, `tokens.space`) que apunta a ellos. No hace falta inventar el modelo.
-
-- [ ] Volcar a SDD Library dos colecciones: `Primitives` y `Semantic` (alias a primitivos, modos Light/Dark). Los componentes solo usan `Semantic`.
-- [ ] Iconos: **Phosphor** (decidido). Traer la librería de comunidad a la página `Icons` y enlazarla. Reglas en `contracts/PhosphorIconLibrary.contract.json`.
-- [ ] `Icon.contract.json` está escrito solo para Lucide: adaptarlo a Phosphor (subida de `version` major si cambia la API). No bloquea a Divider, que no lleva iconos.
-- [ ] Publicar SDD Library como librería del equipo (paso manual del usuario en Figma).
-
-## Fase 4 · Prueba con un componente
-
-- [ ] **Divider** (decidido). Hoy es un ejemplo didáctico sin `anchors.figma`: se dibuja por primera vez en SDD Library, se rellenan `anchors.figma.file/node` y se quita su aviso de `needsReview`. Contrato → Section → Spec → `check.mjs`.
-- [ ] Si sale bien, Button. Nada de Checkbox (216 variantes) en esta fase.
-
-## Fase 5 · Entrega
-
-- [ ] Commits en esta rama (contrato primero, luego script y docs).
-- [ ] Push al fork `i-casaca/SD-Design-System` → solo con OK.
-- [ ] PR hacia `mokkapp-studio/SD-Design-System` → solo con OK y como paso aparte.
-
-## Modelo de página y Spec (2026-11-09, ticket «Plantilla de la Spec»)
-
-Sustituye al esquema de Fase 1 y a la lista de Fase 2 (que quedan como histórico).
-
-**Página de componente en SDD Library** (una Section por componente, ancho = columna + Spec):
+One page per component, with an SDD Library-specific format (different from Radix):
 
 ```
-Section «<Componente>»
-├─ _sdd-header      oscuro (#1C2024), ancho completo de la Section: eyebrow, título, descripción, versión, enlace al contrato
-├─ column-bg        fondo gris, a la izquierda, de la altura de la Section
-├─ component        el COMPONENT_SET (blanco sobre el gris)
-├─ examples         ejemplos (blanco sobre el gris)
-└─ Documentation    SPEC_BLOCK a la derecha de la columna (x = ancho columna + 60, y = bajo el header)
+Page "Button"
+└─ Section "Button"
+   ├─ Header (instance of a _Header component: name, version, status, contract path)
+   ├─ Section "Variants"   → the COMPONENT_SET
+   ├─ Section "Examples"   → instances, one per relevant variant
+   └─ Spec (SPEC_BLOCK)    → the documentation
 ```
 
-- Al terminar de generar la Spec se **restituye el alto de la Section** = max(Spec, columna) + 80 y se ensancha el header al ancho de la Section. El botón «full size» de la Spec no tiene API: se hace a mano en la UI.
-- Los **building blocks** de la documentación (`_anatomy`, `_specs`, solo los dibujos que se exportan a imagen) viven aparte, en la página «Helpers», en una Section «Building blocks · <Componente>». Nada de láminas sueltas dentro de la Section del componente.
+- [ ] Create the `_Header` component (local, with a `_` prefix so it is not published as DS). Text fields: `name`, `version`, `status`, `contract`.
+- [ ] Fixed pages at the start: `Cover`, `Foundations` (tokens), `Icons`, a `----` separator, and then one per component.
+- [ ] Add to `references/contract-to-figma.md` the rule: "create or reuse the component's Section and its Header before creating the set".
 
-**Spec «Documentation»** (un solo documento; cabeceras en inglés, contenido en el idioma del contrato; bloque sin dato = se omite):
+## Phase 2 · "Zeroheight-style" Spec generated from the contract
+
+A single template (`docs/spec-template.md`) that the agent fills from the JSON:
+
+1. `# <name>` + version and status line
+2. `## Description` ← `description`
+3. `## When to use / not to use` ← `guidance`
+4. `## Props` (table) ← `props[]`
+5. `## Variants and states` ← `states`, with a link to each example in the "Examples" Section
+6. `## Anatomy` ← `anatomy`
+7. `## Tokens` (table) ← `tokens.bindings`
+8. `## Accessibility` ← `a11y`
+9. `## Code` → a ```tsx block (component usage) and a ```json block (the contract, or its relevant part)
+10. `## Source` → GitHub permalink to the contract (never a local path)
+
+- [ ] Script `scripts/build-spec.mjs <Component>` that produces the Markdown. This way the Spec is reproducible and does not depend on the agent.
+- [ ] "Reference" ```json block: only `props` (name, type, values, default) and `tokens.bindings`. The whole contract stays in the `## Source` permalink.
+- [ ] The agent creates the Spec with `figma.spec.createOnCanvasAsync` the first time and updates it with `editContent` afterwards.
+
+### Automatic execution from the skill
+
+The script is launched from `ui-contract-builder`, as the last step of **mode C (Contract → Figma)** and of **mode D** when a change is applied. No hook is needed: the skill is already the point everything drawn goes through.
+
+- [ ] Move the script to `skills/ui-contract-builder/scripts/build-spec.mjs` (next to `check.mjs`) so it travels with the skill to other projects.
+- [ ] In `references/contract-to-figma.md`, add at the end of the flow:
+  1. `node <skill>/scripts/check.mjs <root>` (0 errors, otherwise stop).
+  2. `node <skill>/scripts/build-spec.mjs <root> <Component>` → Markdown.
+  3. Find the `SPEC_BLOCK` of the component's Section (`anchors.figma.spec`); if it does not exist, create it; if it exists, `editContent` by sections.
+  4. Re-read with `getContent` and check that the contract version appears in the Spec.
+- [ ] In `SKILL.md`, "When finished": one line pointing to that step.
+- Discarded for now: a Claude Code hook after `use_figma`. It would fire on every write, not only when a component is finished. To be considered if the skill falls short.
+- Optional, later: the ```tsx block as a Code Layer in the "Examples" Section (it is enabled in the file).
+- [ ] **Two-way link (minimal version):** the Spec links to the contract on GitHub and the contract stores the Spec's node in `anchors.figma.spec`. If the schema does not accept that field, it goes to `meta` (do not touch the schema without asking).
+- [ ] Plan B if there are no Specs: the same Markdown in a text frame inside the Section, marked as "generated".
+
+## Phase 3 · Tokens and icons as resources
+
+It already exists in `tokens/tokens.json`: primitives (`colors`, `spacing`, `radius`…) and a semantic layer (`tokens.colors`, `tokens.space`) that points to them. There is no need to invent the model.
+
+- [ ] Dump two collections into SDD Library: `Primitives` and `Semantic` (aliases to primitives, Light/Dark modes). Components only use `Semantic`.
+- [ ] Icons: **Phosphor** (decided). Bring the community library into the `Icons` page and link it. Rules in `contracts/PhosphorIconLibrary.contract.json`.
+- [ ] `Icon.contract.json` is written for Lucide only: adapt it to Phosphor (major `version` bump if the API changes). It does not block Divider, which has no icons.
+- [ ] Publish SDD Library as the team library (a manual step for the user in Figma).
+
+## Phase 4 · Test with one component
+
+- [ ] **Divider** (decided). Today it is a teaching example with no `anchors.figma`: it is drawn for the first time in SDD Library, `anchors.figma.file/node` are filled in and its `needsReview` warning is removed. Contract → Section → Spec → `check.mjs`.
+- [ ] If it goes well, Button. No Checkbox (216 variants) in this phase.
+
+## Phase 5 · Delivery
+
+- [ ] Commits on this branch (contract first, then script and docs).
+- [ ] Push to the fork `i-casaca/SD-Design-System` → only with OK.
+- [ ] PR to `mokkapp-studio/SD-Design-System` → only with OK and as a separate step.
+
+## Page and Spec model (2026-11-09, ticket "Spec template")
+
+Replaces the Phase 1 scheme and the Phase 2 list (which remain as history).
+
+**Component page in SDD Library** (one Section per component, width = column + Spec):
+
+```
+Section "<Component>"
+├─ _sdd-header      dark (#1C2024), full width of the Section: eyebrow, title, description, version, contract link
+├─ column-bg        gray background, on the left, as tall as the Section
+├─ component        the COMPONENT_SET (white on the gray)
+├─ examples         examples (white on the gray)
+└─ Documentation    SPEC_BLOCK to the right of the column (x = column width + 60, y = below the header)
+```
+
+- When the Spec has been generated, the **Section height is restored** = max(Spec, column) + 80 and the header is widened to the Section width. The Spec's "full size" button has no API: it is done by hand in the UI.
+- The documentation's **building blocks** (`_anatomy`, `_specs`, only the drawings that are exported as images) live separately, on the "Helpers" page, in a "Building blocks · <Component>" Section. No loose sheets inside the component's Section.
+
+**"Documentation" Spec** (a single document; headers in English, content in English by default (or in the contract's language if it differs); a block with no data is omitted):
 
 ```
 # Documentation
 ## Overview            Definition · Usage Guidelines (+ Label) · Behavior and Interactions
 ## Anatomy             Component Breakdown · Specs · Properties (+ #### Code) · Tokens · Breakpoints · Motion
-## Accessibility       incluye el contraste medido de la variante dibujada
+## Accessibility       includes the measured contrast of the drawn variant
 ## History             git log
 ```
 
-- **Solo son imagen los dibujos**: anatomía con marcadores (fondo oscuro, magenta) y cotas de Specs (azul, bandas verdes de padding y naranjas de espacio). **Todo dato es Markdown** (tablas GFM): partes con valor, token y cadena de alias; Layout and spacing; tokens por size; All properties; Tokens con `var(--…)`. Así lo lee una máquina.
-- Los datos salen **extraídos del componente en Figma** (variables enlazadas, alias resueltos, estilos de texto), no de los números del contrato. Los valores sin token se marcan «sin token».
-- `#### Code` dentro de Properties: contrato condensado (props + `base` + `bySize`; Divider entero) y `tsx` de uso, más enlace al contrato completo.
-- Referencia de estilo: Dynamic Handoff (datos) y Hovercard (dibujo de cotas). Dynamic Handoff se usa solo para contrastar; no se deja su salida en el archivo.
+- **Only the drawings are images**: anatomy with markers (dark background, magenta) and Specs measurements (blue, green padding bands and orange spacing bands). **All data is Markdown** (GFM tables): parts with value, token and alias chain; Layout and spacing; tokens per size; All properties; Tokens with `var(--…)`. This way a machine can read it.
+- The data is **extracted from the component in Figma** (bound variables, resolved aliases, text styles), not from the contract's numbers. Values with no token are marked "no token".
+- `#### Code` inside Properties: condensed contract (props + `base` + `bySize`; Divider in full) and `tsx` usage, plus a link to the full contract.
+- Style reference: Dynamic Handoff (data) and Hovercard (measurements drawing). Dynamic Handoff is used only for comparison; its output is not left in the file.
 
-## Decisiones (2026-11-08)
+## Decisions (2026-11-08)
 
-1. Iconos: **Phosphor**.
-2. Specs y Code Layer **activos** en el plan del archivo → Spec nativa; el plan B queda solo como respaldo.
-3. Primer componente: **Divider**.
-4. Bloque ```json: **versión de consulta** (props + tokens).
-5. `build-spec.mjs` se ejecuta **desde la skill** al terminar el dibujado (modo C/D), sin hook.
-6. Página de componente: header oscuro a todo el ancho, columna gris con componente y ejemplos, Spec a la derecha; alto de Section restituido al terminar; building blocks aparte en «Helpers».
-7. Spec: dibujos como imagen, todos los datos como Markdown; añade «Tokens» al esqueleto de #20.
+1. Icons: **Phosphor**.
+2. Specs and Code Layer **enabled** in the file's plan → native Spec; plan B stays only as a fallback.
+3. First component: **Divider**.
+4. ```json block: **reference version** (props + tokens).
+5. `build-spec.mjs` runs **from the skill** when drawing is finished (mode C/D), with no hook.
+6. Component page: full-width dark header, gray column with component and examples, Spec on the right; Section height restored at the end; building blocks separate in "Helpers".
+7. Spec: drawings as images, all data as Markdown; adds "Tokens" to the #20 skeleton.

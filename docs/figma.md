@@ -1,58 +1,58 @@
-# Usar el contrato con Figma
+# Using the contract with Figma
 
-Figma y el contrato no se actualizan entre sí: **se comparan**. Si no coinciden, decides cuál es el correcto y cambias el otro.
+Figma and the contract do not update each other: **they are compared**. If they do not match, you decide which one is right and change the other.
 
-## 1. Prepara el componente en Figma
+## 1. Prepare the component in Figma
 
-- **Variables con nombre por uso**, no por aspecto: `color/fill/brand/default`, no `azul-fuerte`. Dos niveles: primitivos y semánticos.
-- **Component set** con propiedades limpias:
-  - Variant → variantes visuales (`Variant`, `Size`).
-  - Boolean → interruptores (`Loading`, `Disabled`, `Full width`).
-  - Text → etiquetas (`Label`).
-  - Instance swap → intercambiar un icono (`Icon start`, `Icon end`).
-  - Slot → huecos que reciben contenido libre (`Header`, `Body`, `Footer`).
-- **Auto layout** en todo, y capas con nombre estable: `root`, `icon`, `label`... las mismas claves que `anatomy`.
-- **Descripción** del componente: pega `description` del contrato y la ruta `contracts/<Componente>.contract.json`.
+- **Variables named by usage**, not by appearance: `color/fill/brand/default`, not `strong-blue`. Two levels: primitives and semantics.
+- **Component set** with clean properties:
+  - Variant → visual variants (`Variant`, `Size`).
+  - Boolean → switches (`Loading`, `Disabled`, `Full width`).
+  - Text → labels (`Label`).
+  - Instance swap → swapping an icon (`Icon start`, `Icon end`).
+  - Slot → gaps that receive free-form content (`Header`, `Body`, `Footer`).
+- **Auto layout** everywhere, and layers with stable names: `root`, `icon`, `label`... the same keys as `anatomy`.
+- **Component description**: paste the contract's `description` and the path `contracts/<Component>.contract.json`.
 
-## 2. Qué se corresponde con qué
+## 2. What maps to what
 
-| En Figma | En el contrato |
+| In Figma | In the contract |
 | --- | --- |
-| Nombre del component set | `name` |
-| Propiedad del componente | `props[]` con `bindings.figma.property` y `.type` |
-| Variantes `Hover`, `Focus`, `Pressed` | `states.native` |
-| Variantes o booleanos `Disabled`, `Loading`, `Error` | `states.controlled` |
-| Nombres de capas | claves de `anatomy` |
-| Propiedad de slot o instance swap | `anatomy.<parte>.slot.figmaProp` |
-| Panel de auto layout | `layout.autoLayout` |
-| Variables aplicadas | `tokens.bindings` |
-| Enlace al nodo | `anchors.figma.file` y `.node` |
+| Component set name | `name` |
+| Component property | `props[]` with `bindings.figma.property` and `.type` |
+| `Hover`, `Focus`, `Pressed` variants | `states.native` |
+| `Disabled`, `Loading`, `Error` variants or booleans | `states.controlled` |
+| Layer names | keys of `anatomy` |
+| Slot or instance swap property | `anatomy.<part>.slot.figmaProp` |
+| Auto layout panel | `layout.autoLayout` |
+| Applied variables | `tokens.bindings` |
+| Link to the node | `anchors.figma.file` and `.node` |
 
-El nombre en `bindings.figma.property` debe ser **idéntico** al de Figma, mayúsculas incluidas.
+The name in `bindings.figma.property` must be **identical** to the one in Figma, capitalization included.
 
-## 3. Qué NO está en Figma
+## 3. What is NOT in Figma
 
-`description`, `guidance`, `a11y` y `events` los decides tú (con desarrollo). Puedes dejar una anotación en Figma que apunte al contrato, pero la fuente es el contrato.
+`description`, `guidance`, `a11y` and `events` are decided by you (with development). You can leave an annotation in Figma that points to the contract, but the source is the contract.
 
-## 4. Flujo: de Figma al contrato
+## 4. Flow: from Figma to the contract
 
-**A mano:** pasos 4–7 de `docs/contract-guide.md`.
+**By hand:** steps 4–7 of `docs/contract-guide.md`.
 
-**Con Claude y el MCP de Figma (sin skill):**
+**With Claude and the Figma MCP (no skill):**
 
-1. Pásale el enlace del componente (clic derecho → copiar enlace a la selección).
+1. Give it the component link (right-click → copy link to selection).
 2. Prompt:
-   > Lee este componente de Figma: <enlace>. Usa `contracts/_template.contract.json` y `docs/contract-guide.md`. Rellena solo lo que se pueda deducir de Figma: `name`, `props` (con `bindings.figma`), `states`, `anatomy`, `layout`, `tokens.bindings` y `anchors`. Deja `description`, `guidance` y `a11y` con placeholders. Anota en `meta.needsReview` todo lo dudoso. Guarda en `contracts/<Componente>.contract.json` y ejecuta `node check.mjs`.
-3. Revisa tú el resultado. La IA acierta lo mecánico y falla en la intención.
+   > Read this Figma component: <link>. Use `contracts/_template.contract.json` and `docs/contract-guide.md`. Fill in only what can be deduced from Figma: `name`, `props` (with `bindings.figma`), `states`, `anatomy`, `layout`, `tokens.bindings` and `anchors`. Leave `description`, `guidance` and `a11y` with placeholders. Note anything doubtful in `meta.needsReview`. Save to `contracts/<Component>.contract.json` and run `node check.mjs`.
+3. Review the result yourself. The AI gets the mechanical parts right and fails on intent.
 
-## 5. Flujo: comprobar que Figma y contrato coinciden
+## 5. Flow: check that Figma and the contract match
 
-> Compara el componente de Figma <enlace> con `contracts/<Componente>.contract.json`. Lista: (1) propiedades de Figma que faltan en el contrato, (2) props del contrato sin propiedad en Figma, (3) capas que no están en `anatomy`, (4) valores sin variable. No modifiques nada.
+> Compare the Figma component <link> with `contracts/<Component>.contract.json`. List: (1) Figma properties missing from the contract, (2) contract props with no Figma property, (3) layers not in `anatomy`, (4) values with no variable. Do not modify anything.
 
-Hazlo cada vez que cambie el componente en Figma y antes de pedir cambios de código.
+Do it every time the component changes in Figma and before requesting code changes.
 
-## 6. Qué no hacer
+## 6. What not to do
 
-- No escribas medidas ni colores sueltos en el contrato: referencia tokens.
-- No renombres una propiedad en Figma sin cambiar `bindings.figma.property` (y subir `version` a major si cambia la API).
-- No uses `opacity` para disabled: tokens `*.disabled`.
+- Do not write loose measurements or colors in the contract: reference tokens.
+- Do not rename a property in Figma without changing `bindings.figma.property` (and bumping `version` to major if the API changes).
+- Do not use `opacity` for disabled: use the `*.disabled` tokens.

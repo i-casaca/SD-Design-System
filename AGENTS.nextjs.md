@@ -1,95 +1,95 @@
-# AGENTS.md — proyecto Next.js
+# AGENTS.md — Next.js project
 
-Copia este archivo a la raíz del proyecto como `AGENTS.md`. Reglas para cualquier agente de IA que trabaje aquí.
+Copy this file to the project root as `AGENTS.md`. Rules for any AI agent working here.
 
-## Este proyecto
+## This project
 
-- Next.js (App Router) + TypeScript estricto. Alias `@/` apunta a `src/`.
-- Estilos: CSS Modules. Sin Tailwind, sin librerías de estilos, sin estilos en línea.
-- El sistema de diseño vive en `design-system/` (submodule o copia). **No se edita desde aquí** salvo petición expresa.
-- Fuente de verdad de cada componente: `design-system/contracts/<Componente>.contract.json`.
-- Tokens: `design-system/tokens/tokens.css`, importado en `src/app/globals.css`.
+- Next.js (App Router) + strict TypeScript. The `@/` alias points to `src/`.
+- Styles: CSS Modules. No Tailwind, no style libraries, no inline styles.
+- The design system lives in `design-system/` (submodule or copy). **It is not edited from here** unless expressly requested.
+- Source of truth for each component: `design-system/contracts/<Component>.contract.json`.
+- Tokens: `design-system/tokens/tokens.css`, imported in `src/app/globals.css`.
 
-## Estructura
+## Structure
 
 ```
 src/
-├── app/                              páginas (App Router)
-│   ├── globals.css                   importa tokens.css
-│   └── playground/page.tsx           muestra todos los componentes y variantes
+├── app/                              pages (App Router)
+│   ├── globals.css                   imports tokens.css
+│   └── playground/page.tsx           shows all components and variants
 └── components/
-    └── <nombre-en-kebab>/
-        ├── <nombre>.tsx              componente
-        ├── <nombre>.module.css       estilos
-        ├── <nombre>.contract.json    copia del contrato (no editar a mano)
-        └── <nombre>.md               documentación generada desde el contrato
-design-system/                        contratos, tokens, docs, check.mjs
+    └── <name-in-kebab>/
+        ├── <name>.tsx                component
+        ├── <name>.module.css         styles
+        ├── <name>.contract.json      copy of the contract (do not edit by hand)
+        └── <name>.md                 documentation generated from the contract
+design-system/                        contracts, tokens, docs, check.mjs
 ```
 
-## Antes de crear o modificar un componente
+## Before creating or modifying a component
 
-1. Lee `design-system/contracts/<Componente>.contract.json` completo. Si no existe, **para y pregunta**.
-2. Lee `design-system/docs/components.md` (vocabulario de props).
-3. Mira `meta.needsReview` del contrato: son huecos conocidos. No los rellenes con suposiciones: pregunta.
-4. Mira qué componentes ya existen en `src/components/` y reutilízalos (los pide `composition.nestedComponents` o `slot.allowedComponents`).
+1. Read `design-system/contracts/<Component>.contract.json` in full. If it does not exist, **stop and ask**.
+2. Read `design-system/docs/components.md` (props vocabulary).
+3. Check the contract's `meta.needsReview`: these are known gaps. Do not fill them with assumptions: ask.
+4. Check which components already exist in `src/components/` and reuse them (they are requested by `composition.nestedComponents` or `slot.allowedComponents`).
 
-## Reglas de código
+## Code rules
 
-- **Props:** nombres, tipos y valores por defecto exactamente como en `props`. No añadas ni quites props.
-- **Props solo de código** (`bindings.figma: null`): impleméntalas igual.
-- **Variantes:** `variant`, `color`, `size`, etc. se exponen como atributos `data-*` en el elemento (`data-variant="solid"`) y se estilan con selectores de atributo en el CSS Module. No generes clases dinámicas.
-- **Partes:** cada clave de `anatomy` lleva `data-part="<clave>"`. El `ref` va en la parte de `semantics.refTarget`.
-- **Estados nativos** (`states.native`): `:hover`, `:focus-visible`, `:active` en CSS.
-- **Estados controlados** (`states.controlled`): son props y llevan el atributo ARIA indicado en `aria`.
-- **Slots:** respeta `allowedComponents`, `minItems`, `maxItems`, `mandatory`. Un slot es una prop o `children`.
-- **Composición:** nunca pongas dentro lo que esté en `composition.forbiddenChildren`.
-- **Tipos:** sin `any`. Exporta con nombre (`export function Button`), y exporta el tipo de props (`ButtonProps`).
-- **React:** si el proyecto usa React 19, `ref` es una prop normal; con React 18, usa `forwardRef`.
-- **`"use client"`:** solo en componentes con estado, eventos o hooks. Nada más.
-- **Comportamiento accesible complejo** (Checkbox, RadioGroup, Switch, AlertDialog): usa los primitivos de Radix (`radix-ui`) para el comportamiento y aplica nuestros estilos con `data-*`. No reimplementes foco, teclado ni ARIA a mano.
+- **Props:** names, types and default values exactly as in `props`. Do not add or remove props.
+- **Code-only props** (`bindings.figma: null`): implement them all the same.
+- **Variants:** `variant`, `color`, `size`, etc. are exposed as `data-*` attributes on the element (`data-variant="solid"`) and styled with attribute selectors in the CSS Module. Do not generate dynamic classes.
+- **Parts:** each key in `anatomy` carries `data-part="<key>"`. The `ref` goes on the part in `semantics.refTarget`.
+- **Native states** (`states.native`): `:hover`, `:focus-visible`, `:active` in CSS.
+- **Controlled states** (`states.controlled`): they are props and carry the ARIA attribute indicated in `aria`.
+- **Slots:** respect `allowedComponents`, `minItems`, `maxItems`, `mandatory`. A slot is a prop or `children`.
+- **Composition:** never put inside anything listed in `composition.forbiddenChildren`.
+- **Types:** no `any`. Use named exports (`export function Button`), and export the props type (`ButtonProps`).
+- **React:** if the project uses React 19, `ref` is a normal prop; with React 18, use `forwardRef`.
+- **`"use client"`:** only on components with state, events or hooks. Nothing else.
+- **Complex accessible behavior** (Checkbox, RadioGroup, Switch, AlertDialog): use the Radix primitives (`radix-ui`) for behavior and apply our styles with `data-*`. Do not reimplement focus, keyboard or ARIA by hand.
 
-## Reglas de estilo
+## Style rules
 
-- Los valores salen **solo** de `tokens.bindings` del contrato. Ni hex, ni px sueltos, ni colores fuera de los tokens.
-- Un token del contrato se convierte en variable CSS así: ruta con puntos → guiones, con prefijo `--`.
+- Values come **only** from the contract's `tokens.bindings`. No hex, no loose px values, no colors outside the tokens.
+- A contract token becomes a CSS variable like this: dotted path → hyphens, with a `--` prefix.
   `colors.accent.accent.9` → `var(--colors-accent-accent-9)`; `spacing.3` → `var(--spacing-3)`.
-- Plantillas `{color.step}.9`: resuelve `tokens.scales.<color>.step` y repite el CSS por cada valor de `color`.
-- `byHighContrast` solo sobrescribe lo que indica. `byState.disabled` aplica con `disabled` o `aria-disabled`.
-- `opacity` solo con los valores numéricos que da el contrato (hover/active). **Disabled nunca con opacity.**
-- Modo oscuro: no escribas nada. Las variables cambian con `data-theme="dark"`.
-- Medidas sin token (alturas, tamaños de icono) salen de `layout`: úsalas como valores del componente.
+- `{color.step}.9` templates: resolve `tokens.scales.<color>.step` and repeat the CSS for each `color` value.
+- `byHighContrast` only overrides what it indicates. `byState.disabled` applies with `disabled` or `aria-disabled`.
+- `opacity` only with the numeric values the contract gives (hover/active). **Disabled never with opacity.**
+- Dark mode: write nothing. The variables change with `data-theme="dark"`.
+- Measurements with no token (heights, icon sizes) come from `layout`: use them as component values.
 
-## Iconos
+## Icons
 
-- Solo iconos de `design-system/icons/registry.json`, importados desde `src/components/icon/icons.ts` (generado). Nunca `import * as` ni imports directos de `lucide-react` en componentes.
-- Se dibujan con el componente `Icon` (contrato `Icon.contract.json`). Sin `label` es decorativo (`aria-hidden`); con `label`, `role="img"`.
-- El tamaño lo fija el componente padre por CSS según su `size` (`layout.iconSize` del contrato). El color se hereda (`currentColor`).
-- Si necesitas un icono que no está en el registry, no lo importes: pregunta.
+- Only icons from `design-system/icons/registry.json`, imported from `src/components/icon/icons.ts` (generated). Never `import * as` or direct `lucide-react` imports in components.
+- They are drawn with the `Icon` component (contract `Icon.contract.json`). Without `label` it is decorative (`aria-hidden`); with `label`, `role="img"`.
+- The size is set by the parent component via CSS according to its `size` (the contract's `layout.iconSize`). The color is inherited (`currentColor`).
+- If you need an icon that is not in the registry, do not import it: ask.
 
-## Accesibilidad
+## Accessibility
 
-Cumple `a11y` del contrato: rol, nombre accesible, teclado, foco visible, área mínima, contraste. Si `minTarget` avisa de que no se cumple, haz pulsable también la etiqueta o añade padding invisible, y dilo en el resumen.
+Comply with the contract's `a11y`: role, accessible name, keyboard, visible focus, minimum target size, contrast. If `minTarget` warns that it is not met, make the label clickable too or add invisible padding, and say so in the summary.
 
-## Cosas que no haces
+## Things you do not do
 
-- No inventas props, variantes, estados ni tokens.
-- No tocas `design-system/`.
-- No editas `tokens.css` (se regenera).
-- No instalas librerías sin preguntar (`lucide-react` y `radix-ui` ya están decididas).
-- No creas componentes que no tengan contrato.
-- No importas iconos fuera del registry.
+- You do not invent props, variants, states or tokens.
+- You do not touch `design-system/`.
+- You do not edit `tokens.css` (it is regenerated).
+- You do not install libraries without asking (`lucide-react` and `radix-ui` are already decided).
+- You do not create components that have no contract.
+- You do not import icons from outside the registry.
 
-## Cuando dudes
+## When in doubt
 
-Pregunta. Si algo no está en el contrato, no lo rellenes con suposiciones.
+Ask. If something is not in the contract, do not fill it with assumptions.
 
-## Al terminar
+## When finished
 
-Si la skill `contract-to-component` está instalada, úsala para crear o actualizar componentes. Antes de dar por bueno un componente, ejecuta:
-`node design-system/skills/contract-to-component/scripts/conformance.mjs src/components/<nombre> --ds design-system` (0 errores).
+If the `contract-to-component` skill is installed, use it to create or update components. Before accepting a component, run:
+`node design-system/skills/contract-to-component/scripts/conformance.mjs src/components/<name> --ds design-system` (0 errors).
 
-Responde con una lista corta:
-1. Archivos creados o cambiados.
-2. Reglas del contrato aplicadas.
-3. Qué has dejado fuera o te ha hecho dudar (lo de `meta.needsReview` que afecta al código).
-4. Cómo probarlo (ruta del playground).
+Reply with a short list:
+1. Files created or changed.
+2. Contract rules applied.
+3. What you left out or were unsure about (the `meta.needsReview` items that affect the code).
+4. How to test it (playground route).
