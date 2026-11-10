@@ -5,61 +5,61 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "container",
-  "description": "Pie de página de la aplicación. En su versión simple, solo la barra inferior con el copyright y los enlaces sociales. En su versión completa, además la marca con su eslogan y una fila de FooterColumn, con un separador entre ambas partes.",
+  "description": "Application footer. In its simple version, only the bottom bar with the copyright and social links. In its full version, also the brand with its tagline and a row of FooterColumn, with a divider between the two parts.",
   "guidance": {
     "dos": [
-      "Usa `variant=\"simple\"` (por defecto) en páginas de producto o de herramienta. Usa `variant=\"full\"` en la página de inicio o en páginas de contenido que necesiten navegación secundaria.",
-      "Pon como mucho tres o cuatro FooterColumn en la fila de columnas, cada una con su título y sus enlaces.",
-      "Pon el copyright en la barra inferior y deja los enlaces sociales a la derecha, como en Figma.",
-      "Usa `showSocial={false}` si la aplicación no tiene redes sociales. La barra inferior queda con solo el copyright."
+      "Use `variant=\"simple\"` (default) on product or tool pages. Use `variant=\"full\"` on the home page or on content pages that need secondary navigation.",
+      "Put at most three or four FooterColumn in the columns row, each with its title and links.",
+      "Put the copyright in the bottom bar and leave the social links on the right, as in Figma.",
+      "Use `showSocial={false}` if the application has no social networks. The bottom bar keeps only the copyright."
     ],
     "donts": [
       {
-        "case": "Navegación principal de la aplicación dentro del footer",
-        "useInstead": "Navbar en la parte superior",
-        "why": "El footer es navegación secundaria. Los destinos principales deben estar siempre a la vista, arriba."
+        "case": "Main application navigation inside the footer",
+        "useInstead": "Navbar at the top",
+        "why": "The footer is secondary navigation. Main destinations must always be in view, at the top."
       },
       {
-        "case": "Un formulario de suscripción o de contacto dentro del footer",
-        "useInstead": "Form en su propia sección de la página",
-        "why": "El footer no tiene espacio ni estados para un formulario. El Form necesita cabecera, errores y confirmación."
+        "case": "A subscription or contact form inside the footer",
+        "useInstead": "Form in its own page section",
+        "why": "The footer has no space or states for a form. The Form needs a header, errors and confirmation."
       },
       {
-        "case": "Más de un footer por página",
-        "useInstead": "Un único footer al final del documento",
-        "why": "Un segundo footer confunde a los lectores de pantalla: el pie de página debe ser único (landmark contentinfo)."
+        "case": "More than one footer per page",
+        "useInstead": "A single footer at the end of the document",
+        "why": "A second footer confuses screen readers: the page footer must be unique (contentinfo landmark)."
       },
       {
-        "case": "Un pie con texto largo o varios párrafos",
-        "useInstead": "Página de contenido enlazada desde el footer",
-        "why": "Las columnas y la barra tienen tamaño fijo en Figma. El texto largo rompe la fila y se lee mal en móvil."
+        "case": "A footer with long text or several paragraphs",
+        "useInstead": "A content page linked from the footer",
+        "why": "The columns and the bar have a fixed size in Figma. Long text breaks the row and reads poorly on mobile."
       }
     ],
     "related": [
       {
         "component": "FooterColumn",
         "relation": "contains",
-        "difference": "Cada columna de la fila de enlaces es un FooterColumn (solo en variant=full)."
+        "difference": "Each column in the links row is a FooterColumn (only in variant=full)."
       },
       {
         "component": "IconButton",
         "relation": "contains",
-        "difference": "Los enlaces sociales son IconButton ghost de tamaño 2 (ver needsReview: destino de cada uno)."
+        "difference": "The social links are ghost IconButton of size 2 (see needsReview: destination of each one)."
       },
       {
         "component": "Divider",
         "relation": "contains",
-        "difference": "Separador horizontal entre la marca y la barra inferior (solo en variant=full)."
+        "difference": "Horizontal divider between the brand and the bottom bar (only in variant=full)."
       },
       {
         "component": "Navbar",
         "relation": "similar",
-        "difference": "Navbar es la navegación principal arriba; Footer es la secundaria y el pie abajo."
+        "difference": "Navbar is the main navigation at the top; Footer is the secondary navigation and the page bottom."
       },
       {
         "component": "Icon",
         "relation": "contains",
-        "difference": "El logo de la marca es un Icon circle-check de 20 px, no una imagen (ver needsReview)."
+        "difference": "The brand logo is a 20 px circle-check Icon, not an image (see needsReview)."
       }
     ]
   },
@@ -74,7 +74,7 @@
       "name": "variant",
       "type": "'simple' | 'full'",
       "default": "simple",
-      "description": "Versión del pie. simple = solo la barra inferior (copyright y redes). full = además la marca con su eslogan, la fila de FooterColumn y el separador. En Figma, el valor por defecto del component set es simple.",
+      "description": "Footer version. simple = only the bottom bar (copyright and social links). full = also the brand with its tagline, the FooterColumn row and the divider. In Figma, the component set default is simple.",
       "bindings": {
         "figma": {
           "property": "variant",
@@ -86,7 +86,7 @@
       "name": "showSocial",
       "type": "boolean",
       "default": true,
-      "description": "Si es true, muestra el grupo de enlaces sociales (tres IconButton) en la barra inferior. Si es false, la barra solo lleva el copyright.",
+      "description": "If true, shows the group of social links (three IconButton) in the bottom bar. If false, the bar carries only the copyright.",
       "bindings": {
         "figma": {
           "property": "showSocial#41:1",
@@ -102,48 +102,48 @@
   "anatomy": {
     "root": {
       "element": "footer",
-      "description": "Elemento raíz. Columna con la parte superior (solo full), el separador (solo full) y la barra inferior. Tiene fondo neutral.2 y un trazo superior.",
-      "figmaLayer": "Footer (cada variante del component set)"
+      "description": "Root element. Column with the top part (full only), the divider (full only) and the bottom bar. Has a neutral.2 background and a top stroke.",
+      "figmaLayer": "Footer (each variant of the component set)"
     },
     "top": {
       "element": "div",
-      "description": "Parte superior: marca y fila de columnas. Solo con variant=full.",
+      "description": "Top part: brand and columns row. Only with variant=full.",
       "optional": true,
       "figmaLayer": "top"
     },
     "brand": {
       "element": "div",
-      "description": "Bloque de marca: logo, nombre y eslogan. Columna con separación de 12 px.",
+      "description": "Brand block: logo, name and tagline. Column with 12 px gap.",
       "optional": true,
       "figmaLayer": "brand"
     },
     "brandRow": {
       "element": "div",
-      "description": "Fila de logo y nombre. Separación de 8 px.",
+      "description": "Logo and name row. 8 px gap.",
       "optional": true,
       "figmaLayer": "brandRow"
     },
     "logo": {
       "element": "svg",
-      "description": "Logo de la marca: Icon circle-check de 20 px, fijo en Figma.",
+      "description": "Brand logo: 20 px circle-check Icon, fixed in Figma.",
       "optional": true,
       "figmaLayer": "logo"
     },
     "name": {
       "element": "span",
-      "description": "Nombre de la marca «Mokkapp», texto fijo en Figma. No es propiedad.",
+      "description": "Brand name \"Mokkapp\", fixed text in Figma. Not a property.",
       "optional": true,
       "figmaLayer": "name"
     },
     "tagline": {
       "element": "p",
-      "description": "Eslogan «Sistemas de diseño basados en contratos.», texto fijo en Figma. No es propiedad.",
+      "description": "Tagline \"Sistemas de diseño basados en contratos.\", fixed text in Figma. Not a property.",
       "optional": true,
       "figmaLayer": "tagline"
     },
     "columns": {
       "element": "div",
-      "description": "Fila de FooterColumn. En escritorio, en horizontal con 40 px entre columnas; en móvil, en vertical. Solo con variant=full.",
+      "description": "FooterColumn row. On desktop, horizontal with 40 px between columns; on mobile, vertical. Only with variant=full.",
       "optional": true,
       "figmaLayer": "columns",
       "slot": {
@@ -159,23 +159,23 @@
     },
     "divider": {
       "element": "hr",
-      "description": "Separador horizontal de 1 px, color neutral-alpha.6. Solo con variant=full.",
+      "description": "1 px horizontal divider, color neutral-alpha.6. Only with variant=full.",
       "optional": true,
       "figmaLayer": "divider"
     },
     "bottom": {
       "element": "div",
-      "description": "Barra inferior: copyright a la izquierda y enlaces sociales a la derecha en escritorio; en móvil, apilados.",
+      "description": "Bottom bar: copyright on the left and social links on the right on desktop; stacked on mobile.",
       "figmaLayer": "bottom"
     },
     "legal": {
       "element": "p",
-      "description": "Copyright «© 2026 Mokkapp Studio», texto fijo en Figma. No es propiedad.",
+      "description": "Copyright \"© 2026 Mokkapp Studio\", fixed text in Figma. Not a property.",
       "figmaLayer": "legal"
     },
     "social": {
       "element": "div",
-      "description": "Grupo de enlaces sociales. Solo con showSocial=true. Tres IconButton ghost de tamaño 2 en Figma (LinkedIn, GitHub, YouTube).",
+      "description": "Group of social links. Only with showSocial=true. Three ghost IconButton of size 2 in Figma (LinkedIn, GitHub, YouTube).",
       "optional": true,
       "figmaLayer": "social",
       "slot": {
@@ -234,18 +234,18 @@
       },
       "unit": "px",
       "token": null,
-      "note": "Alto de la versión simple en escritorio (129 px = 48 + 32 de la barra + 48 de padding). La versión full depende de la altura de las columnas."
+      "note": "Height of the simple version on desktop (129 px = 48 + 32 for the bar + 48 padding). The full version depends on the height of the columns."
     },
     "width": {
       "default": "fill",
       "modes": {
-        "fill": "Ancho completo de la página (FILL).",
-        "fixed": "1280 px en escritorio y 375 px en móvil, en el ejemplo de Figma.",
-        "hug": "No definido en Figma."
+        "fill": "Full page width (FILL).",
+        "fixed": "1280 px on desktop and 375 px on mobile, in the Figma example.",
+        "hug": "Not defined in Figma."
       },
       "min": null,
       "max": null,
-      "note": "En Figma, el componente mide 1280 px de ancho en escritorio y 375 px en móvil; su ancho real lo fija el viewport."
+      "note": "In Figma, the component is 1280 px wide on desktop and 375 px on mobile; its actual width is set by the viewport."
     },
     "autoLayout": {
       "direction": "VERTICAL",
@@ -253,20 +253,20 @@
       "sizingVertical": "HUG",
       "alignMain": "MIN",
       "alignCross": "MIN",
-      "gap": "spacing.6 (32 px) entre la parte superior, el separador y la barra inferior (escritorio y móvil)."
+      "gap": "spacing.6 (32 px) between the top part, the divider and the bottom bar (desktop and mobile)."
     },
     "topLayout": {
       "desktop": {
         "direction": "HORIZONTAL",
         "alignMain": "MIN",
         "sizingHorizontal": "FILL",
-        "gap": "spacing.8 (48 px) entre la marca y las columnas"
+        "gap": "spacing.8 (48 px) between the brand and the columns"
       },
       "mobile": {
         "direction": "VERTICAL",
         "alignMain": "MIN",
         "sizingHorizontal": "FILL",
-        "gap": "spacing.6 (32 px) entre la marca y las columnas"
+        "gap": "spacing.6 (32 px) between the brand and the columns"
       }
     },
     "columnsLayout": {
@@ -278,7 +278,7 @@
       "mobile": {
         "direction": "VERTICAL",
         "sizingHorizontal": "FILL",
-        "gap": "24 px (derivado de las alturas de las columnas en Figma; no tiene variable)"
+        "gap": "24 px (derived from the column heights in Figma; no variable)"
       }
     },
     "bottomLayout": {
@@ -344,33 +344,33 @@
   },
   "events": [],
   "a11y": {
-    "role": "contentinfo (implícito en footer fuera de article y section)",
-    "name": "No necesita nombre si es el único pie de la página.",
+    "role": "contentinfo (implicit on footer outside article and section)",
+    "name": "Needs no name if it is the only footer on the page.",
     "keyboard": [
-      "Tab — recorre las columnas, los enlaces y los botones sociales en orden"
+      "Tab — moves through the columns, links and social buttons in order"
     ],
-    "focusIndicator": "Lo heredan FooterColumn (Link), IconButton y Divider de sus contratos. El footer no añade anillo propio.",
-    "minTarget": "Botones sociales de 32 × 32 px. Los enlaces de FooterColumn miden 20 px de alto: ver needsReview de FooterColumn.",
-    "contrastNote": "Texto neutral.12 (nombre) y neutral.11 (eslogan y copyright) sobre neutral.2. No medido en Figma.",
+    "focusIndicator": "Inherited by FooterColumn (Link), IconButton and Divider from their contracts. The footer adds no ring of its own.",
+    "minTarget": "Social buttons are 32 × 32 px. FooterColumn links are 20 px tall: see FooterColumn's needsReview.",
+    "contrastNote": "neutral.12 text (name) and neutral.11 (tagline and copyright) on neutral.2. Not measured in Figma.",
     "wcag": [
-      "1.3.1 Información y relaciones",
-      "1.4.3 Contraste (AA)",
-      "2.1.1 Teclado",
-      "2.4.1 Evitar bloques",
-      "2.5.8 Tamaño mínimo del objetivo (AA)",
-      "4.1.2 Nombre, función, valor"
+      "1.3.1 Info and Relationships",
+      "1.4.3 Contrast (Minimum) (AA)",
+      "2.1.1 Keyboard",
+      "2.4.1 Bypass Blocks",
+      "2.5.8 Target Size (Minimum) (AA)",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "content": {
     "label": {
       "maxLength": null,
       "casing": "sentence",
-      "voice": "Textos fijos de Figma: marca «Mokkapp», eslogan «Sistemas de diseño basados en contratos.», copyright «© 2026 Mokkapp Studio». Los títulos y enlaces de las columnas son de FooterColumn."
+      "voice": "Fixed Figma texts: brand \"Mokkapp\", tagline \"Sistemas de diseño basados en contratos.\", copyright \"© 2026 Mokkapp Studio\". The column titles and links belong to FooterColumn."
     }
   },
   "behavior": {
     "loading": null,
-    "overflow": "wrap: el copyright, el eslogan y los enlaces se envuelven en móvil. Figma no define este caso.",
+    "overflow": "wrap: the copyright, tagline and links wrap on mobile. Figma does not define this case.",
     "motion": [],
     "responsive": [
       {
@@ -380,8 +380,8 @@
           "mobile"
         ],
         "default": "desktop",
-        "desktop": "Padding 48 px arriba y abajo, 32 px a los lados. Marca y columnas en horizontal; barra inferior con copyright y redes separados.",
-        "mobile": "Padding 32 px arriba y abajo, 16 px a los lados. Marca y columnas apiladas; barra inferior apilada, con 16 px entre copyright y redes."
+        "desktop": "Padding 48 px top and bottom, 32 px on the sides. Brand and columns horizontal; bottom bar with copyright and social links apart.",
+        "mobile": "Padding 32 px top and bottom, 16 px on the sides. Brand and columns stacked; bottom bar stacked, with 16 px between copyright and social links."
       }
     ]
   },
@@ -397,20 +397,20 @@
     "density": null
   },
   "i18n": {
-    "rtl": "La barra inferior se invierte: el copyright pasa a la derecha y los enlaces sociales a la izquierda. El orden de las columnas lo sigue.",
-    "textExpansion": "El copyright y el eslogan se envuelven. En escritorio, una fila de columnas más anchas puede desbordar la de 1216 px: revisar con textos largos."
+    "rtl": "The bottom bar is mirrored: the copyright moves to the right and the social links to the left. The column order follows.",
+    "textExpansion": "The copyright and tagline wrap. On desktop, a row of wider columns can overflow the 1216 px one: check with long texts."
   },
   "testing": {
     "cases": [
-      "renderiza un footer con la barra inferior siempre visible",
-      "variant=simple oculta top y divider; variant=full los muestra",
-      "showSocial=false oculta el grupo social; la barra queda con el copyright",
-      "el separador es un Divider horizontal de 1 px con neutral-alpha.6",
-      "en escritorio, padding 48 px vertical y 32 px horizontal; en móvil, 32 px y 16 px",
-      "las columnas van separadas 40 px en escritorio y apiladas en móvil",
-      "el slot columns acepta FooterColumn y rechaza Link y Button",
-      "el slot social acepta IconButton",
-      "el footer tiene fondo neutral.2 y trazo superior neutral-alpha.6"
+      "renders a footer with the bottom bar always visible",
+      "variant=simple hides top and divider; variant=full shows them",
+      "showSocial=false hides the social group; the bar keeps the copyright",
+      "the divider is a 1 px horizontal Divider with neutral-alpha.6",
+      "on desktop, padding 48 px vertical and 32 px horizontal; on mobile, 32 px and 16 px",
+      "columns are 40 px apart on desktop and stacked on mobile",
+      "the columns slot accepts FooterColumn and rejects Link and Button",
+      "the social slot accepts IconButton",
+      "the footer has a neutral.2 background and a neutral-alpha.6 top stroke"
     ]
   },
   "governance": null,
@@ -433,23 +433,23 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "El component set tiene 4 variantes: breakpoint (desktop, mobile) × variant (simple, full). Todas leídas. simple oculta top y divider; full los muestra. El breakpoint cambia padding y dirección de la parte superior, las columnas y la barra inferior.",
-      "Propiedad breakpoint: no es prop. Se documenta en behavior.responsive, igual que en Navbar, porque en código es un media query. El punto de corte entre escritorio (1280 px) y móvil (375 px) no está definido en Figma.",
-      "Propiedad variant (simple, full): se expone como prop. Por defecto simple, que es el valor por defecto del component set.",
-      "Propiedad showSocial (BOOLEAN, por defecto true): controla la capa social de la barra inferior. Se expone como prop showSocial. Nota: en FooterColumn, showSocial no tenía capas; aquí sí la tiene.",
-      "Textos fijos sin propiedad: marca «Mokkapp», eslogan, copyright «© 2026 Mokkapp Studio». Pregunta: ¿añadir propiedades de texto en Figma o aprobarlas en código? No se han añadido props.",
-      "Títulos y enlaces de las columnas: tres instancias de FooterColumn con sus títulos y enlaces fijos (overrides de instancia). Figma no permite cambiarlos desde el Footer.",
-      "Logo: Icon circle-check de 20 px, no una imagen. Decidir si la marca debe llevar un logo real (imagen o SVG propio) en lugar de un icono de ejemplo.",
-      "Redes sociales: tres IconButton ghost de tamaño 2 (LinkedIn, GitHub, YouTube), con icono por instancia swap. Problema: IconButton es un botón y no tiene href, pero estos elementos deben llevar a una URL. Decidir si son Link con icono (y cambiar el contrato) o IconButton con onPress y destino en la aplicación. Además, IconButton exige aria-label y Figma no define los textos (p. ej. «LinkedIn»).",
-      "Separación en móvil: las columnas se apilan con 24 px entre ellas, valor derivado de las alturas de los componentes en Figma (344 px de alto total con tres columnas de 108, 108 y 80 px). No tiene variable: confirmar y, si se quiere, crear un token.",
-      "Separación entre marca y columnas: 48 px en escritorio (spacing.8) y 32 px en móvil (spacing.6), ligados a variable.",
-      "Trazo superior del footer: neutral-alpha.6 con opacidad de 0.15 sobre el propio trazo, igual que en Navbar y Form. La opacidad no tiene token y la posición del trazo se documenta como superior por convención; verificar a mano.",
-      "Separador: Divider horizontal de 1 px con neutral-alpha.6 y opacidad 0.15 en el propio relleno (mismo caso que el trazo).",
-      "Altura: la versión simple en escritorio mide 129 px. La versión full no se calculó como valor fijo porque depende de la altura de las columnas.",
-      "Medidas sin variable: logo 20 px (Icon admite '20'), separación de 24 px en móvil (ver arriba), ancho de 1280 / 375 px del ejemplo (viewport), y 1216 px de contenido (1280 menos 64 de padding horizontal).",
-      "Contenido, guidance, a11y (contentinfo implícito), testing y content: redactados como borrador. No salen de Figma. Decisiones propias: landmark footer único, showSocial=false como caso de uso y la recomendación de no meter navegación principal ni formularios.",
-      "Contraste no medido. Figma no define estados de foco ni hover para los enlaces del footer.",
-      "governance: null, igual que Button. Falta definir responsables del componente."
+      "The component set has 4 variants: breakpoint (desktop, mobile) × variant (simple, full). All read. simple hides top and divider; full shows them. The breakpoint changes the padding and the direction of the top part, the columns and the bottom bar.",
+      "breakpoint property: not a prop. It is documented in behavior.responsive, as in Navbar, because in code it is a media query. The cutoff between desktop (1280 px) and mobile (375 px) is not defined in Figma.",
+      "variant property (simple, full): exposed as a prop. Default simple, which is the component set default.",
+      "showSocial property (BOOLEAN, default true): controls the social layer of the bottom bar. Exposed as the showSocial prop. Note: in FooterColumn, showSocial had no layers; here it does.",
+      "Fixed texts with no property: brand \"Mokkapp\", tagline, copyright \"© 2026 Mokkapp Studio\". Question: add text properties in Figma or approve them in code? No props have been added.",
+      "Column titles and links: three FooterColumn instances with their fixed titles and links (instance overrides). Figma does not allow changing them from the Footer.",
+      "Logo: 20 px circle-check Icon, not an image. Decide whether the brand should carry a real logo (image or its own SVG) instead of an example icon.",
+      "Social links: three ghost IconButton of size 2 (LinkedIn, GitHub, YouTube), with an icon per instance swap. Problem: IconButton is a button and has no href, but these elements must lead to a URL. Decide whether they are Link with an icon (and change the contract) or IconButton with onPress and the destination in the application. Also, IconButton requires aria-label and Figma does not define the texts (e.g. \"LinkedIn\").",
+      "Mobile gap: the columns stack with 24 px between them, a value derived from the component heights in Figma (344 px total height with three columns of 108, 108 and 80 px). No variable: confirm and, if wanted, create a token.",
+      "Gap between brand and columns: 48 px on desktop (spacing.8) and 32 px on mobile (spacing.6), bound to a variable.",
+      "Footer top stroke: neutral-alpha.6 with 0.15 opacity on the stroke itself, as in Navbar and Form. The opacity has no token and the stroke position is documented as top by convention; verify by hand.",
+      "Divider: 1 px horizontal Divider with neutral-alpha.6 and 0.15 opacity on the fill itself (same case as the stroke).",
+      "Height: the simple version on desktop is 129 px. The full version was not computed as a fixed value because it depends on the height of the columns.",
+      "Measurements with no variable: 20 px logo (Icon accepts '20'), 24 px mobile gap (see above), 1280 / 375 px example width (viewport), and 1216 px of content (1280 minus 64 of horizontal padding).",
+      "Content, guidance, a11y (implicit contentinfo), testing and content: written as a draft. They do not come from Figma. Own decisions: single footer landmark, showSocial=false as a use case and the recommendation not to include main navigation or forms.",
+      "Contrast not measured. Figma defines no focus or hover states for the footer links.",
+      "governance: null, same as Button. Component owners still need to be defined."
     ]
   }
 }

@@ -5,51 +5,51 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "input",
-  "description": "Interruptor de dos posiciones (encendido / apagado) cuyo efecto se aplica al cambiar. Alternativa a la casilla para ajustes.",
+  "description": "Two-position (on / off) switch whose effect applies as soon as it changes. Alternative to the checkbox for settings.",
   "guidance": {
     "dos": [
-      "Usa un Switch para ajustes con efecto inmediato: «Notificaciones», «Modo oscuro».",
-      "Etiqueta (`label`) en positivo y que describa el estado «encendido»: «Recibir avisos».",
-      "Pon la etiqueta a la derecha del interruptor.",
-      "Haz que el cambio se aplique al instante, sin botón de guardar."
+      "Use a Switch for settings with immediate effect: \"Notifications\", \"Dark mode\".",
+      "Write the label (`label`) in positive terms, describing the \"on\" state: \"Receive alerts\".",
+      "Place the label to the right of the switch.",
+      "Apply the change instantly, with no save button."
     ],
     "donts": [
       {
-        "case": "Opción que se confirma al enviar un formulario",
+        "case": "Option confirmed when submitting a form",
         "useInstead": "Checkbox",
-        "why": "Un Switch promete efecto inmediato; una casilla espera al envío."
+        "why": "A Switch promises immediate effect; a checkbox waits for submission."
       },
       {
-        "case": "Elegir una opción entre varias",
+        "case": "Choosing one option among several",
         "useInstead": "RadioGroup",
-        "why": "Un Switch solo tiene dos posiciones."
+        "why": "A Switch has only two positions."
       },
       {
-        "case": "Seleccionar varios elementos de una lista",
+        "case": "Selecting several items from a list",
         "useInstead": "Checkbox",
-        "why": "Un Switch no admite estado indeterminado."
+        "why": "A Switch does not support an indeterminate state."
       },
       {
-        "case": "Lanzar una acción",
+        "case": "Triggering an action",
         "useInstead": "Button",
-        "why": "Un Switch guarda un estado, no ejecuta."
+        "why": "A Switch stores a state; it does not execute anything."
       }
     ],
     "related": [
       {
         "component": "Checkbox",
         "relation": "alternative",
-        "difference": "Se confirma con el formulario; admite indeterminado."
+        "difference": "Confirmed with the form; supports indeterminate."
       },
       {
         "component": "RadioGroup",
         "relation": "alternative",
-        "difference": "Una opción entre varias."
+        "difference": "One option among several."
       },
       {
         "component": "Button",
         "relation": "alternative",
-        "difference": "Ejecuta una acción."
+        "difference": "Executes an action."
       }
     ]
   },
@@ -64,7 +64,7 @@
       "name": "variant",
       "type": "'classic' | 'surface' | 'soft'",
       "default": "surface",
-      "description": "Aspecto. surface = pista con borde; classic = igual con sombra interior; soft = relleno tenue de acento sin borde.",
+      "description": "Appearance. surface = track with border; classic = same with inner shadow; soft = faint accent fill with no border.",
       "bindings": {
         "figma": {
           "property": "variant",
@@ -76,7 +76,7 @@
       "name": "size",
       "type": "'1' | '2' | '3'",
       "default": "2",
-      "description": "Tamaño de la pista: 28x16 / 35x20 / 42x24 px, con su pulgar y espaciado. El 2 es el valor por defecto.",
+      "description": "Track size: 28x16 / 35x20 / 42x24 px, with its thumb and spacing. 2 is the default.",
       "bindings": {
         "figma": {
           "property": "size",
@@ -88,7 +88,7 @@
       "name": "highContrast",
       "type": "boolean",
       "default": false,
-      "description": "Si es true y el interruptor está encendido, usa el paso 12 del acento. Apagado no cambia mucho.",
+      "description": "If true and the switch is on, uses accent step 12. Off, it barely changes.",
       "bindings": {
         "figma": {
           "property": "highContrast",
@@ -101,7 +101,7 @@
       "name": "checked",
       "type": "boolean",
       "default": false,
-      "description": "Encendido. En Figma es el eje `status`: false = «unchecked ✦», true = «checked».",
+      "description": "On. In Figma it is the `status` axis: false = \"unchecked ✦\", true = \"checked\".",
       "bindings": {
         "figma": {
           "property": "status",
@@ -114,7 +114,7 @@
       "name": "disabled",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, no se puede cambiar. En Figma es el valor «disable» del eje `state`.",
+      "description": "If true, it cannot be changed. In Figma it is the \"disable\" value of the `state` axis.",
       "bindings": {
         "figma": {
           "property": "state",
@@ -127,7 +127,7 @@
       "name": "label",
       "type": "string | undefined",
       "default": null,
-      "description": "Texto a la derecha del interruptor. En Figma el boolean `text` lo muestra u oculta (oculto por defecto). Texto de ejemplo: «Text».",
+      "description": "Text to the right of the switch. In Figma the `text` boolean shows or hides it (hidden by default). Sample text: \"Text\".",
       "bindings": {
         "figma": {
           "property": "⮑ ✏️ text",
@@ -139,7 +139,7 @@
       "name": "name",
       "type": "string | undefined",
       "default": null,
-      "description": "Nombre del campo al enviar un formulario. Solo de código.",
+      "description": "Field name when submitting a form. Code only.",
       "bindings": {
         "figma": null
       }
@@ -148,7 +148,7 @@
       "name": "onCheckedChange",
       "type": "(checked: boolean) => void",
       "default": null,
-      "description": "Se emite al cambiar de posición. Solo de código.",
+      "description": "Emitted when the position changes. Code only.",
       "bindings": {
         "figma": null
       }
@@ -163,25 +163,25 @@
     "controlled": [
       {
         "name": "checked",
-        "description": "Encendido. El pulgar va a la derecha y la pista usa el acento.",
+        "description": "On. The thumb moves to the right and the track uses the accent.",
         "aria": "aria-checked='true'"
       },
       {
         "name": "disabled",
-        "description": "No interactivo. Pista y pulgar con tokens neutros; nunca con opacity.",
-        "aria": "disabled (atributo HTML nativo)"
+        "description": "Not interactive. Track and thumb use neutral tokens; never opacity.",
+        "aria": "disabled (native HTML attribute)"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "span",
-      "description": "Contenedor de interruptor y etiqueta. Un solo objetivo pulsable.",
-      "figmaLayer": "Switch (cada variante del component set)"
+      "description": "Container for switch and label. A single pressable target.",
+      "figmaLayer": "Switch (each variant of the component set)"
     },
     "focusRing": {
       "element": "css",
-      "description": "No es un elemento: se pinta con :focus-visible. En Figma es una capa que se muestra con el boolean focusRing: borde exterior de 4px e interior de 2px.",
+      "description": "Not an element: painted with :focus-visible. In Figma it is a layer shown with the focusRing boolean: 4px outer and 2px inner border.",
       "optional": true,
       "figmaLayer": "focus-ring",
       "figmaToggle": {
@@ -192,17 +192,17 @@
     },
     "track": {
       "element": "button",
-      "description": "La pista. Lleva role=switch y aria-checked.",
+      "description": "The track. Carries role=switch and aria-checked.",
       "figmaLayer": "switch"
     },
     "thumb": {
       "element": "span",
-      "description": "El pulgar circular. Izquierda si está apagado, derecha si está encendido.",
+      "description": "The circular thumb. Left when off, right when on.",
       "figmaLayer": "thumb"
     },
     "label": {
       "element": "label",
-      "description": "Texto a la derecha. Asociado al interruptor.",
+      "description": "Text to the right. Associated with the switch.",
       "optional": true,
       "figmaLayer": "Text",
       "figmaToggle": {
@@ -234,18 +234,18 @@
       },
       "unit": "px",
       "token": null,
-      "note": "Altura de la pista; sin token."
+      "note": "Track height; no token."
     },
     "width": {
       "default": "hug",
       "modes": {
-        "hug": "Pista más etiqueta.",
-        "fill": "No aplica.",
-        "fixed": "No aplica."
+        "hug": "Track plus label.",
+        "fill": "Not applicable.",
+        "fixed": "Not applicable."
       },
       "min": null,
       "max": null,
-      "note": "Sin tokens de ancho."
+      "note": "No width tokens."
     },
     "autoLayout": {
       "direction": "HORIZONTAL",
@@ -253,7 +253,7 @@
       "sizingVertical": "HUG",
       "alignMain": "MIN",
       "alignCross": "CENTER",
-      "gap": "Entre pista y etiqueta, por size: spacing.2 / 2 / 3"
+      "gap": "Between track and label, by size: spacing.2 / 2 / 3"
     },
     "trackSize": {
       "values": {
@@ -709,7 +709,7 @@
   "events": [
     {
       "name": "onCheckedChange",
-      "trigger": "Clic, o Espacio con el interruptor enfocado",
+      "trigger": "Click, or Space with the switch focused",
       "payload": "boolean",
       "blockedWhen": [
         "disabled"
@@ -718,22 +718,22 @@
   ],
   "a11y": {
     "role": "switch",
-    "name": "La etiqueta (label). Sin etiqueta visible, aria-label obligatorio.",
+    "name": "The label (label). With no visible label, aria-label is required.",
     "keyboard": [
-      "Space — alterna",
-      "Enter — alterna (opcional según el patrón)",
-      "Tab — entra y sale"
+      "Space — toggles",
+      "Enter — toggles (optional, depending on the pattern)",
+      "Tab — enters and leaves"
     ],
-    "focusIndicator": "Anillo doble sobre la pista: exterior de 4px con colors.accent.accent-alpha.8 e interior de 2px con colors.accent.accent.3 (capa focus-ring).",
-    "minTarget": "La pista mide 16 / 20 / 24 px de alto: por debajo de 24x24 en size 1 y 2 (WCAG 2.5.8). Hay que hacer pulsable también la etiqueta o añadir padding invisible.",
-    "contrastNote": "Pista contra el fondo ≥ 3:1 (WCAG 1.4.11) y texto ≥ 4.5:1. No medido en Figma; la pista apagada usa neutral-alpha.3 con borde neutral-alpha.7.",
+    "focusIndicator": "Double ring on the track: 4px outer with colors.accent.accent-alpha.8 and 2px inner with colors.accent.accent.3 (focus-ring layer).",
+    "minTarget": "The track is 16 / 20 / 24 px tall: below 24x24 in size 1 and 2 (WCAG 2.5.8). The label must also be made pressable, or invisible padding added.",
+    "contrastNote": "Track against the background ≥ 3:1 (WCAG 1.4.11) and text ≥ 4.5:1. Not measured in Figma; the off track uses neutral-alpha.3 with a neutral-alpha.7 border.",
     "wcag": [
-      "1.4.3 Contraste (AA)",
-      "1.4.11 Contraste no textual",
-      "2.1.1 Teclado",
-      "2.4.7 Foco visible",
-      "2.5.8 Tamaño del objetivo",
-      "4.1.2 Nombre, función, valor"
+      "1.4.3 Contrast (Minimum)",
+      "1.4.11 Non-text Contrast",
+      "2.1.1 Keyboard",
+      "2.4.7 Focus Visible",
+      "2.5.8 Target Size (Minimum)",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "form": {
@@ -745,13 +745,13 @@
     },
     "validation": null,
     "errorMessage": null,
-    "note": "Figma no define estado de error. Valor enviado: según name y checked."
+    "note": "Figma defines no error state. Submitted value: based on name and checked."
   },
   "content": {
     "label": {
       "maxLength": 60,
       "casing": "sentence",
-      "voice": "Ajuste en positivo: «Recibir avisos»"
+      "voice": "Setting in positive terms: \"Receive alerts\""
     }
   },
   "behavior": {
@@ -759,7 +759,7 @@
     "motion": [
       {
         "on": "checked",
-        "property": "posición del pulgar y color de la pista",
+        "property": "thumb position and track color",
         "reducedMotion": "instant"
       }
     ],
@@ -767,11 +767,11 @@
   },
   "testing": {
     "cases": [
-      "Space alterna checked y emite onCheckedChange",
-      "disabled no recibe foco ni emite onCheckedChange",
-      "aria-checked refleja el estado",
-      "pulsar la etiqueta alterna el interruptor",
-      "sin label ni aria-label falla el check de accesibilidad"
+      "Space toggles checked and emits onCheckedChange",
+      "disabled receives no focus and emits no onCheckedChange",
+      "aria-checked reflects the state",
+      "pressing the label toggles the switch",
+      "with no label or aria-label, the accessibility check fails"
     ]
   },
   "anchors": {
@@ -793,18 +793,18 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "Los valores por defecto van marcados con ✦ («surface ✦», «2 ✦», «unchecked ✦», «default ✦»). El default del component set es `classic`.",
-      "Tokens de color leídos en size 2 con el texto de ejemplo. En size 1 y 3 solo se leyeron medidas, gap y estilo de texto.",
-      "Size 1 usa el estilo de texto de size 2 (Typography/2/Regular) en Figma; en Checkbox y RadioGroup, size 1 usa Typography/1.",
-      "Posición del pulgar: izquierda (unchecked) y derecha (checked) por alineación de la pista con padding de 1px; no hay variable de recorrido.",
-      "Hay un borde en la pista también encendida (neutral-alpha.7, surface y classic): puede ser intencionado o un sobrante.",
-      "En classic, el borde de la pista apagada es neutral-alpha.6 y el pulgar sin sombra; en surface y soft el pulgar lleva shadows.shadow-3.",
-      "classic usa shadows.shadow-1 en la pista, salvo en disabled.",
-      "opacity en hover/active (0.88, 0.82, 0.92) fijo en Figma, sin variable. Es el único caso en que el contrato usa opacity; disabled nunca.",
-      "disabled se ve igual para encendido y apagado: no distingue la posición por color. El texto no cambia de color.",
-      "El anillo de foco se leyó solo en size 2 (radio 6 con radius.3-max). Radio de esquina en size 1 y 3 no leído.",
-      "La pista mide menos de 24px de alto en size 1 y 2: área táctil por debajo de WCAG 2.5.8.",
-      "Sin estado de error, campo requerido ni etiqueta a la izquierda en Figma."
+      "Default values are marked with ✦ (\"surface ✦\", \"2 ✦\", \"unchecked ✦\", \"default ✦\"). The component set default is `classic`.",
+      "Color tokens read in size 2 with the sample text. In size 1 and 3 only measurements, gap and text style were read.",
+      "Size 1 uses the size 2 text style (Typography/2/Regular) in Figma; in Checkbox and RadioGroup, size 1 uses Typography/1.",
+      "Thumb position: left (unchecked) and right (checked) through track alignment with 1px padding; there is no travel variable.",
+      "There is a border on the track even when on (neutral-alpha.7, surface and classic): it may be intentional or a leftover.",
+      "In classic, the off track border is neutral-alpha.6 and the thumb has no shadow; in surface and soft the thumb has shadows.shadow-3.",
+      "classic uses shadows.shadow-1 on the track, except in disabled.",
+      "opacity on hover/active (0.88, 0.82, 0.92) is fixed in Figma, with no variable. It is the only case where the contract uses opacity; never for disabled.",
+      "disabled looks the same for on and off: it does not distinguish the position by color. The text does not change color.",
+      "The focus ring was read only in size 2 (radius 6 with radius.3-max). Corner radius in size 1 and 3 not read.",
+      "The track is less than 24px tall in size 1 and 2: touch target below WCAG 2.5.8.",
+      "No error state, required field or left-side label in Figma."
     ]
   }
 }

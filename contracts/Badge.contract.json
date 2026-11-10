@@ -5,52 +5,52 @@
     "version": "0.1.0",
     "status": "draft",
     "category": "feedback",
-    "description": "Etiqueta pequeña y no interactiva que resume un estado, una categoría o un valor corto. Puede llevar un icono al inicio.",
+    "description": "Small, non-interactive label that summarizes a status, a category or a short value. It can carry an icon at the start.",
     "guidance": {
         "dos": [
-            "Texto corto, de una o dos palabras: «Nuevo», «En revisión». Si necesitas una frase, no es un Badge.",
-            "El texto debe decir el estado por sí solo: el color refuerza, pero no puede ser la única señal (WCAG 1.4.1).",
-            "Usa `color=\"neutral\"` para información sin carga y `success`, `warning`, `error` o `info` cuando el color tenga significado de estado.",
-            "Usa `variant=\"solid\"` para lo que debe destacar y `soft` (el valor por defecto) para el resto. `outline` y `surface` son para fondos ya cargados.",
-            "Usa `highContrast` cuando el color de acento no dé contraste suficiente sobre el fondo."
+            "Short text, one or two words: \"New\", \"In review\". If you need a sentence, it is not a Badge.",
+            "The text must state the status on its own: color reinforces it but cannot be the only signal (WCAG 1.4.1).",
+            "Use `color=\"neutral\"` for neutral information and `success`, `warning`, `error` or `info` when the color carries status meaning.",
+            "Use `variant=\"solid\"` for what must stand out and `soft` (the default) for the rest. `outline` and `surface` are for already busy backgrounds.",
+            "Use `highContrast` when the accent color does not give enough contrast on the background."
         ],
         "donts": [
             {
-                "case": "Algo que se pueda pulsar (filtro, acción, cerrar)",
+                "case": "Something that can be pressed (filter, action, close)",
                 "useInstead": "Button",
-                "why": "Un Badge no es interactivo: no recibe foco, ni teclado, ni tiene estado hover. Si parece un botón, la persona intentará pulsarlo."
+                "why": "A Badge is not interactive: it receives no focus, no keyboard input and has no hover state. If it looks like a button, people will try to press it."
             },
             {
-                "case": "Navegar a otra página o recurso",
+                "case": "Navigate to another page or resource",
                 "useInstead": "Link",
-                "why": "Un enlace se puede abrir, copiar y lo anuncia el lector de pantalla como enlace."
+                "why": "A link can be opened, copied, and screen readers announce it as a link."
             },
             {
-                "case": "Mensajes largos o varias frases",
-                "useInstead": "Texto normal o un aviso",
-                "why": "El Badge no corta ni envuelve el texto: el ancho se ajusta a lo que lleve y se desborda."
+                "case": "Long messages or several sentences",
+                "useInstead": "Regular text or a warning",
+                "why": "The Badge does not truncate or wrap text: the width fits its content and it overflows."
             },
             {
-                "case": "Que el color sea la única forma de saber el estado",
-                "useInstead": "Un texto que diga el estado, más el color",
-                "why": "Las personas con daltonismo o lectores de pantalla no reciben el color."
+                "case": "Color as the only way to know the status",
+                "useInstead": "Text that states the status, plus color",
+                "why": "People with color blindness or screen readers do not receive the color."
             }
         ],
         "related": [
             {
                 "component": "Button",
                 "relation": "similar",
-                "difference": "Ejecuta una acción; el Badge solo informa."
+                "difference": "Performs an action; the Badge only informs."
             },
             {
                 "component": "Link",
                 "relation": "similar",
-                "difference": "Navega; el Badge solo informa."
+                "difference": "Navigates; the Badge only informs."
             },
             {
                 "component": "Icon",
                 "relation": "contains",
-                "difference": "El icono inicial del Badge es un Icon."
+                "difference": "The Badge's leading icon is an Icon."
             }
         ]
     },
@@ -65,7 +65,7 @@
             "name": "variant",
             "type": "'solid' | 'soft' | 'outline' | 'surface'",
             "default": "soft",
-            "description": "Énfasis visual. solid = relleno pleno; soft = relleno tenue; outline = solo borde; surface = borde con fondo suave. En Figma el valor marcado con ✦ es soft.",
+            "description": "Visual emphasis. solid = full fill; soft = subtle fill; outline = border only; surface = border with soft background. In Figma the value marked ✦ is soft.",
             "bindings": {
                 "figma": {
                     "property": "variant",
@@ -77,7 +77,7 @@
             "name": "color",
             "type": "'accent' | 'neutral' | 'error' | 'success' | 'warning' | 'info' | 'tomato' | 'red' | 'ruby' | 'crimson' | 'pink' | 'plum' | 'purple' | 'violet' | 'iris' | 'indigo' | 'blue' | 'cyan' | 'teal' | 'jade' | 'green' | 'grass' | 'orange' | 'brown' | 'sky' | 'mint' | 'lime' | 'yellow' | 'amber' | 'bronze' | 'gold'",
             "default": "accent",
-            "description": "Color del Badge. accent y neutral usan las escalas del tema; error, success, warning e info son los colores semánticos; el resto son las escalas de color de Radix. Es el único componente del sistema con más de tres colores.",
+            "description": "Badge color. accent and neutral use the theme scales; error, success, warning and info are the semantic colors; the rest are Radix color scales. It is the only component in the system with more than three colors.",
             "bindings": {
                 "figma": {
                     "property": "color",
@@ -89,7 +89,7 @@
             "name": "size",
             "type": "'1' | '2' | '3'",
             "default": "1",
-            "description": "Tamaño: alto de 20 / 24 / 28 px, con su padding, separación, radio y estilo de texto. En Figma el valor marcado con ✦ es 1.",
+            "description": "Size: height of 20 / 24 / 28 px, with its padding, gap, radius and text style. In Figma the value marked ✦ is 1.",
             "bindings": {
                 "figma": {
                     "property": "size",
@@ -101,7 +101,7 @@
             "name": "highContrast",
             "type": "boolean",
             "default": false,
-            "description": "Si es true, refuerza el contraste: usa el paso 12 de la escala en texto, fondo o borde según la variante. En Figma el eje se llama «highConstrast» (errata del archivo).",
+            "description": "If true, strengthens contrast: uses step 12 of the scale for text, background or border depending on the variant. In Figma the axis is called \"highConstrast\" (typo in the file).",
             "bindings": {
                 "figma": {
                     "property": "highConstrast",
@@ -114,7 +114,7 @@
             "name": "icon",
             "type": "ReactNode | undefined",
             "default": null,
-            "description": "Icono al inicio. Si no se pasa, no se pinta. Solo existe icono inicial; no hay icono final.",
+            "description": "Leading icon. If not passed, nothing is rendered. Only a leading icon exists; there is no trailing icon.",
             "usage": "icon={<Check />}",
             "bindings": {
                 "figma": {
@@ -127,7 +127,7 @@
             "name": "children",
             "type": "ReactNode",
             "required": true,
-            "description": "Texto del Badge. Texto por defecto en Figma: «Badge».",
+            "description": "Badge text. Default text in Figma: \"Badge\".",
             "bindings": {
                 "figma": {
                     "property": "✏️ text",
@@ -143,12 +143,12 @@
     "anatomy": {
         "root": {
             "element": "span",
-            "description": "Elemento raíz. Un <span> en línea con auto layout horizontal; no es interactivo.",
-            "figmaLayer": "Badge (cada variante del component set)"
+            "description": "Root element. An inline <span> with horizontal auto layout; not interactive.",
+            "figmaLayer": "Badge (each variant of the component set)"
         },
         "icon": {
             "element": "slot",
-            "description": "Hueco para el icono inicial. Se oculta si no hay icono.",
+            "description": "Slot for the leading icon. Hidden when there is no icon.",
             "optional": true,
             "figmaLayer": "Design / inner-shadow (instancia)",
             "figmaToggle": {
@@ -169,7 +169,7 @@
         },
         "label": {
             "element": "span",
-            "description": "Texto del Badge.",
+            "description": "Badge text.",
             "figmaLayer": "Badge (capa de texto)",
             "content": {
                 "prop": "children"
@@ -199,16 +199,16 @@
             },
             "unit": "px",
             "token": null,
-            "note": "Alto = padding vertical + altura de línea del texto (2+16+2, 4+16+4 y 4+20+4). No hay token de altura: resulta del layout."
+            "note": "Height = vertical padding + text line height (2+16+2, 4+16+4 and 4+20+4). There is no height token: it results from the layout."
         },
         "width": {
             "default": "hug",
             "modes": {
-                "hug": "Se ajusta al texto más el padding horizontal y el icono si lo hay. Siempre; no hay fill ni fixed."
+                "hug": "Fits the text plus horizontal padding and the icon if present. Always; there is no fill or fixed."
             },
             "min": null,
             "max": null,
-            "note": "En Figma, con el texto de ejemplo «Badge»: 49 / 53 / 63 px sin icono visible."
+            "note": "In Figma, with the sample text \"Badge\": 49 / 53 / 63 px with no visible icon."
         },
         "autoLayout": {
             "direction": "HORIZONTAL",
@@ -216,7 +216,7 @@
             "sizingVertical": "HUG",
             "alignMain": "CENTER",
             "alignCross": "CENTER",
-            "gap": "Por size: 6 / 6 / 8 px, entre icono y texto. Solo size 3 lo enlaza a una variable (spacing.2)."
+            "gap": "Per size: 6 / 6 / 8 px, between icon and text. Only size 3 binds it to a variable (spacing.2)."
         },
         "padding": {
             "values": {
@@ -225,7 +225,7 @@
                 "3": "4px 10px"
             },
             "unit": "px",
-            "note": "Formato vertical horizontal. En Figma solo el vertical de size 2 y 3 (spacing.1) y el horizontal de size 2 (spacing.2) están enlazados a variables; el resto son valores sueltos."
+            "note": "Format: vertical horizontal. In Figma only the vertical padding of size 2 and 3 (spacing.1) and the horizontal padding of size 2 (spacing.2) are bound to variables; the rest are loose values."
         },
         "iconSize": {
             "values": {
@@ -234,7 +234,7 @@
                 "3": 16
             },
             "unit": "px",
-            "note": "En size 2 y 3 el icono enlaza ancho y alto a spacing.4."
+            "note": "In size 2 and 3 the icon binds width and height to spacing.4."
         },
         "fontSize": {
             "values": {
@@ -243,7 +243,7 @@
                 "3": 14
             },
             "unit": "px",
-            "note": "Deducido de los estilos text-style.1 y text-style.2 (los mismos que usa Link); no leído aquí."
+            "note": "Inferred from the text-style.1 and text-style.2 styles (the same ones Link uses); not read here."
         }
     },
     "behavior": {
@@ -255,7 +255,7 @@
         "label": {
             "maxLength": 24,
             "casing": "sentence",
-            "voice": "Estado o categoría en una o dos palabras: «Nuevo», «En revisión»"
+            "voice": "Status or category in one or two words: \"New\", \"In review\""
         }
     },
     "tokens": {
@@ -545,27 +545,27 @@
         }
     },
     "a11y": {
-        "role": "Ninguno propio: es texto en un <span>, no un control.",
-        "name": "El texto (children). Si hay icono, es decorativo: el texto ya dice lo mismo.",
+        "role": "None of its own: it is text in a <span>, not a control.",
+        "name": "The text (children). If there is an icon, it is decorative: the text already says the same.",
         "keyboard": [],
-        "focusIndicator": "No recibe foco: no es interactivo. Si hace falta que se pueda pulsar, usa Button o Link.",
-        "minTarget": "No aplica: no es interactivo.",
-        "contrastNote": "Texto sobre fondo ≥ 4.5:1 (WCAG 1.4.3). No medido en Figma. Mirar con más cuidado soft, surface y outline en colores claros (amber, yellow, lime, mint, sky). solid usa white-contrast o black-contrast según el color.",
+        "focusIndicator": "Does not receive focus: not interactive. If it needs to be pressable, use Button or Link.",
+        "minTarget": "Not applicable: not interactive.",
+        "contrastNote": "Text on background ≥ 4.5:1 (WCAG 1.4.3). Not measured in Figma. Look more carefully at soft, surface and outline in light colors (amber, yellow, lime, mint, sky). solid uses white-contrast or black-contrast depending on the color.",
         "wcag": [
-            "1.3.1 Información y relaciones",
-            "1.4.1 Uso del color",
-            "1.4.3 Contraste (AA)"
+            "1.3.1 Info and Relationships",
+            "1.4.1 Use of Color",
+            "1.4.3 Contrast (Minimum)"
         ]
     },
     "testing": {
         "cases": [
-            "no recibe foco ni emite eventos",
-            "el texto no se corta ni se envuelve (nowrap)",
-            "cada variant × color × highContrast usa los tokens de tokens.bindings",
-            "highContrast usa el paso 12 (o el 1 sobre solid) en todas las variantes y colores",
-            "solid usa black-contrast en warning, info, sky, mint, lime, yellow y amber; accent-contrast en accent; white-contrast en el resto",
-            "el icono solo se pinta si se pasa icon, y usa el tamaño de layout.iconSize según size",
-            "la altura resulta de 20 / 24 / 28 px según size, sin icono y con él"
+            "does not receive focus or emit events",
+            "text is not truncated or wrapped (nowrap)",
+            "each variant × color × highContrast uses the tokens in tokens.bindings",
+            "highContrast uses step 12 (or 1 on solid) in all variants and colors",
+            "solid uses black-contrast on warning, info, sky, mint, lime, yellow and amber; accent-contrast on accent; white-contrast on the rest",
+            "the icon is only rendered if icon is passed, and uses the layout.iconSize size according to size",
+            "height results in 20 / 24 / 28 px according to size, with and without an icon"
         ]
     },
     "anchors": {
@@ -587,20 +587,20 @@
             "tokens.bindings"
         ],
         "needsReview": [
-            "Los valores por defecto del contrato (variant=soft, color=accent, size=1, highContrast=false) siguen la marca ✦ de Figma en variant y size. El valor por defecto del propio component set en Figma puede ser otro: comprobar con defaultVariant antes de generar el componente en código.",
-            "El eje de Figma se llama «highConstrast» (errata, igual que en Button). En código es highContrast. Se mantuvo la errata en bindings.figma.property.",
-            "Figma tiene 744 variantes: 3 sizes × 4 variants × 31 colores × 2 highConstrast. Existen todas las combinaciones. No hay estados (hover, active, foco, disabled): el Badge no es interactivo y states queda vacío.",
-            "Los tokens de fondo, borde y texto se leyeron en las 744 variantes y se agruparon por firma: todas siguen el mismo patrón por color y por variante, y el size no los cambia. Excepciones: ver los dos puntos siguientes.",
-            "El fondo de surface no es uniforme: accent usa tokens.colors.accent-surface, neutral usa tokens.colors.surface y el resto de colores usan el paso 2 de su escala alpha. Así está en tokens.scales.",
-            "El texto de solid sin highContrast tampoco es uniforme: accent usa tokens.colors.accent-contrast; warning, info, sky, mint, lime, yellow y amber usan tokens.colors.black-contrast; el resto, tokens.colors.white-contrast. Con highContrast, el texto de solid usa siempre el paso 1 de la escala del propio color (en Button, accent y neutral usan neutral.1).",
-            "El color del icono (iconColor) NO se pudo leer: el icono es una instancia y sus rellenos no son accesibles. Se asume que es el mismo que el del texto (lo habitual en Radix). Verificar a mano. El icono por defecto del archivo es un marcador («Design / inner-shadow», 16×16).",
-            "Valores sueltos en Figma, sin variable: padding de size 1 (2 / 6 px), padding horizontal de size 3 (10 px), separación entre icono y texto de size 1 y 2 (6 px), tamaño del icono de size 1 (12 px) y el grosor del borde de outline y surface (1 px, alineado dentro). 6 y 10 px no coinciden con spacing.1, 2 ni 4 (4, 8 y 16 px).",
-            "Una variante tiene el icono de 11×12 px en lugar de 12×12 (size=1, outline, accent, highConstrast=true): es una errata de Figma, no se refleja en el contrato.",
-            "size 1 y size 2 usan el mismo estilo de texto (text-style.1.medium); size 3 usa text-style.2.medium. El tamaño de letra de layout.fontSize (12 / 12 / 14) se dedujo de los estilos que usa Link, no se leyó aquí.",
-            "Solo existe icono inicial (iconStart). A diferencia de Button, no hay iconEnd.",
-            "color tiene 31 valores en Figma, mientras que docs/components.md dice «accent, neutral, error» para el sistema. El Badge es el único componente con más de tres colores.",
-            "Contenido de producto redactado como borrador, no sale de Figma: description, guidance, a11y, content.label (maxLength 24), composition.forbiddenChildren y testing. Decisiones mías: no cortar ni envolver el texto (behavior.overflow), icono decorativo y texto máximo de 24 caracteres.",
-            "Contraste no medido. No hay opacity, degradados ni sombras en el Badge."
+            "The contract's default values (variant=soft, color=accent, size=1, highContrast=false) follow the Figma ✦ mark on variant and size. The component set's own default in Figma may be different: check defaultVariant before generating the component in code.",
+            "The Figma axis is called \"highConstrast\" (typo, same as in Button). In code it is highContrast. The typo was kept in bindings.figma.property.",
+            "Figma has 744 variants: 3 sizes × 4 variants × 31 colors × 2 highConstrast. All combinations exist. There are no states (hover, active, focus, disabled): the Badge is not interactive and states stays empty.",
+            "The background, border and text tokens were read across all 744 variants and grouped by signature: they all follow the same pattern per color and per variant, and size does not change them. Exceptions: see the next two points.",
+            "The surface background is not uniform: accent uses tokens.colors.accent-surface, neutral uses tokens.colors.surface and the other colors use step 2 of their alpha scale. That is how it is in tokens.scales.",
+            "The solid text without highContrast is not uniform either: accent uses tokens.colors.accent-contrast; warning, info, sky, mint, lime, yellow and amber use tokens.colors.black-contrast; the rest, tokens.colors.white-contrast. With highContrast, the solid text always uses step 1 of the color's own scale (in Button, accent and neutral use neutral.1).",
+            "The icon color (iconColor) could NOT be read: the icon is an instance and its fills are not accessible. It is assumed to be the same as the text color (usual in Radix). Verify by hand. The file's default icon is a placeholder (\"Design / inner-shadow\", 16×16).",
+            "Loose values in Figma, with no variable: size 1 padding (2 / 6 px), size 3 horizontal padding (10 px), gap between icon and text for size 1 and 2 (6 px), size 1 icon size (12 px) and the border width of outline and surface (1 px, inside-aligned). 6 and 10 px do not match spacing.1, 2 or 4 (4, 8 and 16 px).",
+            "One variant has an 11×12 px icon instead of 12×12 (size=1, outline, accent, highConstrast=true): it is a Figma typo, not reflected in the contract.",
+            "size 1 and size 2 use the same text style (text-style.1.medium); size 3 uses text-style.2.medium. The font size in layout.fontSize (12 / 12 / 14) was inferred from the styles Link uses, not read here.",
+            "Only a leading icon exists (iconStart). Unlike Button, there is no iconEnd.",
+            "color has 31 values in Figma, whereas docs/components.md says \"accent, neutral, error\" for the system. The Badge is the only component with more than three colors.",
+            "Product content written as a draft, not taken from Figma: description, guidance, a11y, content.label (maxLength 24), composition.forbiddenChildren and testing. My decisions: do not truncate or wrap the text (behavior.overflow), decorative icon and a maximum text length of 24 characters.",
+            "Contrast not measured. The Badge has no opacity, gradients or shadows."
         ]
     }
 }

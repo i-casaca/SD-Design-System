@@ -1,47 +1,47 @@
 {
   "$schema": "./component.schema.json",
-  "id": "<kebab-case, p. ej. button>",
-  "name": "<NombreComponente>",
+  "id": "<kebab-case, e.g. button>",
+  "name": "<ComponentName>",
   "version": "0.1.0",
   "status": "draft",
   "category": "<action | input | container | overlay | data | media | navigation | feedback>",
-  "description": "<Una frase: qué hace este componente por la persona usuaria.>",
+  "description": "<One sentence: what this component does for the user.>",
   "guidance": {
     "dos": [
-      "<Buena práctica concreta y comprobable>"
+      "<Concrete, verifiable good practice>"
     ],
     "donts": [
       {
-        "case": "<Caso en el que NO se usa>",
-        "useInstead": "<Componente o patrón correcto>",
-        "why": "<Motivo en una línea>"
+        "case": "<Case in which it is NOT used>",
+        "useInstead": "<Correct component or pattern>",
+        "why": "<Reason in one line>"
       }
     ],
     "related": [
       {
-        "component": "<Otro componente>",
+        "component": "<Other component>",
         "relation": "alternative | similar | contains | contained-by",
-        "difference": "<En qué se distingue>"
+        "difference": "<How it differs>"
       }
     ]
   },
   "semantics": {
-    "element": "<elemento HTML raíz: button | div | section | input ...>",
-    "role": "<rol ARIA explícito o null si es implícito>",
-    "refTarget": "<parte de anatomy que recibe el ref>",
+    "element": "<root HTML element: button | div | section | input ...>",
+    "role": "<explicit ARIA role, or null if implicit>",
+    "refTarget": "<anatomy part that receives the ref>",
     "elementByProp": null
   },
   "props": [
     {
       "name": "<prop>",
-      "type": "<'a' | 'b' | boolean | ReactNode | función ...>",
-      "default": "<valor o null>",
+      "type": "<'a' | 'b' | boolean | ReactNode | function ...>",
+      "default": "<value or null>",
       "required": false,
-      "description": "<Qué controla y cómo se ve cada valor.>",
-      "usage": "<ejemplo de uso opcional>",
+      "description": "<What it controls and how each value looks.>",
+      "usage": "<optional usage example>",
       "bindings": {
         "figma": {
-          "property": "<nombre exacto de la propiedad en Figma>",
+          "property": "<exact property name in Figma>",
           "type": "VARIANT | BOOLEAN | TEXT | INSTANCE_SWAP | SLOT"
         }
       }
@@ -55,61 +55,61 @@
     ],
     "controlled": [
       {
-        "name": "<estado controlado por prop>",
-        "description": "<Qué significa y cómo se comporta.>",
-        "aria": "<atributo aria o nativo>"
+        "name": "<prop-controlled state>",
+        "description": "<What it means and how it behaves.>",
+        "aria": "<aria or native attribute>"
       }
     ]
   },
   "anatomy": {
     "root": {
-      "element": "<elemento HTML>",
-      "description": "<Raíz del componente.>",
+      "element": "<HTML element>",
+      "description": "<Component root.>",
       "figmaLayer": "<nombre exacto de la capa en Figma>"
     },
     "<parte>": {
       "element": "<span | svg | slot | ...>",
-      "description": "<Qué es.>",
+      "description": "<What it is.>",
       "optional": true,
       "figmaLayer": "<capa en Figma>",
       "figmaToggle": {
-        "property": "<boolean de Figma que muestra u oculta la parte y no tiene prop en código>",
+        "property": "<Figma boolean that shows or hides the part and has no prop in code>",
         "type": "BOOLEAN",
         "default": false
       },
       "content": {
-        "prop": "<prop que rellena el contenido, p. ej. children>"
+        "prop": "<prop that fills the content, e.g. children>"
       },
       "slot": {
-        "key": "<nombre del slot>",
+        "key": "<slot name>",
         "allowedComponents": [
-          "<Componente aceptado>"
+          "<Accepted component>"
         ],
         "minItems": 0,
         "maxItems": 1,
         "mandatory": false,
-        "figmaProp": "<propiedad slot o instance swap en Figma>"
+        "figmaProp": "<slot or instance swap property in Figma>"
       }
     }
   },
   "composition": {
     "allowedChildren": [
-      "<componentes permitidos dentro, o null>"
+      "<components allowed inside, or null>"
     ],
     "forbiddenChildren": [
-      "<componentes que nunca van dentro>"
+      "<components that never go inside>"
     ],
     "nestedComponents": [
       {
-        "part": "<parte>",
-        "component": "<Componente>",
+        "part": "<part>",
+        "component": "<Component>",
         "fixedProps": {}
       }
     ],
     "codeParts": [
       {
-        "name": "<Componente.Parte>",
-        "description": "<solo si la API de código es compuesta (Root, Trigger, Content...)>"
+        "name": "<Component.Part>",
+        "description": "<only if the code API is compound (Root, Trigger, Content...)>"
       }
     ],
     "asChild": false
@@ -123,7 +123,7 @@
         "l": 0
       },
       "unit": "px",
-      "token": "<token, admite {size}>"
+      "token": "<token, supports {size}>"
     },
     "width": {
       "default": "hug | fill | fixed",
@@ -142,7 +142,7 @@
       "sizingVertical": "HUG | FILL | FIXED",
       "alignMain": "MIN | CENTER | MAX | SPACE_BETWEEN",
       "alignCross": "MIN | CENTER | MAX",
-      "gap": "<token y entre qué partes>"
+      "gap": "<token and between which parts>"
     }
   },
   "tokens": {
@@ -158,14 +158,14 @@
     },
     "bindings": {
       "base": {
-        "<propiedad visual>": "<token, admite {prop} que se expande por los valores del enum>"
+        "<propiedad visual>": "<token, supports {prop}, which expands across the enum values>"
       },
       "byVariant": {
         "<valor de variant>": {
           "background": "<token>",
           "text": "<token>",
           "icon": "<token>",
-          "border": "<token o null>"
+          "border": "<token or null>"
         }
       },
       "byState": {
@@ -181,31 +181,31 @@
   "events": [
     {
       "name": "<onPress | onOpenChange | onValueChange ...>",
-      "trigger": "<qué lo dispara>",
-      "payload": "<tipo del evento>",
+      "trigger": "<what triggers it>",
+      "payload": "<event type>",
       "blockedWhen": [
-        "<estado en el que no se emite>"
+        "<state in which it is not emitted>"
       ]
     }
   ],
   "a11y": {
-    "role": "<rol ARIA o implícito del elemento>",
-    "name": "<cómo obtiene su nombre accesible>",
+    "role": "<ARIA role or the element's implicit role>",
+    "name": "<how it gets its accessible name>",
     "keyboard": [
-      "<Tecla — acción>"
+      "<Key — action>"
     ],
-    "focusIndicator": "<token y grosor del indicador de foco>",
-    "minTarget": "<área mínima táctil, p. ej. 24x24px (WCAG 2.5.8)>",
-    "contrastNote": "<requisito de contraste>",
+    "focusIndicator": "<token and thickness of the focus indicator>",
+    "minTarget": "<minimum touch area, e.g. 24x24px (WCAG 2.5.8)>",
+    "contrastNote": "<contrast requirement>",
     "wcag": [
-      "<criterio WCAG>"
+      "<WCAG criterion>"
     ]
   },
   "content": {
     "label": {
       "maxLength": 0,
       "casing": "sentence | title | upper",
-      "voice": "<tono y ejemplo>"
+      "voice": "<tone and example>"
     }
   },
   "behavior": {
@@ -214,7 +214,7 @@
     "motion": [
       {
         "on": "<hover | open | ...>",
-        "property": "<propiedad>",
+        "property": "<property>",
         "reducedMotion": "instant"
       }
     ],
@@ -232,34 +232,34 @@
     "density": null
   },
   "i18n": {
-    "rtl": "<comportamiento en RTL>",
-    "textExpansion": "<qué pasa con textos un 30-40% más largos>"
+    "rtl": "<behavior in RTL>",
+    "textExpansion": "<what happens with text 30-40% longer>"
   },
   "testing": {
     "cases": [
-      "<comportamiento que debe verificarse>"
+      "<behavior that must be verified>"
     ]
   },
   "governance": {
     "owners": [
-      "<equipo>"
+      "<team>"
     ],
-    "changelog": "<ruta o enlace>"
+    "changelog": "<path or link>"
   },
   "anchors": {
     "figma": {
-      "file": "<URL del archivo de Figma>",
-      "node": "<id del nodo del componente>"
+      "file": "<URL of the Figma file>",
+      "node": "<component node id>"
     },
     "code": {
-      "importPath": "<ruta de import>",
-      "export": "<nombre exportado>"
+      "importPath": "<import path>",
+      "export": "<exported name>"
     }
   },
   "meta": {
     "source": "manual | figma | mixed",
     "needsReview": [
-      "<campos pendientes de revisar>"
+      "<fields pending review>"
     ],
     "derivableFromSource": [
       "props.type",

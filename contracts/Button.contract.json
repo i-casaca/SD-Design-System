@@ -5,57 +5,57 @@
   "version": "2.0.0",
   "status": "draft",
   "category": "action",
-  "description": "Lanza una acción cuando la persona lo pulsa. Se elige el énfasis con `variant`, el significado con `color` y se puede reforzar el contraste con `highContrast`.",
+  "description": "Triggers an action when the user presses it. Emphasis is chosen with `variant`, meaning with `color`, and contrast can be strengthened with `highContrast`.",
   "guidance": {
     "dos": [
-      "Una sola acción principal por vista: `variant=\"solid\"` (o `classic`) con `color=\"accent\"`.",
-      "Etiqueta con un verbo y un objeto: «Guardar cambios», no «Aceptar».",
-      "Usa `color=\"error\"` solo para acciones destructivas y pide confirmación si no se pueden deshacer.",
-      "Usa `highContrast` cuando necesites más contraste que el que da el color de acento.",
-      "Jerarquía de énfasis de mayor a menor: solid/classic → soft/surface → outline → ghost."
+      "A single primary action per view: `variant=\"solid\"` (or `classic`) with `color=\"accent\"`.",
+      "Label with a verb and an object: \"Save changes\", not \"OK\".",
+      "Use `color=\"error\"` only for destructive actions and ask for confirmation if they cannot be undone.",
+      "Use `highContrast` when you need more contrast than the accent color gives.",
+      "Emphasis hierarchy from highest to lowest: solid/classic → soft/surface → outline → ghost."
     ],
     "donts": [
       {
-        "case": "Navegación pura entre páginas",
+        "case": "Pure navigation between pages",
         "useInstead": "Link",
-        "why": "Un enlace se puede abrir en pestaña nueva, copiar y lo anuncia el lector de pantalla como enlace."
+        "why": "A link can be opened in a new tab, copied, and screen readers announce it as a link."
       },
       {
-        "case": "Estado que persiste (activado / desactivado)",
-        "useInstead": "Toggle o Checkbox",
-        "why": "Un botón ejecuta, no mantiene estado."
+        "case": "State that persists (on / off)",
+        "useInstead": "Toggle or Checkbox",
+        "why": "A button executes; it does not hold state."
       },
       {
-        "case": "Botón solo con icono",
+        "case": "Icon-only button",
         "useInstead": "IconButton",
-        "why": "Exige nombre accesible y tiene medidas propias; el Button de Figma siempre lleva etiqueta."
+        "why": "Requires an accessible name and has its own measurements; the Figma Button always carries a label."
       },
       {
-        "case": "Dos botones solid/classic con color accent en la misma vista",
-        "useInstead": "Uno solid y el resto soft, outline o ghost",
-        "why": "Si todo destaca, nada destaca."
+        "case": "Two solid/classic buttons with accent color in the same view",
+        "useInstead": "One solid and the rest soft, outline or ghost",
+        "why": "If everything stands out, nothing does."
       },
       {
-        "case": "Enviar un formulario sin declararlo",
-        "useInstead": "type='submit' explícito",
-        "why": "El valor por defecto es type='button' para evitar envíos accidentales."
+        "case": "Submitting a form without declaring it",
+        "useInstead": "Explicit type='submit'",
+        "why": "The default is type='button' to avoid accidental submissions."
       }
     ],
     "related": [
       {
         "component": "Link",
         "relation": "similar",
-        "difference": "Navega a otra página o recurso; el botón ejecuta una acción."
+        "difference": "Navigates to another page or resource; the button executes an action."
       },
       {
         "component": "Toggle",
         "relation": "similar",
-        "difference": "Mantiene estado pulsado (aria-pressed)."
+        "difference": "Keeps a pressed state (aria-pressed)."
       },
       {
         "component": "IconButton",
         "relation": "alternative",
-        "difference": "Solo icono; exige nombre accesible."
+        "difference": "Icon only; requires an accessible name."
       }
     ]
   },
@@ -70,7 +70,7 @@
       "name": "variant",
       "type": "'classic' | 'solid' | 'soft' | 'surface' | 'outline' | 'ghost'",
       "default": "solid",
-      "description": "Énfasis visual. solid = relleno pleno; classic = relleno con degradado y borde; soft = relleno tenue; surface = borde con fondo suave; outline = solo borde; ghost = sin relleno ni borde hasta hover.",
+      "description": "Visual emphasis. solid = full fill; classic = gradient fill with border; soft = subtle fill; surface = border with soft background; outline = border only; ghost = no fill or border until hover.",
       "bindings": {
         "figma": {
           "property": "variant",
@@ -82,7 +82,7 @@
       "name": "color",
       "type": "'accent' | 'neutral' | 'error'",
       "default": "accent",
-      "description": "Significado cromático. accent = color de marca; neutral = gris; error = acción destructiva.",
+      "description": "Color meaning. accent = brand color; neutral = gray; error = destructive action.",
       "bindings": {
         "figma": {
           "property": "color",
@@ -94,7 +94,7 @@
       "name": "size",
       "type": "'1' | '2' | '3' | '4'",
       "default": "2",
-      "description": "Tamaño físico: altura 24 / 32 / 40 / 48 px, y con ello padding, texto, gap y radio. El 2 es el valor por defecto.",
+      "description": "Physical size: height 24 / 32 / 40 / 48 px, and with it padding, text, gap and radius. 2 is the default.",
       "bindings": {
         "figma": {
           "property": "size",
@@ -106,7 +106,7 @@
       "name": "highContrast",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, refuerza el contraste: usa el paso 12 de la escala en lugar del 9/11.",
+      "description": "If true, strengthens contrast: uses step 12 of the scale instead of 9/11.",
       "bindings": {
         "figma": {
           "property": "highContrast",
@@ -119,7 +119,7 @@
       "name": "loading",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, la acción está en curso: un spinner sustituye a icono y etiqueta, el ancho no cambia y no se puede pulsar.",
+      "description": "If true, the action is in progress: a spinner replaces icon and label, the width does not change and it cannot be pressed.",
       "bindings": {
         "figma": {
           "property": "loading",
@@ -132,7 +132,7 @@
       "name": "disabled",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, el botón no es interactivo. En Figma es el valor «disable» del eje `state`.",
+      "description": "If true, the button is not interactive. In Figma it is the \"disable\" value of the `state` axis.",
       "bindings": {
         "figma": {
           "property": "state",
@@ -145,7 +145,7 @@
       "name": "icon",
       "type": "ReactNode | undefined",
       "default": null,
-      "description": "Icono inicial (en Figma, iconStart). Tamaño por size: 16 / 16 / 18 / 20 px. aria-hidden porque la etiqueta ya describe la acción.",
+      "description": "Leading icon (iconStart in Figma). Size by size: 16 / 16 / 18 / 20 px. aria-hidden because the label already describes the action.",
       "usage": "icon={<Plus />}",
       "bindings": {
         "figma": {
@@ -158,7 +158,7 @@
       "name": "iconEnd",
       "type": "ReactNode | undefined",
       "default": null,
-      "description": "Icono final. Mismos tamaños que icon.",
+      "description": "Trailing icon. Same sizes as icon.",
       "usage": "iconEnd={<ArrowRight />}",
       "bindings": {
         "figma": {
@@ -171,7 +171,7 @@
       "name": "type",
       "type": "'button' | 'submit' | 'reset'",
       "default": "button",
-      "description": "Tipo nativo del botón. Solo de código. Usa 'submit' de forma explícita para enviar formularios.",
+      "description": "Native button type. Code only. Use 'submit' explicitly to submit forms.",
       "bindings": {
         "figma": null
       }
@@ -180,7 +180,7 @@
       "name": "children",
       "type": "ReactNode",
       "required": true,
-      "description": "Contenido de la etiqueta. Texto por defecto en Figma: «Button».",
+      "description": "Label content. Default text in Figma: \"Button\".",
       "bindings": {
         "figma": {
           "property": "✏️ text",
@@ -192,7 +192,7 @@
       "name": "onPress",
       "type": "(event: MouseEvent<HTMLButtonElement>) => void",
       "default": null,
-      "description": "Manejador de pulsación (ratón, teclado o toque). Solo de código.",
+      "description": "Press handler (mouse, keyboard or touch). Code only.",
       "bindings": {
         "figma": null
       }
@@ -207,25 +207,25 @@
     "controlled": [
       {
         "name": "loading",
-        "description": "La acción lanzada está en curso. No es interactivo y muestra un spinner en lugar del contenido.",
+        "description": "The triggered action is in progress. Not interactive and shows a spinner instead of the content.",
         "aria": "aria-busy='true'"
       },
       {
         "name": "disabled",
-        "description": "No es interactivo. La opción existe pero ahora no está disponible. Se pinta con tokens neutros (neutral-alpha), nunca con opacity.",
-        "aria": "disabled (atributo HTML nativo)"
+        "description": "Not interactive. The option exists but is currently unavailable. Painted with neutral tokens (neutral-alpha), never with opacity.",
+        "aria": "disabled (native HTML attribute)"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "button",
-      "description": "Elemento interactivo raíz. Siempre un <button> nativo.",
-      "figmaLayer": "Button (cada variante de los sets Button/<variant>)"
+      "description": "Root interactive element. Always a native <button>.",
+      "figmaLayer": "Button (each variant of the Button/<variant> sets)"
     },
     "focusRing": {
       "element": "css",
-      "description": "No es un elemento: se pinta con :focus-visible. En Figma es una capa que se muestra con el boolean focusRing: borde exterior de 4px e interior de 2px.",
+      "description": "Not an element: painted with :focus-visible. In Figma it is a layer shown with the focusRing boolean: 4px outer border and 2px inner.",
       "optional": true,
       "figmaLayer": "focus-ring",
       "figmaToggle": {
@@ -236,7 +236,7 @@
     },
     "icon": {
       "element": "slot",
-      "description": "Hueco para el icono inicial. Se oculta si no hay icono.",
+      "description": "Slot for the leading icon. Hidden when there is no icon.",
       "optional": true,
       "figmaLayer": "icon",
       "figmaToggle": {
@@ -257,7 +257,7 @@
     },
     "label": {
       "element": "span",
-      "description": "Texto de la etiqueta.",
+      "description": "Label text.",
       "figmaLayer": "label",
       "content": {
         "prop": "children"
@@ -265,7 +265,7 @@
     },
     "iconEnd": {
       "element": "slot",
-      "description": "Hueco para el icono final.",
+      "description": "Slot for the trailing icon.",
       "optional": true,
       "figmaLayer": "iconEnd",
       "figmaToggle": {
@@ -286,7 +286,7 @@
     },
     "spinner": {
       "element": "svg",
-      "description": "Spinner de 8 hojas. Solo con loading=true; sustituye a icono y etiqueta.",
+      "description": "8-blade spinner. Only with loading=true; replaces icon and label.",
       "optional": true,
       "figmaLayer": "spinner"
     }
@@ -316,13 +316,13 @@
     "width": {
       "default": "hug",
       "modes": {
-        "hug": "El ancho se ajusta al contenido más el padding horizontal. Por defecto.",
-        "fill": "Lo decide quien usa el componente con su layout; no hay prop.",
-        "fixed": "Valor explícito de quien consume el componente. Sin token del sistema."
+        "hug": "Width fits the content plus horizontal padding. Default.",
+        "fill": "Decided by the consumer through their layout; there is no prop.",
+        "fixed": "Explicit value from the consumer of the component. No system token."
       },
       "min": null,
       "max": null,
-      "note": "En Figma, loading=true conserva el ancho (verificado en size 2: 70px con y sin loading)."
+      "note": "In Figma, loading=true keeps the width (verified in size 2: 70px with and without loading)."
     },
     "autoLayout": {
       "direction": "HORIZONTAL",
@@ -330,7 +330,7 @@
       "sizingVertical": "FIXED",
       "alignMain": "CENTER",
       "alignCross": "CENTER",
-      "gap": "Por size: spacing.1 / 2 / 3 / 3, entre icono y etiqueta"
+      "gap": "Per size: spacing.1 / 2 / 3 / 3, between icon and label"
     },
     "iconSize": {
       "values": {
@@ -688,7 +688,7 @@
   "events": [
     {
       "name": "onPress",
-      "trigger": "Clic, Enter, Espacio o toque",
+      "trigger": "Click, Enter, Space or touch",
       "payload": "MouseEvent<HTMLButtonElement>",
       "blockedWhen": [
         "disabled",
@@ -697,27 +697,27 @@
     }
   ],
   "a11y": {
-    "role": "button (implícito por el elemento <button>)",
-    "name": "La etiqueta (children). Si es solo icono, aria-label obligatorio.",
+    "role": "button (implicit from the <button> element)",
+    "name": "The label (children). If icon-only, aria-label is required.",
     "keyboard": [
-      "Enter — activa",
-      "Space — activa al soltar"
+      "Enter — activates",
+      "Space — activates on release"
     ],
-    "focusIndicator": "Anillo doble: exterior de 4px con colors.accent.accent-alpha.8 e interior de 2px con colors.accent.accent.3 (capa focus-ring en Figma).",
-    "minTarget": "24px de alto como mínimo en size 1; el resto, 32 / 40 / 48 (WCAG 2.5.8).",
-    "contrastNote": "Texto sobre fondo ≥ 4.5:1 salvo disabled. No medido en Figma: pendiente de verificar por variante.",
+    "focusIndicator": "Double ring: 4px outer with colors.accent.accent-alpha.8 and 2px inner with colors.accent.accent.3 (focus-ring layer in Figma).",
+    "minTarget": "At least 24px tall in size 1; the rest 32 / 40 / 48 (WCAG 2.5.8).",
+    "contrastNote": "Text on background ≥ 4.5:1 except disabled. Not measured in Figma: to be verified per variant.",
     "wcag": [
-      "1.4.3 Contraste (AA)",
-      "2.1.1 Teclado",
-      "2.4.7 Foco visible",
-      "4.1.2 Nombre, función, valor"
+      "1.4.3 Contrast (Minimum)",
+      "2.1.1 Keyboard",
+      "2.4.7 Focus Visible",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "content": {
     "label": {
       "maxLength": 24,
       "casing": "sentence",
-      "voice": "Verbo + objeto: «Guardar cambios»"
+      "voice": "Verb + object: \"Save changes\""
     }
   },
   "behavior": {
@@ -739,11 +739,11 @@
   },
   "testing": {
     "cases": [
-      "disabled y loading no emiten onPress",
-      "loading añade aria-busy, muestra el spinner y mantiene el ancho",
-      "highContrast usa el paso 12 en todas las variantes y colores",
-      "cada variant × color × estado usa los tokens de tokens.bindings",
-      "type por defecto es 'button'"
+      "disabled and loading do not emit onPress",
+      "loading adds aria-busy, shows the spinner and keeps the width",
+      "highContrast uses step 12 in all variants and colors",
+      "each variant × color × state uses the tokens in tokens.bindings",
+      "type defaults to 'button'"
     ]
   },
   "anchors": {
@@ -777,19 +777,19 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "Dibujado en SDD Library desde este contrato (2026-11-09): un COMPONENT_SET por valor de variant (Button/classic … Button/ghost, #19), 120 variantes cada uno (color × size × highContrast × state, más loading=true solo con state=disable). anchors.figma.node es la Section; anchors.figma.sets, cada set. Lectura original en Radix: anchors.figma.reference.",
-      "En SDD Library el eje se llama highContrast (sin la errata «highConstrast» de Radix) y los valores por defecto no llevan ✦: el default es la primera variante (solid · accent · 2 · false · default · false).",
-      "Spinner: helper _spinner de 8 hojas con opacidades 1/8…8/8 sin token (dibujo de referencia, no animado).",
-      "loading=true solo existe en Figma junto a state=disable (144 variantes): el diseño de loading hereda el aspecto de disabled. En código, decidir si loading debe verse como disabled.",
-      "classic usa dos capas de degradado (blanco → transparente) sin variable, y una al 20% en hover. No están en tokens.",
-      "opacity en hover/active (0.88, 0.82, 0.92) está fijo en Figma, sin variable. Es el único caso en que el contrato usa opacity; disabled nunca.",
-      "surface: Figma no define fondo para color neutral y error en default/hover (solo accent usa tokens.colors.accent-surface). Radix usa --color-surface.",
-      "Inconsistencias de Figma: texto de variantes no sólidas en accent usa accent-alpha.11, pero neutral y error usan el paso 11 sólido; en highContrast el texto sobre solid/classic es neutral.1 en accent y neutral, y error.1 en error; classic highContrast con color=error usa las sombras de accent; classic disabled usa la sombra button-classic-accent.",
-      "ghost usa text-style …regular en size 2 (el resto de variantes, medium). No verificado en size 1, 3 y 4.",
-      "Tokens de size 1, 3 y 4 leídos solo en solid + accent + default; se asume que valen para las demás variantes. El anillo de foco solo se leyó en accent.",
-      "Anchos: size 2 sin icono = 70px; el ancho depende del texto de ejemplo «Button».",
-      "No existen en Figma: fullWidth (eliminada del contrato), type, onPress.",
-      "Contraste y área táctil no medidos."
+      "Drawn in SDD Library from this contract (2026-11-09): one COMPONENT_SET per variant value (Button/classic … Button/ghost, #19), 120 variants each (color × size × highContrast × state, plus loading=true only with state=disable). anchors.figma.node is the Section; anchors.figma.sets, each set. Original reading in Radix: anchors.figma.reference.",
+      "In SDD Library the axis is called highContrast (without Radix's \"highConstrast\" typo) and default values carry no ✦: the default is the first variant (solid · accent · 2 · false · default · false).",
+      "Spinner: 8-blade _spinner helper with opacities 1/8…8/8 and no token (reference drawing, not animated).",
+      "loading=true only exists in Figma together with state=disable (144 variants): the loading design inherits the disabled look. In code, decide whether loading should look like disabled.",
+      "classic uses two gradient layers (white → transparent) with no variable, and one at 20% on hover. They are not in tokens.",
+      "opacity on hover/active (0.88, 0.82, 0.92) is hardcoded in Figma, with no variable. It is the only case where the contract uses opacity; disabled never does.",
+      "surface: Figma defines no background for neutral and error colors in default/hover (only accent uses tokens.colors.accent-surface). Radix uses --color-surface.",
+      "Figma inconsistencies: text of non-solid variants in accent uses accent-alpha.11, but neutral and error use the solid step 11; in highContrast the text on solid/classic is neutral.1 in accent and neutral, and error.1 in error; classic highContrast with color=error uses accent's shadows; classic disabled uses the button-classic-accent shadow.",
+      "ghost uses text-style …regular in size 2 (the other variants, medium). Not verified in size 1, 3 and 4.",
+      "Size 1, 3 and 4 tokens were read only in solid + accent + default; they are assumed to hold for the other variants. The focus ring was only read in accent.",
+      "Widths: size 2 without icon = 70px; the width depends on the sample text \"Button\".",
+      "Do not exist in Figma: fullWidth (removed from the contract), type, onPress.",
+      "Contrast and touch target not measured."
     ]
   }
 }

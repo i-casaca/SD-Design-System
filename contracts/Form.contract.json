@@ -5,62 +5,62 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "container",
-  "description": "Formulario completo de la aplicación: título y descripción, una lista de campos (FormField), una casilla de aceptación y un botón de envío. Muestra en el mismo sitio el error general, el envío en curso o la confirmación, sin cambiar de página.",
+  "description": "Complete application form: title and description, a list of fields (FormField), an acceptance checkbox and a submit button. It shows the general error, the submission in progress or the confirmation in the same place, without changing page.",
   "guidance": {
     "dos": [
-      "Título corto que diga qué pide el formulario: «Hablemos de tu proyecto», no «Formulario de contacto».",
-      "Pon solo FormField y, si hace falta, una Checkbox de aceptación en los campos. Un campo nuevo es un FormField con su etiqueta visible.",
-      "Usa `variant=\"card\"` (por defecto) cuando el formulario va sobre la página. Usa `plain` cuando ya está dentro de una tarjeta o de un panel con su propio fondo.",
-      "Usa `state=\"error\"` cuando el envío falle o haya campos sin rellenar. Marca el campo con FormField `error` y deja que el banner diga cuántos hay que revisar.",
-      "Usa `state=\"submitting\"` mientras se envía, y `state=\"success\"` cuando esté enviado. En éxito, el formulario se sustituye por el mensaje de confirmación."
+      "Short title that says what the form asks for: \"Let's talk about your project\", not \"Contact form\".",
+      "Put only FormField and, if needed, an acceptance Checkbox in the fields. A new field is a FormField with its visible label.",
+      "Use `variant=\"card\"` (default) when the form sits on the page. Use `plain` when it is already inside a card or a panel with its own background.",
+      "Use `state=\"error\"` when submission fails or there are empty fields. Mark the field with FormField `error` and let the banner say how many need review.",
+      "Use `state=\"submitting\"` while submitting, and `state=\"success\"` once sent. On success, the form is replaced by the confirmation message."
     ],
     "donts": [
       {
-        "case": "Un formulario de una sola pregunta o de un solo botón, sin título",
-        "useInstead": "FormField y Button sueltos",
-        "why": "Form pinta cabecera, banner de error y confirmación. Para un solo campo sobran y ocupan espacio."
+        "case": "A single-question or single-button form, without a title",
+        "useInstead": "Standalone FormField and Button",
+        "why": "Form renders a header, error banner and confirmation. For a single field they are unnecessary and take up space."
       },
       {
-        "case": "Una página de varios pasos con progreso",
-        "useInstead": "Varias vistas, con Tabs o pasos propios",
-        "why": "Form tiene un solo estado de envío. Un flujo en pasos necesita su propio control de progreso."
+        "case": "A multi-step page with progress",
+        "useInstead": "Several views, with Tabs or custom steps",
+        "why": "Form has a single submission state. A step flow needs its own progress control."
       },
       {
-        "case": "Acciones que no envían (cancelar, volver, borrar)",
-        "useInstead": "Button con variant=\"ghost\" o \"outline\" fuera del Form",
-        "why": "El Form solo tiene un botón de envío (solid, accent). Otra acción con el mismo peso confunde qué pasa al pulsar."
+        "case": "Actions that do not submit (cancel, back, delete)",
+        "useInstead": "Button with variant=\"ghost\" or \"outline\" outside the Form",
+        "why": "The Form has only one submit button (solid, accent). Another action with the same weight makes it unclear what happens on press."
       },
       {
-        "case": "Validar en el Form lo que deben validar los campos",
-        "useInstead": "FormField con su propio error",
-        "why": "Form muestra el estado general; cada FormField decide si su valor es válido. Mezclar las dos cosas deja errores sin mensaje."
+        "case": "Validating in the Form what the fields should validate",
+        "useInstead": "FormField with its own error",
+        "why": "Form shows the general state; each FormField decides whether its value is valid. Mixing the two leaves errors without a message."
       }
     ],
     "related": [
       {
         "component": "FormField",
         "relation": "contains",
-        "difference": "Cada campo del formulario es un FormField con etiqueta, control y mensaje."
+        "difference": "Each field in the form is a FormField with label, control and message."
       },
       {
         "component": "Checkbox",
         "relation": "contains",
-        "difference": "Casilla de aceptación de la política de privacidad."
+        "difference": "Acceptance checkbox for the privacy policy."
       },
       {
         "component": "Button",
         "relation": "contains",
-        "difference": "Botón de envío (solid, accent, con flecha)."
+        "difference": "Submit button (solid, accent, with arrow)."
       },
       {
         "component": "Badge",
         "relation": "contains",
-        "difference": "Confirmación de éxito (success) en el estado success."
+        "difference": "Success confirmation (success) in the success state."
       },
       {
         "component": "Icon",
         "relation": "contains",
-        "difference": "Icono del banner de error y del mensaje de la casilla."
+        "difference": "Icon of the error banner and of the checkbox message."
       }
     ]
   },
@@ -75,7 +75,7 @@
       "name": "variant",
       "type": "'card' | 'plain'",
       "default": "card",
-      "description": "Aspecto del contenedor. card = fondo neutral.1, borde neutral-alpha.6 y radio de 8 px con 32 px de padding; plain = sin fondo, sin borde y sin padding. En Figma, el valor por defecto del component set es card.",
+      "description": "Container appearance. card = neutral.1 background, neutral-alpha.6 border and 8 px radius with 32 px padding; plain = no background, no border and no padding. In Figma, the component set default is card.",
       "bindings": {
         "figma": {
           "property": "variant",
@@ -87,7 +87,7 @@
       "name": "showDescription",
       "type": "boolean",
       "default": true,
-      "description": "Si es true, muestra la descripción debajo del título.",
+      "description": "If true, shows the description below the title.",
       "bindings": {
         "figma": {
           "property": "showDescription#36:0",
@@ -99,7 +99,7 @@
       "name": "state",
       "type": "'default' | 'error' | 'submitting' | 'success'",
       "default": "default",
-      "description": "Estado del envío. default = campos y botón activos. error = banner de error general, casilla sin marcar y mensaje de la casilla; el botón sigue activo. submitting = botón deshabilitado, campos sin cambios. success = se ocultan campos, casilla, botón y banner, y aparece la confirmación. En Figma, es la propiedad state.",
+      "description": "Submission state. default = fields and button active. error = general error banner, unchecked checkbox and checkbox message; the button stays active. submitting = button disabled, fields unchanged. success = fields, checkbox, button and banner are hidden, and the confirmation appears. In Figma, it is the state property.",
       "bindings": {
         "figma": {
           "property": "state",
@@ -113,58 +113,58 @@
     "controlled": [
       {
         "name": "error",
-        "description": "Muestra el banner «Revisa los campos marcados.», el icono de error y el mensaje de la casilla. El banner se anuncia al lector de pantalla al aparecer.",
-        "aria": "role=\"alert\" en el banner de error (formError)"
+        "description": "Shows the \"Revisa los campos marcados.\" banner, the error icon and the checkbox message. The banner is announced to the screen reader when it appears.",
+        "aria": "role=\"alert\" on the error banner (formError)"
       },
       {
         "name": "submitting",
-        "description": "El botón de envío está deshabilitado (state=disable en Figma). Los campos siguen editables en Figma; ver needsReview.",
-        "aria": "disabled (atributo HTML nativo) en el botón de envío"
+        "description": "The submit button is disabled (state=disable in Figma). The fields stay editable in Figma; see needsReview.",
+        "aria": "disabled (native HTML attribute) on the submit button"
       },
       {
         "name": "success",
-        "description": "Sustituye los campos y el botón por la confirmación. El mensaje se anuncia al lector de pantalla.",
-        "aria": "role=\"status\" en la confirmación (successMessage)"
+        "description": "Replaces the fields and the button with the confirmation. The message is announced to the screen reader.",
+        "aria": "role=\"status\" on the confirmation (successMessage)"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "form",
-      "description": "Elemento raíz. Columna con cabecera, banner de error, campos, acciones o confirmación. Su aspecto lo da variant.",
-      "figmaLayer": ".Form (cada variante del component set)"
+      "description": "Root element. Column with header, error banner, fields, actions or confirmation. Its appearance is given by variant.",
+      "figmaLayer": ".Form (each variant of the component set)"
     },
     "header": {
       "element": "div",
-      "description": "Cabecera: título y descripción. Columna con separación de 4 px.",
+      "description": "Header: title and description. Column with 4 px gap.",
       "figmaLayer": "header"
     },
     "title": {
       "element": "h2",
-      "description": "Título del formulario. Texto fijo «Hablemos de tu proyecto» en Figma: no es propiedad. Propuesta: h2, porque el nivel depende de la página.",
+      "description": "Form title. Fixed text \"Hablemos de tu proyecto\" in Figma: not a property. Proposal: h2, because the level depends on the page.",
       "figmaLayer": "title"
     },
     "description": {
       "element": "p",
-      "description": "Descripción debajo del título. Texto fijo «Déjanos tus datos y te escribimos en 24 h.» en Figma. Solo con showDescription=true.",
+      "description": "Description below the title. Fixed text \"Déjanos tus datos y te escribimos en 24 h.\" in Figma. Only with showDescription=true.",
       "optional": true,
       "figmaLayer": "description"
     },
     "formError": {
       "element": "div",
-      "description": "Banner de error general: icono info de 16 px y texto «Revisa los campos marcados.». Solo con state=error. Fondo error-alpha.3 al 8 %.",
+      "description": "General error banner: 16 px info icon and text \"Revisa los campos marcados.\". Only with state=error. error-alpha.3 background at 8 %.",
       "optional": true,
       "figmaLayer": "formError"
     },
     "formErrorIcon": {
       "element": "svg",
-      "description": "Icono info de 16 px del banner.",
+      "description": "16 px info icon of the banner.",
       "optional": true,
       "figmaLayer": "icon"
     },
     "fields": {
       "element": "div",
-      "description": "Lista de campos y la casilla de privacidad. Columna con separación de 16 px. Se oculta en success.",
+      "description": "List of fields and the privacy checkbox. Column with 16 px gap. Hidden in success.",
       "figmaLayer": "fields",
       "slot": {
         "key": "fields",
@@ -180,25 +180,25 @@
     },
     "privacy": {
       "element": "label",
-      "description": "Casilla de aceptación de la política de privacidad. Marcada en default, submitting y success; sin marcar en error. Texto fijo «Acepto la política de privacidad» en Figma.",
+      "description": "Acceptance checkbox for the privacy policy. Checked in default, submitting and success; unchecked in error. Fixed text \"Acepto la política de privacidad\" in Figma.",
       "optional": false,
       "figmaLayer": "privacy"
     },
     "privacyError": {
       "element": "div",
-      "description": "Mensaje de la casilla: icono info de 14 px y texto «Acepta la política para continuar.». Solo con state=error.",
+      "description": "Checkbox message: 14 px info icon and text \"Acepta la política para continuar.\". Only with state=error.",
       "optional": true,
       "figmaLayer": "privacyError"
     },
     "privacyErrorIcon": {
       "element": "svg",
-      "description": "Icono info de 14 px del mensaje de la casilla.",
+      "description": "14 px info icon of the checkbox message.",
       "optional": true,
       "figmaLayer": "icon"
     },
     "actions": {
       "element": "div",
-      "description": "Grupo de acciones: el botón de envío, alineado a la derecha y a ancho completo del grupo. Se oculta en success.",
+      "description": "Actions group: the submit button, aligned right and at the full width of the group. Hidden in success.",
       "figmaLayer": "actions",
       "slot": {
         "key": "actions",
@@ -213,13 +213,13 @@
     },
     "successMessage": {
       "element": "div",
-      "description": "Confirmación de envío: Badge success (soft, tamaño 2) y el texto «Gracias. Te escribiremos pronto.». Solo con state=success.",
+      "description": "Submission confirmation: Badge success (soft, size 2) and the text \"Gracias. Te escribiremos pronto.\". Only with state=success.",
       "optional": true,
       "figmaLayer": "successMessage"
     },
     "successBadge": {
       "element": "span",
-      "description": "Badge de confirmación: variant soft, color success, size 2.",
+      "description": "Confirmation badge: variant soft, color success, size 2.",
       "optional": true,
       "figmaLayer": "Badge"
     }
@@ -285,18 +285,18 @@
       },
       "unit": "px",
       "token": null,
-      "note": "Altura del ejemplo de Figma en el estado default (502 px, card). Depende de los campos y del estado; no es fija."
+      "note": "Height of the Figma example in the default state (502 px, card). Depends on the fields and the state; it is not fixed."
     },
     "width": {
       "default": "fixed",
       "modes": {
-        "fixed": "400 px en Figma (ancho del component set).",
-        "fill": "No definido en Figma.",
-        "hug": "No definido en Figma."
+        "fixed": "400 px in Figma (component set width).",
+        "fill": "Not defined in Figma.",
+        "hug": "Not defined in Figma."
       },
       "min": null,
       "max": null,
-      "note": "Figma define 400 px fijos. Decidir si en la aplicación debe ser fill."
+      "note": "Figma defines a fixed 400 px. Decide whether in the application it should be fill."
     },
     "autoLayout": {
       "direction": "VERTICAL",
@@ -304,7 +304,7 @@
       "sizingVertical": "HUG",
       "alignMain": "MIN",
       "alignCross": "MIN",
-      "gap": "spacing.5 (24 px) entre cabecera, banner, campos y acciones. En plain, igual."
+      "gap": "spacing.5 (24 px) between header, banner, fields and actions. In plain, the same."
     },
     "headerLayout": {
       "direction": "VERTICAL",
@@ -322,7 +322,7 @@
       "direction": "HORIZONTAL",
       "sizingHorizontal": "FILL",
       "sizingVertical": "HUG",
-      "gap": "spacing.2 (8 px); padding de spacing.3 (12 px) en los cuatro lados"
+      "gap": "spacing.2 (8 px); spacing.3 (12 px) padding on all four sides"
     },
     "actionsLayout": {
       "direction": "HORIZONTAL",
@@ -391,7 +391,7 @@
   "events": [
     {
       "name": "onSubmit",
-      "trigger": "Enviar el formulario (botón de envío o Enter en un campo). No está en Figma: necesario para que el envío tenga efecto.",
+      "trigger": "Submit the form (submit button or Enter in a field). Not in Figma: needed for the submission to take effect.",
       "payload": "(event: FormEvent<HTMLFormElement>) => void",
       "blockedWhen": [
         "submitting",
@@ -400,36 +400,36 @@
     }
   ],
   "a11y": {
-    "role": "form, solo con nombre accesible (aria-labelledby apunta al título)",
-    "name": "El título (title) mediante aria-labelledby. Sin título visible, aria-label obligatorio.",
+    "role": "form, only with an accessible name (aria-labelledby points to the title)",
+    "name": "The title (title) via aria-labelledby. Without a visible title, aria-label is mandatory.",
     "keyboard": [
-      "Tab — recorre los campos, la casilla y el botón en orden",
-      "Espacio — marca o desmarca la casilla",
-      "Enter — en un campo, envía el formulario (propuesta)"
+      "Tab — moves through the fields, the checkbox and the button in order",
+      "Space — checks or unchecks the checkbox",
+      "Enter — in a field, submits the form (proposal)"
     ],
-    "focusIndicator": "Lo heredan FormField, Checkbox y Button de sus contratos. El Form no añade anillo propio.",
-    "minTarget": "Botón de envío 32 px de alto. Casilla de 16 px visibles: su área pulsable debe incluir la etiqueta (≥ 24 × 24 px, WCAG 2.5.8).",
-    "contrastNote": "Texto neutral.12 y neutral.11 sobre neutral.1 (card). Texto de error colors.semantic.error.11 sobre error-alpha.3 al 8 % y sobre el fondo. No medido en Figma.",
+    "focusIndicator": "Inherited by FormField, Checkbox and Button from their contracts. The Form adds no ring of its own.",
+    "minTarget": "Submit button 32 px tall. Checkbox 16 px visible: its clickable area must include the label (≥ 24 × 24 px, WCAG 2.5.8).",
+    "contrastNote": "neutral.12 and neutral.11 text on neutral.1 (card). Error text colors.semantic.error.11 on error-alpha.3 at 8 % and on the background. Not measured in Figma.",
     "wcag": [
-      "1.3.1 Información y relaciones",
-      "1.4.1 Uso del color (el error lleva icono y texto)",
-      "1.4.3 Contraste (AA)",
-      "2.1.1 Teclado",
-      "2.5.8 Tamaño mínimo del objetivo (AA)",
-      "3.3.1 Identificación de errores",
-      "4.1.3 Mensajes de estado"
+      "1.3.1 Info and Relationships",
+      "1.4.1 Use of Color (the error carries an icon and text)",
+      "1.4.3 Contrast (Minimum) (AA)",
+      "2.1.1 Keyboard",
+      "2.5.8 Target Size (Minimum) (AA)",
+      "3.3.1 Error Identification",
+      "4.1.3 Status Messages"
     ]
   },
   "content": {
     "label": {
       "maxLength": null,
       "casing": "sentence",
-      "voice": "Cercano y directo, en tú. Textos fijos de Figma: título «Hablemos de tu proyecto», descripción «Déjanos tus datos y te escribimos en 24 h.», error «Revisa los campos marcados.», casilla «Acepto la política de privacidad», botón «Enviar» y confirmación «Gracias. Te escribiremos pronto.»."
+      "voice": "Friendly and direct, informal second person (tú). Fixed Figma texts: title \"Hablemos de tu proyecto\", description \"Déjanos tus datos y te escribimos en 24 h.\", error \"Revisa los campos marcados.\", checkbox \"Acepto la política de privacidad\", button \"Enviar\" and confirmation \"Gracias. Te escribiremos pronto.\"."
     }
   },
   "behavior": {
     "loading": null,
-    "overflow": "wrap: la descripción, el banner y los mensajes se envuelven dentro del ancho del formulario.",
+    "overflow": "wrap: the description, banner and messages wrap within the form width.",
     "motion": [],
     "responsive": []
   },
@@ -440,9 +440,9 @@
     "errorMessage": {
       "prop": null,
       "visibleWhen": "state=error",
-      "note": "Texto fijo «Revisa los campos marcados.» en Figma. La validación la hace cada FormField; Form solo muestra el estado."
+      "note": "Fixed text \"Revisa los campos marcados.\" in Figma. Validation is done by each FormField; Form only shows the state."
     },
-    "note": "Form no valida ni envía por sí mismo: el envío lo gestiona onSubmit. El estado (error, submitting, success) lo decide quien usa el componente."
+    "note": "Form neither validates nor submits by itself: submission is handled by onSubmit. The state (error, submitting, success) is decided by whoever uses the component."
   },
   "overlay": null,
   "data": null,
@@ -455,20 +455,20 @@
     "density": null
   },
   "i18n": {
-    "rtl": "El botón de envío va alineado a la derecha (MAX) en LTR; en RTL se alinea a la izquierda. La flecha del botón debe girar en RTL.",
-    "textExpansion": "Con un texto un 30-40 % más largo, el título y los mensajes se envuelven. El ancho fijo de 400 px hace que la fila de acciones ocupe menos espacio; el botón puede no caber junto a otro texto."
+    "rtl": "The submit button is aligned right (MAX) in LTR; in RTL it aligns left. The button arrow must flip in RTL.",
+    "textExpansion": "With text 30-40 % longer, the title and messages wrap. The fixed 400 px width makes the actions row take less space; the button may not fit next to other text."
   },
   "testing": {
     "cases": [
-      "renderiza un form con header, fields y actions, con los tokens de spacing y de text-style de la tabla",
-      "variant=card aplica fondo neutral.1, borde neutral-alpha.6, radio 8 px y padding 32 px; plain no aplica ninguno",
-      "showDescription=false oculta la descripción",
-      "state=error muestra el banner con role=alert y el mensaje de la casilla; la casilla queda sin marcar",
-      "state=submitting deshabilita el botón de envío y no oculta los campos",
-      "state=success oculta fields, actions y el banner, y muestra la confirmación con role=status",
-      "el título está asociado al form con aria-labelledby",
-      "la casilla de privacidad y el botón solo aceptan Checkbox y Button en el slot correspondiente",
-      "onSubmit no se dispara en submitting ni en success"
+      "renders a form with header, fields and actions, with the spacing and text-style tokens from the table",
+      "variant=card applies neutral.1 background, neutral-alpha.6 border, 8 px radius and 32 px padding; plain applies none",
+      "showDescription=false hides the description",
+      "state=error shows the banner with role=alert and the checkbox message; the checkbox is left unchecked",
+      "state=submitting disables the submit button and does not hide the fields",
+      "state=success hides fields, actions and the banner, and shows the confirmation with role=status",
+      "the title is associated with the form via aria-labelledby",
+      "the privacy checkbox and the button accept only Checkbox and Button in the corresponding slot",
+      "onSubmit does not fire in submitting or success"
     ]
   },
   "governance": null,
@@ -491,26 +491,26 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "El component set tiene 8 variantes: variant (card, plain) × state (default, error, submitting, success). Todas leídas. Las variantes card y plain tienen la misma estructura; solo cambian el contenedor (fondo, borde, radio, padding).",
-      "Props leídas: variant (VARIANT), showDescription (BOOLEAN) y state (VARIANT). Ninguna de las tres tiene valores que no estén en el contrato.",
-      "Textos fijos en Figma, sin propiedad: título, descripción, banner de error, casilla, botón «Enviar» y confirmación. Como en FormField, no se han añadido props de texto. Pregunta: ¿añadirlas en Figma o aprobarlas en código?",
-      "Inconsistencia entre contratos: el campo «Comentario» de Figma usa un TextArea como control, y FormField.contract.json solo admite TextField. Si el TextArea es válido, FormField debe admitirlo (cambio de contrato con subida de versión). No se ha tocado FormField.",
-      "Campos con override de texto: las etiquetas «Nombre», «Correo electrónico» y «Comentario», los placeholders y los textos de ayuda son overrides de instancia de FormField, no propiedades de Form. Los tres campos están fijos en Figma: no hay forma de cambiarlos desde el Form.",
-      "Estado error en Figma: solo el campo de correo pasa a error (FormField state=error). Los otros dos no cambian. En el contrato, error es un estado del Form, no de cada campo: decidir cómo se traslada el error a cada FormField.",
-      "Estado error: la casilla de privacidad pasa a sin marcar (status=unchecked). Figma no dice qué la desmarca: si es el propio error del formulario o una regla de la casilla. El contrato lo describe como comportamiento del estado error; confirmar.",
-      "Estado submitting: el botón pasa a state=disable (deshabilitado), sin el spinner de loading. Figma no usa loading. Decisión: deshabilitado y no spinner. Si se quiere un spinner, usar Button loading y actualizar Figma.",
-      "Estado submitting: los campos no cambian en Figma (siguen con su estado normal). Decisión: no bloquearlos en submitting; confirmar.",
-      "Estado success: se ocultan fields, actions y el banner; se muestra la confirmación (Badge success, soft, size 2, texto de 14 px en text-style.2.regular). La cabecera sigue visible.",
-      "Botón de envío: Button variant=solid, color=accent, size=2 con iconEnd arrow-right (16 px). Fijo en Figma. Las etiquetas «Enviar» y la flecha son overrides de instancia.",
-      "Ancho: 400 px FIXED en el component set. Propuesta: width fixed por defecto; si en la aplicación debe llenar el contenedor, cambiar a fill.",
-      "Alto 502 px en default: resultado de la suma de partes (cabecera 52 px, campos 304 px y botón 32 px más gaps de 24 px). Sin token.",
-      "Medidas sin variable: alto del botón de envío (32 px, coincide con tokens.space.button-height-2 por valor), iconos de 16 y 14 px (Icon admite '14' y '16'), padding de card 32 px = spacing.6 (ligado), gap 24 = spacing.5 (ligado), 16 = spacing.4 (ligado).",
-      "Trazo de la card: neutral-alpha.6 con opacidad de 0.15 sobre el propio trazo, igual que en Navbar. El token de color está ligado; la opacidad no tiene token y la posición del trazo no se leyó. Verificar a mano.",
-      "Banner de error: fondo colors.semantic.error-alpha.3 con opacidad 0.08 en el propio relleno. La opacidad no tiene token y se documenta como valor de Figma. Verificar a mano.",
-      "Checkbox: variant surface, size 2, highContrast false, status checked; su label es un override de instancia. Su contrato usa checked como boolean; en el Form la casilla está marcada en todos los estados salvo error.",
-      "Contenido, guidance, a11y (role=alert en el banner, role=status en la confirmación, aria-labelledby en el form), testing, events (onSubmit) y el bloque form: redactados como borrador. No salen de Figma. Decisiones tomadas por mí: el form como elemento raíz, h2 para el título, Enter envía, y bloqueo de onSubmit en submitting y success.",
-      "Contraste no medido. Figma no define estado disabled para el Form completo ni foco visible.",
-      "governance: null, igual que Button. Falta definir responsables del componente."
+      "The component set has 8 variants: variant (card, plain) × state (default, error, submitting, success). All read. The card and plain variants have the same structure; only the container changes (background, border, radius, padding).",
+      "Props read: variant (VARIANT), showDescription (BOOLEAN) and state (VARIANT). None of the three has values missing from the contract.",
+      "Fixed texts in Figma, with no property: title, description, error banner, checkbox, \"Enviar\" button and confirmation. As in FormField, no text props have been added. Question: add them in Figma or approve them in code?",
+      "Inconsistency between contracts: the Figma \"Comentario\" field uses a TextArea as its control, and FormField.contract.json only accepts TextField. If the TextArea is valid, FormField must accept it (contract change with a version bump). FormField has not been touched.",
+      "Fields with text override: the labels \"Nombre\", \"Correo electrónico\" and \"Comentario\", the placeholders and the help texts are FormField instance overrides, not Form properties. The three fields are fixed in Figma: there is no way to change them from the Form.",
+      "Error state in Figma: only the email field goes to error (FormField state=error). The other two do not change. In the contract, error is a state of the Form, not of each field: decide how the error is passed on to each FormField.",
+      "Error state: the privacy checkbox becomes unchecked (status=unchecked). Figma does not say what unchecks it: the form's own error or a checkbox rule. The contract describes it as error-state behavior; confirm.",
+      "Submitting state: the button goes to state=disable (disabled), without the loading spinner. Figma does not use loading. Decision: disabled, no spinner. If a spinner is wanted, use Button loading and update Figma.",
+      "Submitting state: the fields do not change in Figma (they keep their normal state). Decision: do not block them in submitting; confirm.",
+      "Success state: fields, actions and the banner are hidden; the confirmation is shown (Badge success, soft, size 2, 14 px text in text-style.2.regular). The header stays visible.",
+      "Submit button: Button variant=solid, color=accent, size=2 with iconEnd arrow-right (16 px). Fixed in Figma. The \"Enviar\" label and the arrow are instance overrides.",
+      "Width: 400 px FIXED in the component set. Proposal: width fixed by default; if in the application it must fill the container, change to fill.",
+      "Height 502 px in default: result of summing the parts (header 52 px, fields 304 px and button 32 px plus 24 px gaps). No token.",
+      "Measurements with no variable: submit button height (32 px, matches tokens.space.button-height-2 by value), 16 and 14 px icons (Icon accepts '14' and '16'), card padding 32 px = spacing.6 (bound), gap 24 = spacing.5 (bound), 16 = spacing.4 (bound).",
+      "Card stroke: neutral-alpha.6 with 0.15 opacity on the stroke itself, as in Navbar. The color token is bound; the opacity has no token and the stroke position was not read. Verify by hand.",
+      "Error banner: colors.semantic.error-alpha.3 background with 0.08 opacity on the fill itself. The opacity has no token and is documented as a Figma value. Verify by hand.",
+      "Checkbox: variant surface, size 2, highContrast false, status checked; its label is an instance override. Its contract uses checked as a boolean; in the Form the checkbox is checked in all states except error.",
+      "Content, guidance, a11y (role=alert on the banner, role=status on the confirmation, aria-labelledby on the form), testing, events (onSubmit) and the form block: written as a draft. They do not come from Figma. Own decisions: form as root element, h2 for the title, Enter submits, and onSubmit blocked in submitting and success.",
+      "Contrast not measured. Figma defines no disabled state for the whole Form nor visible focus.",
+      "governance: null, same as Button. Component owners still need to be defined."
     ]
   }
 }

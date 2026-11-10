@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Contrato de componente",
-  "description": "Bloques núcleo obligatorios; el resto de bloques son opcionales según el tipo de componente.",
+  "title": "Component contract",
+  "description": "Core blocks are required; the other blocks are optional depending on the component type.",
   "type": "object",
   "required": [
     "id",
@@ -202,7 +202,7 @@
                   },
                   "value": {
                     "type": "string",
-                    "description": "Solo si la prop es booleana en código pero en Figma es un valor de un eje VARIANT: el valor de Figma que equivale a true (p. ej. state → \"disable\")."
+                    "description": "Only if the prop is boolean in code but in Figma is a value of a VARIANT axis: the Figma value equivalent to true (e.g. state → \"disable\")."
                   }
                 }
               }
@@ -355,7 +355,7 @@
         },
         "scales": {
           "type": "object",
-          "description": "Opcional. Mapa valor-de-prop (p. ej. color) → claves con rutas de token; se usa en las plantillas como {color.clave}. null = no aplica para ese valor."
+          "description": "Optional. Map of prop-value (e.g. color) → keys with token paths; used in templates as {color.key}. null = does not apply for that value."
         },
         "bindings": {
           "type": "object"

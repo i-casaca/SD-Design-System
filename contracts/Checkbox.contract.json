@@ -5,51 +5,51 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "input",
-  "description": "Casilla que activa o desactiva una opción independiente, con un tercer estado «indeterminado» para selecciones parciales. Se usa en formularios y listas.",
+  "description": "Box that turns an independent option on or off, with a third \"indeterminate\" state for partial selections. Used in forms and lists.",
   "guidance": {
     "dos": [
-      "Usa una etiqueta visible (`label`) que describa la opción en positivo: «Recibir novedades».",
-      "Usa `indeterminate` solo para un «seleccionar todo» cuando hay hijos marcados y sin marcar.",
-      "Agrupa varias casillas relacionadas en CheckboxGroup.",
-      "La casilla y su etiqueta son un único objetivo pulsable: pulsar la etiqueta marca la casilla."
+      "Use a visible label (`label`) that describes the option in positive terms: \"Receive news\".",
+      "Use `indeterminate` only for a \"select all\" when some children are checked and others are not.",
+      "Group related checkboxes in CheckboxGroup.",
+      "The box and its label are a single pressable target: pressing the label checks the box."
     ],
     "donts": [
       {
-        "case": "Elegir una sola opción entre varias",
+        "case": "Choosing a single option among several",
         "useInstead": "RadioGroup",
-        "why": "Una casilla permite marcar varias a la vez."
+        "why": "A checkbox lets you check several at once."
       },
       {
-        "case": "Activar algo que surte efecto al instante (ajuste)",
+        "case": "Turning on something that takes effect instantly (a setting)",
         "useInstead": "Switch",
-        "why": "Una casilla se confirma al enviar el formulario; un Switch actúa al cambiar."
+        "why": "A checkbox is confirmed when the form is submitted; a Switch acts on change."
       },
       {
-        "case": "Lanzar una acción",
+        "case": "Triggering an action",
         "useInstead": "Button",
-        "why": "Una casilla guarda un valor, no ejecuta."
+        "why": "A checkbox stores a value; it does not execute."
       },
       {
-        "case": "Casilla sin etiqueta",
-        "useInstead": "Checkbox con label o aria-label",
-        "why": "Sin nombre accesible no se sabe qué se marca."
+        "case": "Checkbox without a label",
+        "useInstead": "Checkbox with label or aria-label",
+        "why": "Without an accessible name it is unclear what is being checked."
       }
     ],
     "related": [
       {
         "component": "CheckboxGroup",
         "relation": "contained-by",
-        "difference": "Agrupa de 1 a 6 casillas en vertical con un gap de spacing.3."
+        "difference": "Groups 1 to 6 checkboxes vertically with a gap of spacing.3."
       },
       {
         "component": "RadioGroup",
         "relation": "alternative",
-        "difference": "Solo una opción."
+        "difference": "Only one option."
       },
       {
         "component": "Switch",
         "relation": "alternative",
-        "difference": "Efecto inmediato."
+        "difference": "Immediate effect."
       }
     ]
   },
@@ -64,7 +64,7 @@
       "name": "variant",
       "type": "'classic' | 'surface' | 'soft'",
       "default": "surface",
-      "description": "Aspecto. surface = fondo claro con borde; classic = igual con sombra; soft = relleno tenue de acento sin borde.",
+      "description": "Appearance. surface = light background with border; classic = same with shadow; soft = subtle accent fill with no border.",
       "bindings": {
         "figma": {
           "property": "variant",
@@ -76,7 +76,7 @@
       "name": "size",
       "type": "'1' | '2' | '3'",
       "default": "2",
-      "description": "Tamaño de la casilla: 14 / 16 / 20 px, con su texto y espaciado. El 2 es el valor por defecto.",
+      "description": "Checkbox size: 14 / 16 / 20 px, with its text and spacing. 2 is the default.",
       "bindings": {
         "figma": {
           "property": "size",
@@ -88,7 +88,7 @@
       "name": "highContrast",
       "type": "boolean",
       "default": false,
-      "description": "Si es true y la casilla está marcada, usa el paso 12 del acento. Sin marcar no cambia.",
+      "description": "If true and the checkbox is checked, uses step 12 of the accent. Unchecked it does not change.",
       "bindings": {
         "figma": {
           "property": "highContrast",
@@ -101,7 +101,7 @@
       "name": "checked",
       "type": "boolean | 'indeterminate'",
       "default": false,
-      "description": "Valor. En Figma es el eje `status`: false = «unchecked ✦», true = «checked ✓», 'indeterminate' = «indeterminate».",
+      "description": "Value. In Figma it is the `status` axis: false = \"unchecked ✦\", true = \"checked ✓\", 'indeterminate' = \"indeterminate\".",
       "bindings": {
         "figma": {
           "property": "status",
@@ -113,7 +113,7 @@
       "name": "disabled",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, no se puede marcar ni enfocar. En Figma es el valor «disable» del eje `state`.",
+      "description": "If true, it cannot be checked or focused. In Figma it is the \"disable\" value of the `state` axis.",
       "bindings": {
         "figma": {
           "property": "state",
@@ -126,7 +126,7 @@
       "name": "label",
       "type": "string | undefined",
       "default": null,
-      "description": "Texto junto a la casilla. En Figma el boolean `text` lo muestra u oculta (oculto por defecto). Texto de ejemplo: «Text».",
+      "description": "Text next to the checkbox. In Figma the `text` boolean shows or hides it (hidden by default). Sample text: \"Text\".",
       "bindings": {
         "figma": {
           "property": "⮑ ✏️ text",
@@ -138,7 +138,7 @@
       "name": "name",
       "type": "string | undefined",
       "default": null,
-      "description": "Nombre del campo al enviar un formulario. Solo de código.",
+      "description": "Field name when submitting a form. Code only.",
       "bindings": {
         "figma": null
       }
@@ -147,7 +147,7 @@
       "name": "onCheckedChange",
       "type": "(checked: boolean | 'indeterminate') => void",
       "default": null,
-      "description": "Se emite al cambiar el valor. Solo de código.",
+      "description": "Emitted when the value changes. Code only.",
       "bindings": {
         "figma": null
       }
@@ -162,30 +162,30 @@
     "controlled": [
       {
         "name": "checked",
-        "description": "Casilla marcada. Muestra el check.",
+        "description": "Checkbox checked. Shows the check.",
         "aria": "aria-checked='true'"
       },
       {
         "name": "indeterminate",
-        "description": "Selección parcial. Muestra un guion.",
+        "description": "Partial selection. Shows a dash.",
         "aria": "aria-checked='mixed'"
       },
       {
         "name": "disabled",
-        "description": "No interactiva. Fondo y borde con tokens neutros; nunca con opacity.",
-        "aria": "disabled (atributo HTML nativo)"
+        "description": "Not interactive. Background and border with neutral tokens; never with opacity.",
+        "aria": "disabled (native HTML attribute)"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "span",
-      "description": "Contenedor de casilla y etiqueta. Un solo objetivo pulsable.",
-      "figmaLayer": "Checkbox (cada variante del component set)"
+      "description": "Container for box and label. A single pressable target.",
+      "figmaLayer": "Checkbox (each variant of the component set)"
     },
     "focusRing": {
       "element": "css",
-      "description": "No es un elemento: se pinta con :focus-visible. En Figma es una capa que se muestra con el boolean focusRing: borde exterior de 4px e interior de 2px.",
+      "description": "Not an element: painted with :focus-visible. In Figma it is a layer shown with the focusRing boolean: 4px outer border and 2px inner.",
       "optional": true,
       "figmaLayer": "focus-ring",
       "figmaToggle": {
@@ -196,18 +196,18 @@
     },
     "box": {
       "element": "button",
-      "description": "La casilla. Lleva role=checkbox y aria-checked.",
+      "description": "The box. Carries role=checkbox and aria-checked.",
       "figmaLayer": "checkbox"
     },
     "indicator": {
       "element": "svg",
-      "description": "Check (marcada) o guion (indeterminado). Oculto si no está marcada.",
+      "description": "Check (checked) or dash (indeterminate). Hidden when unchecked.",
       "optional": true,
       "figmaLayer": "Abstract / check | Typography / dash"
     },
     "label": {
       "element": "label",
-      "description": "Texto junto a la casilla. Asociado a la casilla.",
+      "description": "Text next to the box. Associated with the box.",
       "optional": true,
       "figmaLayer": "Text",
       "figmaToggle": {
@@ -239,18 +239,18 @@
       },
       "unit": "px",
       "token": null,
-      "note": "Es el alto de línea del texto; la casilla mide 14 / 16 / 20."
+      "note": "It is the text line height; the box measures 14 / 16 / 20."
     },
     "width": {
       "default": "hug",
       "modes": {
-        "hug": "Casilla más etiqueta.",
-        "fill": "No aplica.",
-        "fixed": "No aplica."
+        "hug": "Box plus label.",
+        "fill": "Not applicable.",
+        "fixed": "Not applicable."
       },
       "min": null,
       "max": null,
-      "note": "Sin tokens de ancho."
+      "note": "No width tokens."
     },
     "autoLayout": {
       "direction": "HORIZONTAL",
@@ -258,7 +258,7 @@
       "sizingVertical": "HUG",
       "alignMain": "MIN",
       "alignCross": "CENTER",
-      "gap": "Entre casilla y etiqueta, por size: spacing.2 / 2 / 3"
+      "gap": "Between box and label, per size: spacing.2 / 2 / 3"
     },
     "boxSize": {
       "values": {
@@ -271,9 +271,9 @@
     "indicatorSize": {
       "check": {
         "1": null,
-        "2": "9x8 dentro de 16x16"
+        "2": "9x8 inside 16x16"
       },
-      "dash": "5x1 dentro de 16x16"
+      "dash": "5x1 inside 16x16"
     }
   },
   "tokens": {
@@ -555,7 +555,7 @@
   "events": [
     {
       "name": "onCheckedChange",
-      "trigger": "Clic, o Espacio con la casilla enfocada",
+      "trigger": "Click, or Space with the checkbox focused",
       "payload": "boolean | 'indeterminate'",
       "blockedWhen": [
         "disabled"
@@ -564,21 +564,21 @@
   ],
   "a11y": {
     "role": "checkbox",
-    "name": "La etiqueta (label). Sin etiqueta visible, aria-label obligatorio.",
+    "name": "The label (label). Without a visible label, aria-label is required.",
     "keyboard": [
-      "Space — marca o desmarca",
-      "Tab — entra y sale (Enter no marca)"
+      "Space — checks or unchecks",
+      "Tab — enters and leaves (Enter does not check)"
     ],
-    "focusIndicator": "Anillo doble: exterior de 4px con colors.accent.accent-alpha.8 e interior de 2px con colors.accent.accent.3 (capa focus-ring).",
-    "minTarget": "La casilla mide 14 / 16 / 20 px: por debajo de 24x24 (WCAG 2.5.8). Hay que ampliar el área pulsable (label incluida o padding invisible).",
-    "contrastNote": "Borde de la casilla ≥ 3:1 contra el fondo (WCAG 1.4.11) y texto ≥ 4.5:1. No medido en Figma; el borde unchecked usa neutral-alpha.7.",
+    "focusIndicator": "Double ring: 4px outer with colors.accent.accent-alpha.8 and 2px inner with colors.accent.accent.3 (focus-ring layer).",
+    "minTarget": "The box measures 14 / 16 / 20 px: below 24x24 (WCAG 2.5.8). The pressable area must be enlarged (label included or invisible padding).",
+    "contrastNote": "Box border ≥ 3:1 against the background (WCAG 1.4.11) and text ≥ 4.5:1. Not measured in Figma; the unchecked border uses neutral-alpha.7.",
     "wcag": [
-      "1.4.3 Contraste (AA)",
-      "1.4.11 Contraste no textual",
-      "2.1.1 Teclado",
-      "2.4.7 Foco visible",
-      "2.5.8 Tamaño del objetivo",
-      "4.1.2 Nombre, función, valor"
+      "1.4.3 Contrast (Minimum)",
+      "1.4.11 Non-text Contrast",
+      "2.1.1 Keyboard",
+      "2.4.7 Focus Visible",
+      "2.5.8 Target Size (Minimum)",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "form": {
@@ -590,13 +590,13 @@
     },
     "validation": null,
     "errorMessage": null,
-    "note": "Figma no define estado de error ni campo requerido. Valor enviado: según name y checked."
+    "note": "Figma defines no error state or required field. Submitted value: depends on name and checked."
   },
   "content": {
     "label": {
       "maxLength": 80,
       "casing": "sentence",
-      "voice": "Opción en positivo: «Recibir novedades»"
+      "voice": "Option phrased positively: \"Receive news\""
     }
   },
   "behavior": {
@@ -606,11 +606,11 @@
   },
   "testing": {
     "cases": [
-      "Space alterna checked; Enter no",
-      "disabled no recibe foco ni emite onCheckedChange",
-      "indeterminate expone aria-checked=\"mixed\" y al pulsar pasa a true",
-      "pulsar la etiqueta marca la casilla",
-      "sin label ni aria-label falla el check de accesibilidad"
+      "Space toggles checked; Enter does not",
+      "disabled does not receive focus or emit onCheckedChange",
+      "indeterminate exposes aria-checked=\"mixed\" and becomes true when pressed",
+      "pressing the label checks the box",
+      "without label or aria-label the accessibility check fails"
     ]
   },
   "anchors": {
@@ -632,18 +632,18 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "El enlace recibido (1391:12671) es Checkbox Group, no Checkbox. Este contrato es del Checkbox que usa ese grupo (837:25737, 216 variantes). El grupo (hasta 6 casillas en vertical, gap spacing.3 en size 3) no tiene contrato.",
-      "La descripción de Checkbox Group en Figma dice «radio buttons»: es un texto copiado de RadioGroup.",
-      "Los valores por defecto van marcados con ✦ («surface ✦», «2 ✦», «unchecked ✦», «default ✦»). El default del component set es `classic`.",
-      "Color del indicador (check y guion) leído solo en variant surface, sin highContrast, estado default: accent-contrast (check) y accent-alpha.11 (guion). En el resto de combinaciones no se pudo leer: el color del indicador queda sin verificar.",
-      "Tokens leídos en size 2. Tamaños 1 y 3: solo caja, radio, gap y estilo de texto. En size 1 el check no se midió.",
-      "highContrast solo cambia el fondo de checked en classic y surface (accent.12); en soft no cambia colores, solo opacidad.",
-      "opacity en hover/active (0.88, 0.82, 0.92) fijo en Figma, sin variable. Es el único caso en que el contrato usa opacity; disabled nunca.",
-      "disabled usa el mismo aspecto para unchecked, checked e indeterminate (fondo neutral-alpha.3, sin diferenciar el indicador); el texto de la etiqueta no cambia de color en disabled.",
-      "classic añade shadows.shadow-1, también en disabled.",
-      "Sin estados hover/active diferenciados para focus: el anillo es un boolean aparte.",
-      "La caja mide menos de 24px: área táctil por debajo de WCAG 2.5.8.",
-      "Sin estado de error ni campo requerido en Figma."
+      "The link received (1391:12671) is Checkbox Group, not Checkbox. This contract is for the Checkbox that group uses (837:25737, 216 variants). The group (up to 6 checkboxes vertically, gap spacing.3 in size 3) has no contract.",
+      "The Checkbox Group description in Figma says \"radio buttons\": it is text copied from RadioGroup.",
+      "Default values are marked with ✦ (\"surface ✦\", \"2 ✦\", \"unchecked ✦\", \"default ✦\"). The component set's default is `classic`.",
+      "Indicator color (check and dash) read only in variant surface, without highContrast, default state: accent-contrast (check) and accent-alpha.11 (dash). It could not be read in the other combinations: the indicator color remains unverified.",
+      "Tokens read in size 2. Sizes 1 and 3: only box, radius, gap and text style. In size 1 the check was not measured.",
+      "highContrast only changes the checked background in classic and surface (accent.12); in soft it changes no colors, only opacity.",
+      "opacity on hover/active (0.88, 0.82, 0.92) is hardcoded in Figma, with no variable. It is the only case where the contract uses opacity; disabled never does.",
+      "disabled uses the same look for unchecked, checked and indeterminate (neutral-alpha.3 background, indicator not differentiated); the label text does not change color in disabled.",
+      "classic adds shadows.shadow-1, also in disabled.",
+      "No differentiated hover/active states for focus: the ring is a separate boolean.",
+      "The box measures less than 24px: touch target below WCAG 2.5.8.",
+      "No error state or required field in Figma."
     ]
   }
 }

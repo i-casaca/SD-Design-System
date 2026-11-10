@@ -5,51 +5,51 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "input",
-  "description": "Envoltorio de un campo de formulario: etiqueta encima, el control (un TextField) en medio, y debajo un texto de ayuda o un mensaje de error con icono. Une etiqueta, control y mensaje para que lectores de pantalla y personas con error los reciban juntos.",
+  "description": "Wrapper for a form field: label on top, the control (a TextField) in the middle, and below it a helper text or an error message with an icon. It ties label, control and message together so screen readers and people who make an error receive them together.",
   "guidance": {
     "dos": [
-      "Etiqueta corta que diga qué se pide: «Correo electrónico», no «Introduce aquí».",
-      "Marca `required` en los campos obligatorios. El asterisco solo es una señal visual: el campo debe llevar también el atributo required en el control.",
-      "Usa `error` solo cuando el valor ya es incorrecto, y pon en el mensaje qué corregir: «Escribe una dirección de correo válida».",
-      "Usa `showHelper` para dar una pista que ayude a rellenar el campo antes de equivocarse (formato, ejemplo). No lo uses para repetir la etiqueta."
+      "Short label that says what is being asked: \"Email address\", not \"Enter here\".",
+      "Set `required` on mandatory fields. The asterisk is only a visual cue: the control must also carry the required attribute.",
+      "Use `error` only when the value is already incorrect, and state in the message what to fix: \"Enter a valid email address\".",
+      "Use `showHelper` to give a hint that helps fill in the field before making a mistake (format, example). Do not use it to repeat the label."
     ],
     "donts": [
       {
-        "case": "Campo sin etiqueta visible (solo placeholder)",
-        "useInstead": "FormField con label visible",
-        "why": "El placeholder desaparece al escribir y no se lee bien con poco contraste. La etiqueta debe seguir visible."
+        "case": "Field without a visible label (placeholder only)",
+        "useInstead": "FormField with a visible label",
+        "why": "The placeholder disappears when typing and reads poorly at low contrast. The label must stay visible."
       },
       {
-        "case": "Un control que no es un campo de texto de una línea (selección, casilla, interruptor, varias líneas)",
-        "useInstead": "TextArea, Checkbox, RadioGroup, Switch (con su propia etiqueta)",
-        "why": "FormField solo acepta TextField como control. Los otros controles llevan su etiqueta dentro y no encajan en esta anatomía."
+        "case": "A control that is not a single-line text field (selection, checkbox, switch, multiple lines)",
+        "useInstead": "TextArea, Checkbox, RadioGroup, Switch (with their own label)",
+        "why": "FormField only accepts TextField as a control. The other controls carry their label inside and do not fit this anatomy."
       },
       {
-        "case": "Un mensaje de error con varias frases o un párrafo largo",
-        "useInstead": "Un mensaje corto de una frase",
-        "why": "El mensaje va pegado al campo y se lee de un vistazo. Un párrafo entero lo hace ilegible."
+        "case": "An error message with several sentences or a long paragraph",
+        "useInstead": "A short one-sentence message",
+        "why": "The message sits next to the field and is read at a glance. A whole paragraph makes it unreadable."
       },
       {
-        "case": "Señalar el error solo con el color rojo del borde o del texto",
-        "useInstead": "error con el icono y el mensaje de texto",
-        "why": "Las personas con daltonismo o con lector de pantalla no perciben el color (WCAG 1.4.1). El mensaje y el icono son la señal."
+        "case": "Signaling the error only with the red color of the border or text",
+        "useInstead": "error with the icon and the text message",
+        "why": "People with color blindness or using a screen reader do not perceive the color (WCAG 1.4.1). The message and the icon are the signal."
       }
     ],
     "related": [
       {
         "component": "TextField",
         "relation": "contains",
-        "difference": "El control de FormField es un TextField de una línea."
+        "difference": "FormField's control is a single-line TextField."
       },
       {
         "component": "TextArea",
         "relation": "alternative",
-        "difference": "Campo de varias líneas. Figma no lo define como control de FormField."
+        "difference": "Multi-line field. Figma does not define it as a FormField control."
       },
       {
         "component": "Icon",
         "relation": "contains",
-        "difference": "El icono del mensaje de error es un Icon de tamaño 14."
+        "difference": "The error message icon is a size 14 Icon."
       }
     ]
   },
@@ -65,7 +65,7 @@
       "type": "ReactNode (TextField)",
       "default": null,
       "required": true,
-      "description": "Control del campo. Es un slot: solo admite TextField. En Figma es un instance swap; su valor por defecto es un TextField de variant=surface, size=2 en estado placeholder.",
+      "description": "Field control. It is a slot: it only accepts TextField. In Figma it is an instance swap; its default value is a TextField with variant=surface, size=2 in placeholder state.",
       "usage": "control={TextField variant=\"surface\" size=\"2\"}",
       "bindings": {
         "figma": {
@@ -78,7 +78,7 @@
       "name": "required",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, muestra el asterisco «*» junto a la etiqueta en color error.11. El control debe llevar required (accesible), no solo el asterisco.",
+      "description": "If true, shows the asterisk \"*\" next to the label in color error.11. The control must carry required (accessible), not just the asterisk.",
       "bindings": {
         "figma": {
           "property": "required#35:0",
@@ -90,7 +90,7 @@
       "name": "showHelper",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, muestra el texto de ayuda debajo del control. Figma lo deja desactivado por defecto.",
+      "description": "If true, shows the helper text below the control. Figma leaves it off by default.",
       "bindings": {
         "figma": {
           "property": "showHelper#35:3",
@@ -102,7 +102,7 @@
       "name": "error",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, muestra el icono y el mensaje de error debajo del control. En Figma es el valor «error» de la propiedad state; el valor «default» equivale a false.",
+      "description": "If true, shows the icon and the error message below the control. In Figma it is the \"error\" value of the state property; the \"default\" value equals false.",
       "bindings": {
         "figma": {
           "property": "state",
@@ -117,31 +117,31 @@
     "controlled": [
       {
         "name": "error",
-        "description": "El valor no es válido. El control lleva aria-invalid=\"true\" y su descripción apunta al mensaje de error. Muestra el icono y el mensaje.",
-        "aria": "aria-invalid=\"true\" en el control; aria-describedby apunta al mensaje de error"
+        "description": "The value is not valid. The control carries aria-invalid=\"true\" and its description points to the error message. Shows the icon and the message.",
+        "aria": "aria-invalid=\"true\" on the control; aria-describedby points to the error message"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "div",
-      "description": "Elemento raíz. Columna con etiqueta, control y, si aplica, texto de ayuda o error.",
-      "figmaLayer": ".FormField (cada variante del component set)"
+      "description": "Root element. Column with label, control and, if applicable, helper text or error.",
+      "figmaLayer": ".FormField (each variant of the component set)"
     },
     "label": {
       "element": "label",
-      "description": "Etiqueta visible, encima del control. Asociada con htmlFor al control. El texto es fijo «Etiqueta» en Figma: no es propiedad.",
+      "description": "Visible label, above the control. Associated with the control via htmlFor. The text is fixed \"Etiqueta\" in Figma: not a property.",
       "figmaLayer": "label"
     },
     "requiredMark": {
       "element": "span",
-      "description": "Asterisco «*» junto a la etiqueta, color colors.semantic.error.11. Solo con required=true. Decorativo: aria-hidden.",
+      "description": "Asterisk \"*\" next to the label, color colors.semantic.error.11. Only with required=true. Decorative: aria-hidden.",
       "optional": true,
       "figmaLayer": "requiredMark"
     },
     "control": {
       "element": "div",
-      "description": "Contenedor del control. Recibe un TextField.",
+      "description": "Control container. Receives a TextField.",
       "figmaLayer": "control",
       "slot": {
         "key": "control",
@@ -156,25 +156,25 @@
     },
     "helper": {
       "element": "p",
-      "description": "Texto de ayuda debajo del control. Solo con showHelper=true. El texto es fijo «Texto de ayuda» en Figma. Tiene id para aria-describedby.",
+      "description": "Helper text below the control. Only with showHelper=true. The text is fixed \"Texto de ayuda\" in Figma. Has an id for aria-describedby.",
       "optional": true,
       "figmaLayer": "helper"
     },
     "error": {
       "element": "div",
-      "description": "Fila del mensaje de error: icono y texto. Solo con error=true. Tiene id para aria-describedby.",
+      "description": "Error message row: icon and text. Only with error=true. Has an id for aria-describedby.",
       "optional": true,
       "figmaLayer": "error"
     },
     "errorIcon": {
       "element": "svg",
-      "description": "Icono «info» de 14 px, a la izquierda del mensaje. En Figma, en estado error, sus trazos llevan el color error.11.",
+      "description": "14 px \"info\" icon, to the left of the message. In Figma, in error state, its strokes carry the error.11 color.",
       "optional": true,
       "figmaLayer": "icon"
     },
     "errorMessage": {
       "element": "span",
-      "description": "Texto del mensaje de error. Color colors.semantic.error.11. El texto es fijo «Mensaje de error» en Figma: no es propiedad.",
+      "description": "Error message text. Color colors.semantic.error.11. The text is fixed \"Mensaje de error\" in Figma: not a property.",
       "optional": true,
       "figmaLayer": "message"
     }
@@ -210,18 +210,18 @@
       },
       "unit": "px",
       "token": null,
-      "note": "Suma de etiqueta (20 px), control (32 px), texto de ayuda o error (16 px) y dos separaciones de 8 px. Sin ayuda: 60 px. Con error: 84 px."
+      "note": "Sum of label (20 px), control (32 px), helper or error text (16 px) and two 8 px gaps. Without helper: 60 px. With error: 84 px."
     },
     "width": {
       "default": "fill",
       "modes": {
-        "fill": "Propuesta: ocupa el ancho del contenedor. Figma lo tiene fijo.",
-        "hug": "No definido en Figma.",
-        "fixed": "400 px en Figma (ancho del component set)."
+        "fill": "Proposal: takes the container width. Figma has it fixed.",
+        "hug": "Not defined in Figma.",
+        "fixed": "400 px in Figma (component set width)."
       },
       "min": null,
       "max": null,
-      "note": "Figma define 400 px fijos. El control dentro va a ancho completo (FILL)."
+      "note": "Figma defines a fixed 400 px. The control inside is full width (FILL)."
     },
     "autoLayout": {
       "direction": "VERTICAL",
@@ -229,7 +229,7 @@
       "sizingVertical": "HUG",
       "alignMain": "MIN",
       "alignCross": "MIN",
-      "gap": "spacing.2 (8 px) entre etiqueta, control y mensaje."
+      "gap": "spacing.2 (8 px) between label, control and message."
     },
     "labelLayout": {
       "direction": "HORIZONTAL",
@@ -237,7 +237,7 @@
       "alignCross": "CENTER",
       "sizingHorizontal": "HUG",
       "sizingVertical": "HUG",
-      "gap": "spacing.1 (4 px) entre el texto y el asterisco"
+      "gap": "spacing.1 (4 px) between the text and the asterisk"
     },
     "errorLayout": {
       "direction": "HORIZONTAL",
@@ -245,7 +245,7 @@
       "alignCross": "CENTER",
       "sizingHorizontal": "FILL",
       "sizingVertical": "HUG",
-      "gap": "spacing.1 (4 px) entre el icono y el mensaje"
+      "gap": "spacing.1 (4 px) between the icon and the message"
     }
   },
   "tokens": {
@@ -275,39 +275,39 @@
   },
   "events": [],
   "a11y": {
-    "role": "Sin rol propio: el grupo lo da el control (textbox) con su etiqueta asociada.",
-    "name": "La etiqueta (label) asociada con htmlFor al control. El asterisco es aria-hidden; el campo obligatorio lo anuncia el control con required.",
+    "role": "No role of its own: the group is provided by the control (textbox) with its associated label.",
+    "name": "The label (label) associated with the control via htmlFor. The asterisk is aria-hidden; the mandatory field is announced by the control with required.",
     "keyboard": [
-      "Tab — pasa al control (TextField)"
+      "Tab — moves to the control (TextField)"
     ],
-    "focusIndicator": "Lo hereda del TextField (anillo de foco del control). FormField no añade anillo propio.",
-    "minTarget": "El control (32 px de alto) cumple 24 × 24 px (WCAG 2.5.8). Etiqueta y mensaje no son objetivos pulsables.",
-    "contrastNote": "Etiqueta con tokens.colors.text; mensaje de error con colors.semantic.error.11 sobre el fondo. ≥ 4.5:1 en texto normal. No medido en Figma.",
+    "focusIndicator": "Inherited from TextField (the control's focus ring). FormField adds no ring of its own.",
+    "minTarget": "The control (32 px tall) meets 24 × 24 px (WCAG 2.5.8). Label and message are not clickable targets.",
+    "contrastNote": "Label with tokens.colors.text; error message with colors.semantic.error.11 on the background. ≥ 4.5:1 for normal text. Not measured in Figma.",
     "wcag": [
-      "1.3.1 Información y relaciones",
-      "1.4.1 Uso del color (el error lleva icono y texto)",
-      "1.4.3 Contraste (AA)",
-      "2.5.8 Tamaño mínimo del objetivo (AA)",
-      "3.3.1 Identificación de errores",
-      "3.3.2 Etiquetas o instrucciones",
-      "4.1.2 Nombre, función, valor"
+      "1.3.1 Info and Relationships",
+      "1.4.1 Use of Color (the error carries an icon and text)",
+      "1.4.3 Contrast (Minimum) (AA)",
+      "2.5.8 Target Size (Minimum) (AA)",
+      "3.3.1 Error Identification",
+      "3.3.2 Labels or Instructions",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "content": {
     "label": {
       "maxLength": null,
       "casing": "sentence",
-      "voice": "Etiqueta corta de lo que se pide. El mensaje de error dice qué corregir. El texto fijo de Figma («Etiqueta», «Texto de ayuda», «Mensaje de error») es solo de muestra."
+      "voice": "Short label for what is asked. The error message says what to fix. The fixed Figma text (\"Etiqueta\", \"Texto de ayuda\", \"Mensaje de error\") is sample only."
     }
   },
   "behavior": {
     "loading": null,
-    "overflow": "wrap: el texto de ayuda y el de error se envuelven en varias líneas dentro del ancho del campo. Decisión propuesta: Figma no define este caso.",
+    "overflow": "wrap: the helper and error text wrap onto several lines within the field width. Proposed decision: Figma does not define this case.",
     "motion": [],
     "responsive": []
   },
   "form": {
-    "control": "input (a través de TextField)",
+    "control": "input (through TextField)",
     "label": {
       "prop": null,
       "position": "above",
@@ -317,9 +317,9 @@
     "errorMessage": {
       "prop": null,
       "visibleWhen": "error=true",
-      "note": "Texto fijo «Mensaje de error» en Figma: no es propiedad. Figma no define reglas de validación."
+      "note": "Fixed text \"Mensaje de error\" in Figma: not a property. Figma defines no validation rules."
     },
-    "note": "FormField muestra el estado; no valida. La validación la hace quien usa el campo y pasa error=true."
+    "note": "FormField shows the state; it does not validate. Validation is done by whoever uses the field, who passes error=true."
   },
   "overlay": null,
   "data": null,
@@ -332,19 +332,19 @@
     "density": null
   },
   "i18n": {
-    "rtl": "El asterisco va detrás de la etiqueta en LTR. En RTL, decidir si va delante. El icono del error se queda a la izquierda del mensaje en LTR y pasa a la derecha en RTL.",
-    "textExpansion": "Con un texto un 30-40 % más largo, la etiqueta crece en ancho y el mensaje se envuelve. La altura aumenta por cada línea de mensaje: el alto de 84 px deja de ser fijo."
+    "rtl": "The asterisk goes after the label in LTR. In RTL, decide whether it goes before. The error icon stays to the left of the message in LTR and moves to the right in RTL.",
+    "textExpansion": "With text 30-40 % longer, the label grows in width and the message wraps. The height increases with each message line: the 84 px height is no longer fixed."
   },
   "testing": {
     "cases": [
-      "renderiza una columna con label, control y, si aplica, helper o error",
-      "la etiqueta está asociada con htmlFor al control",
-      "required=true muestra el asterisco con colors.semantic.error.11 y aria-hidden; no sustituye al atributo required del control",
-      "showHelper=true muestra el texto de ayuda; por defecto está oculto",
-      "error=true muestra el icono de 14 px y el mensaje; el control lleva aria-invalid=\"true\" y aria-describedby al mensaje",
-      "alto 60 px sin error o ayuda; 84 px con error",
-      "gaps de spacing.2 entre bloques y spacing.1 entre texto e icono / asterisco",
-      "el control acepta TextField y rechaza otros componentes en el slot"
+      "renders a column with label, control and, if applicable, helper or error",
+      "the label is associated with the control via htmlFor",
+      "required=true shows the asterisk with colors.semantic.error.11 and aria-hidden; it does not replace the control's required attribute",
+      "showHelper=true shows the helper text; hidden by default",
+      "error=true shows the 14 px icon and the message; the control carries aria-invalid=\"true\" and aria-describedby pointing to the message",
+      "height 60 px without error or helper; 84 px with error",
+      "spacing.2 gaps between blocks and spacing.1 between text and icon / asterisk",
+      "the control accepts TextField and rejects other components in the slot"
     ]
   },
   "governance": null,
@@ -367,19 +367,19 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "Pregunta principal: los textos «Etiqueta», «Texto de ayuda» y «Mensaje de error» son fijos en Figma y no tienen propiedad. No se han añadido props label, helperText ni errorMessage (AGENTS.md: no añadir props que no estén). Sin ellas, el componente no puede mostrar el texto real. Decidir: añadir las propiedades en Figma, o aprobar las props en código.",
-      "El control es un instance swap (control#35:6) cuyo valor por defecto es TextField variant=surface, size=2, state=placeholder, de la página «✅ TextField» de este mismo archivo. No se pudo leer la lista de opciones permitidas del swap: allowedComponents queda como TextField.",
-      "TextField.contract.json apunta a otro archivo (Radix-Themes, nodo 911:73249), no al TextField de SD-Design-v2 (nodo de la variante 18:297). Revisar cuál es la fuente del TextField antes de implementar.",
-      "El placeholder «nombre@correo.com» dentro del control es un override de la propiedad placeholder del TextField. Form Field no lo expone como prop: se pasa con el propio TextField.",
-      "Estado error: el control no cambia. input-container usa el mismo borde (neutral-alpha.5 al 12 %) en default y en error. Figma no define un borde de error para el control: decidir si debe existir (p. ej. borde colors.semantic.error) antes de implementarlo.",
-      "Texto de ayuda y mensaje de error ocupan la misma posición. Figma no dice qué pasa con error=true y showHelper=true. Decisión propuesta: el mensaje de error sustituye al texto de ayuda.",
-      "Icono del error: Icon info de 14 px. En state=error sus trazos llevan colors.semantic.error.11 con grosor de 1.17 px; en default, el icono no tiene esos trazos. El tamaño de 14 px no tiene token (Icon admite size '14').",
-      "Ancho: el component set mide 400 px FIXED. El contrato propone width default fill; el ancho de 400 px es solo el del ejemplo.",
-      "Medidas: gaps de 8 y 4 px ligados a spacing.2 y spacing.1. Alto 60 / 84 px derivado de las partes (no tiene token). Altura de línea del texto de ayuda y error: text-style.1.regular.",
-      "Overflow: el texto de ayuda y de error se envuelve. Figma no define el caso. Decisión propuesta.",
-      "Contenido, guidance, a11y (aria-invalid, aria-describedby, asterisco aria-hidden), testing, events y el bloque form: redactados como borrador. No salen de Figma. Decisiones propias: error como estado controlado con aria, sin validación interna y el asterisco solo visual.",
-      "Contraste no medido. Figma no tiene estados disabled ni focus en FormField.",
-      "governance: null, igual que Button. Falta definir responsables del componente."
+      "Main question: the texts \"Etiqueta\", \"Texto de ayuda\" and \"Mensaje de error\" are fixed in Figma and have no property. The label, helperText and errorMessage props have not been added (AGENTS.md: do not add props that are not there). Without them, the component cannot show the real text. Decide: add the properties in Figma, or approve the props in code.",
+      "The control is an instance swap (control#35:6) whose default value is TextField variant=surface, size=2, state=placeholder, from the \"✅ TextField\" page of this same file. The swap's list of allowed options could not be read: allowedComponents stays as TextField.",
+      "TextField.contract.json points to another file (Radix-Themes, node 911:73249), not to the TextField in SD-Design-v2 (variant node 18:297). Check which is the TextField source before implementing.",
+      "The placeholder \"nombre@correo.com\" inside the control is an override of the TextField's placeholder property. FormField does not expose it as a prop: it is passed through the TextField itself.",
+      "Error state: the control does not change. input-container uses the same border (neutral-alpha.5 at 12 %) in default and error. Figma defines no error border for the control: decide whether one should exist (e.g. colors.semantic.error border) before implementing it.",
+      "Helper text and error message occupy the same position. Figma does not say what happens with error=true and showHelper=true. Proposed decision: the error message replaces the helper text.",
+      "Error icon: 14 px info Icon. In state=error its strokes carry colors.semantic.error.11 with a 1.17 px weight; in default, the icon does not have those strokes. The 14 px size has no token (Icon accepts size '14').",
+      "Width: the component set is 400 px FIXED. The contract proposes width default fill; the 400 px width is only the example's.",
+      "Measurements: 8 and 4 px gaps bound to spacing.2 and spacing.1. Height 60 / 84 px derived from the parts (no token). Line height of helper and error text: text-style.1.regular.",
+      "Overflow: helper and error text wrap. Figma does not define the case. Proposed decision.",
+      "Content, guidance, a11y (aria-invalid, aria-describedby, aria-hidden asterisk), testing, events and the form block: written as a draft. They do not come from Figma. Own decisions: error as a controlled state with aria, no internal validation and a visual-only asterisk.",
+      "Contrast not measured. Figma has no disabled or focus states in FormField.",
+      "governance: null, same as Button. Component owners still need to be defined."
     ]
   }
 }

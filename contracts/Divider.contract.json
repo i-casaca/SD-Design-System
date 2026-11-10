@@ -5,22 +5,22 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "container",
-  "description": "Línea fina que separa dos grupos de contenido. Es el contrato más corto del sistema: sirve de ejemplo para empezar.",
+  "description": "Thin line that separates two groups of content. It is the shortest contract in the system: use it as a starter example.",
   "guidance": {
     "dos": [
-      "Úsalo para separar grupos de contenido distintos, no cada elemento de una lista.",
-      "Si solo es decorativo, pon `decorative` para que los lectores de pantalla lo ignoren."
+      "Use it to separate distinct groups of content, not every item in a list.",
+      "If it is purely decorative, set `decorative` so screen readers ignore it."
     ],
     "donts": [
       {
-        "case": "Separar dos elementos pequeños y cercanos",
-        "useInstead": "El espaciado (gap) del contenedor",
-        "why": "Una línea entre cada par de elementos ensucia la pantalla; el espacio ya los separa."
+        "case": "Separating two small, close elements",
+        "useInstead": "The container's spacing (gap)",
+        "why": "A line between every pair of elements clutters the screen; the spacing already separates them."
       },
       {
-        "case": "Dibujar un borde alrededor de un bloque",
-        "useInstead": "El borde del propio bloque",
-        "why": "Un Divider es una línea suelta, no un marco."
+        "case": "Drawing a border around a block",
+        "useInstead": "The block's own border",
+        "why": "A Divider is a standalone line, not a frame."
       }
     ],
     "related": []
@@ -37,7 +37,7 @@
       "type": "'horizontal' | 'vertical'",
       "default": "horizontal",
       "required": false,
-      "description": "horizontal: línea a todo lo ancho. vertical: línea a todo lo alto.",
+      "description": "horizontal: full-width line. vertical: full-height line.",
       "bindings": { "figma": { "property": "orientation", "type": "VARIANT" } }
     },
     {
@@ -45,7 +45,7 @@
       "type": "boolean",
       "default": false,
       "required": false,
-      "description": "true: es solo decoración y se oculta a los lectores de pantalla. false: se anuncia como separador.",
+      "description": "true: purely decorative and hidden from screen readers. false: announced as a separator.",
       "bindings": { "figma": null }
     }
   ],
@@ -56,7 +56,7 @@
   "anatomy": {
     "root": {
       "element": "div",
-      "description": "Única parte: la línea.",
+      "description": "Only part: the line.",
       "figmaLayer": "Divider"
     }
   },
@@ -67,13 +67,13 @@
     }
   },
   "a11y": {
-    "role": "separator, o ninguno si decorative=true",
-    "name": "No necesita nombre accesible.",
+    "role": "separator, or none if decorative=true",
+    "name": "Needs no accessible name.",
     "keyboard": [],
-    "focusIndicator": "No recibe foco.",
-    "minTarget": "No es interactivo: no aplica.",
-    "contrastNote": "Es decorativo o estructural: no se exige contraste de texto. Si separa zonas importantes, comprobar que se ve sobre el fondo.",
-    "wcag": ["1.3.1 Información y relaciones"]
+    "focusIndicator": "Does not receive focus.",
+    "minTarget": "Not interactive: not applicable.",
+    "contrastNote": "Decorative or structural: text contrast is not required. If it separates important areas, check that it is visible against the background.",
+    "wcag": ["1.3.1 Info and Relationships"]
   },
   "anchors": {
     "figma": {
@@ -84,10 +84,10 @@
     "code": { "importPath": "@/components/divider/divider", "export": "Divider" }
   },
   "meta": {
-    "source": "ejemplo didáctico",
+    "source": "didactic example",
     "derivableFromSource": ["props.type"],
     "needsReview": [
-      "Dibujado en SDD Library desde este contrato (2026-11-09). El grosor (1px) no tiene token: es valor fijo del contrato."
+      "Drawn in SDD Library from this contract (2026-11-09). The thickness (1px) has no token: it is a fixed value of the contract."
     ]
   }
 }

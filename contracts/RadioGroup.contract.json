@@ -5,52 +5,52 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "input",
-  "description": "Conjunto de opciones excluyentes: solo una puede estar seleccionada a la vez. Cada opción es un Radio con su etiqueta.",
+  "description": "Set of mutually exclusive options: only one can be selected at a time. Each option is a Radio with its label.",
   "guidance": {
     "dos": [
-      "Usa de 2 a 6 opciones visibles a la vez y muestra todas las opciones de un vistazo.",
-      "Da nombre accesible al grupo (aria-label o aria-labelledby): Figma no define una etiqueta de grupo.",
-      "Etiquetas cortas y paralelas, en positivo.",
-      "Preselecciona la opción más segura o habitual cuando tenga sentido.",
-      "Mantén las opciones en una sola columna; el orden refleja la prioridad o la lógica natural."
+      "Use 2 to 6 options visible at a time and show all options at a glance.",
+      "Give the group an accessible name (aria-label or aria-labelledby): Figma does not define a group label.",
+      "Short, parallel labels, phrased positively.",
+      "Preselect the safest or most common option when it makes sense.",
+      "Keep the options in a single column; the order reflects priority or natural logic."
     ],
     "donts": [
       {
-        "case": "Varias opciones a la vez",
+        "case": "Several options at once",
         "useInstead": "Checkbox / CheckboxGroup",
-        "why": "Un radio solo permite una selección."
+        "why": "A radio allows only one selection."
       },
       {
-        "case": "Más de 6 opciones o lista larga",
+        "case": "More than 6 options or a long list",
         "useInstead": "Select",
-        "why": "Ocupa demasiado y dificulta comparar."
+        "why": "Takes up too much space and makes comparison harder."
       },
       {
-        "case": "Activar un ajuste al instante",
+        "case": "Turning a setting on instantly",
         "useInstead": "Switch",
-        "why": "Un grupo de radios se confirma con el formulario."
+        "why": "A radio group is confirmed with the form."
       },
       {
-        "case": "Grupo sin ninguna opción disponible o con una sola",
-        "useInstead": "Checkbox o texto",
-        "why": "Una única opción no es una elección."
+        "case": "Group with no available option or with only one",
+        "useInstead": "Checkbox or text",
+        "why": "A single option is not a choice."
       }
     ],
     "related": [
       {
         "component": "Checkbox",
         "relation": "alternative",
-        "difference": "Permite varias selecciones y estado indeterminado."
+        "difference": "Allows multiple selections and an indeterminate state."
       },
       {
         "component": "Select",
         "relation": "alternative",
-        "difference": "Mejor con muchas opciones."
+        "difference": "Better with many options."
       },
       {
         "component": "Switch",
         "relation": "alternative",
-        "difference": "Efecto inmediato."
+        "difference": "Immediate effect."
       }
     ]
   },
@@ -65,7 +65,7 @@
       "name": "variant",
       "type": "'classic' | 'surface' | 'soft'",
       "default": "surface",
-      "description": "Aspecto de todos los radios. surface = fondo claro con borde; classic = igual con sombra; soft = relleno tenue de acento sin borde.",
+      "description": "Appearance of all radios. surface = light background with border; classic = same with shadow; soft = subtle accent fill with no border.",
       "bindings": {
         "figma": {
           "property": "variant",
@@ -77,7 +77,7 @@
       "name": "size",
       "type": "'1' | '2' | '3'",
       "default": "2",
-      "description": "Tamaño del radio: 14 / 16 / 20 px, con su texto y el espacio entre opciones. El 2 es el valor por defecto.",
+      "description": "Radio size: 14 / 16 / 20 px, with its text and the space between options. 2 is the default.",
       "bindings": {
         "figma": {
           "property": "size",
@@ -89,7 +89,7 @@
       "name": "highContrast",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, la opción seleccionada usa el paso 12 del acento. Sin seleccionar no cambia.",
+      "description": "If true, the selected option uses step 12 of the accent. Unselected does not change.",
       "bindings": {
         "figma": {
           "property": "highContrast",
@@ -102,7 +102,7 @@
       "name": "children",
       "type": "ReactNode (RadioGroup.Item)",
       "required": true,
-      "description": "Las opciones. En Figma, hasta 6 con los booleanos item #1…#6; por defecto se ven 3.",
+      "description": "The options. In Figma, up to 6 with the booleans item #1…#6; 3 are shown by default.",
       "bindings": {
         "figma": {
           "property": "item #1…#6",
@@ -114,7 +114,7 @@
       "name": "value",
       "type": "string | undefined",
       "default": null,
-      "description": "Valor de la opción seleccionada. En Figma, la selección es el eje `status=checked` de un Radio concreto (override de instancia), no una propiedad del grupo.",
+      "description": "Value of the selected option. In Figma, the selection is the `status=checked` axis of a specific Radio (instance override), not a group property.",
       "bindings": {
         "figma": null
       }
@@ -123,7 +123,7 @@
       "name": "disabled",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, deshabilita todo el grupo. En Figma solo existe por opción (`state=disable` del Radio); el grupo no la tiene.",
+      "description": "If true, disables the whole group. In Figma it only exists per option (`state=disable` of the Radio); the group does not have it.",
       "bindings": {
         "figma": null
       }
@@ -132,7 +132,7 @@
       "name": "name",
       "type": "string | undefined",
       "default": null,
-      "description": "Nombre del campo al enviar un formulario. Solo de código.",
+      "description": "Field name when submitting a form. Code only.",
       "bindings": {
         "figma": null
       }
@@ -141,7 +141,7 @@
       "name": "onValueChange",
       "type": "(value: string) => void",
       "default": null,
-      "description": "Se emite al cambiar la selección. Solo de código.",
+      "description": "Emitted when the selection changes. Code only.",
       "bindings": {
         "figma": null
       }
@@ -156,25 +156,25 @@
     "controlled": [
       {
         "name": "checked",
-        "description": "La opción seleccionada. Muestra el indicador (punto).",
-        "aria": "aria-checked='true' en el item; el resto false"
+        "description": "The selected option. Shows the indicator (dot).",
+        "aria": "aria-checked='true' on the item; the rest false"
       },
       {
         "name": "disabled",
-        "description": "No interactiva. Fondo y borde con tokens neutros; nunca con opacity.",
-        "aria": "disabled en el item (o en todos)"
+        "description": "Not interactive. Background and border with neutral tokens; never with opacity.",
+        "aria": "disabled on the item (or on all of them)"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "div",
-      "description": "Contenedor vertical de las opciones. Lleva role=radiogroup.",
+      "description": "Vertical container of the options. Has role=radiogroup.",
       "figmaLayer": "item-container"
     },
     "item": {
       "element": "slot",
-      "description": "Hueco para cada opción (RadioGroup.Item).",
+      "description": "Slot for each option (RadioGroup.Item).",
       "figmaLayer": "Radio",
       "slot": {
         "key": "item",
@@ -189,7 +189,7 @@
     },
     "focusRing": {
       "element": "css",
-      "description": "No es un elemento: se pinta con :focus-visible sobre el radio. En Figma es el boolean focusRing de cada Radio: borde exterior de 4px e interior de 2px.",
+      "description": "Not an element: painted with :focus-visible on the radio. In Figma it is the focusRing boolean of each Radio: 4px outer border and 2px inner border.",
       "optional": true,
       "figmaLayer": "focus-ring",
       "figmaToggle": {
@@ -200,18 +200,18 @@
     },
     "radio": {
       "element": "button",
-      "description": "El círculo de cada opción. Lleva role=radio y aria-checked.",
+      "description": "The circle of each option. Has role=radio and aria-checked.",
       "figmaLayer": "radio"
     },
     "indicator": {
       "element": "span",
-      "description": "Punto central de la opción seleccionada. Oculto si no está seleccionada.",
+      "description": "Center dot of the selected option. Hidden if not selected.",
       "optional": true,
       "figmaLayer": "indicator"
     },
     "itemLabel": {
       "element": "label",
-      "description": "Texto de cada opción. Asociado al radio.",
+      "description": "Text of each option. Associated with the radio.",
       "optional": true,
       "figmaLayer": "Text",
       "figmaToggle": {
@@ -233,16 +233,16 @@
     "codeParts": [
       {
         "name": "RadioGroup.Root",
-        "description": "El grupo (este componente)."
+        "description": "The group (this component)."
       },
       {
         "name": "RadioGroup.Item",
-        "description": "Una opción: props value (string, obligatoria), disabled y label (children)."
+        "description": "One option: props value (string, required), disabled and label (children)."
       }
     ],
     "asChild": false,
     "item": {
-      "figmaComponent": "Radio (851:29635), 144 variantes, componente propio de Figma",
+      "figmaComponent": "Radio (851:29635), 144 variants, Figma's own component",
       "props": [
         {
           "name": "value",
@@ -269,7 +269,7 @@
           }
         },
         {
-          "name": "checked (derivado de value)",
+          "name": "checked (derived from value)",
           "type": "boolean",
           "figma": {
             "property": "status",
@@ -290,18 +290,18 @@
       },
       "unit": "px",
       "token": null,
-      "note": "Altura de ejemplo con 3 opciones visibles. Crece con cada opción."
+      "note": "Example height with 3 visible options. Grows with each option."
     },
     "width": {
       "default": "hug",
       "modes": {
-        "hug": "La opción más ancha.",
-        "fill": "Lo decide quien usa el componente.",
-        "fixed": "En Figma, 160px de ejemplo."
+        "hug": "The widest option.",
+        "fill": "Decided by whoever uses the component.",
+        "fixed": "In Figma, 160px as an example."
       },
       "min": null,
       "max": null,
-      "note": "Sin tokens de ancho."
+      "note": "No width tokens."
     },
     "autoLayout": {
       "direction": "VERTICAL",
@@ -309,7 +309,7 @@
       "sizingVertical": "HUG",
       "alignMain": "MIN",
       "alignCross": "MIN",
-      "gap": "Entre opciones, por size: spacing.1 / 2 / 3. Dentro de cada opción, entre radio y texto: spacing.2 / 2 / 3."
+      "gap": "Between options, by size: spacing.1 / 2 / 3. Inside each option, between radio and text: spacing.2 / 2 / 3."
     },
     "radioSize": {
       "values": {
@@ -565,7 +565,7 @@
   "events": [
     {
       "name": "onValueChange",
-      "trigger": "Clic en una opción, o flechas / Espacio con foco en el grupo",
+      "trigger": "Click on an option, or arrows / Space with focus on the group",
       "payload": "string",
       "blockedWhen": [
         "disabled"
@@ -573,43 +573,43 @@
     }
   ],
   "a11y": {
-    "role": "radiogroup, con items role=radio",
-    "name": "El grupo necesita aria-label o aria-labelledby; cada opción toma su nombre de su etiqueta.",
+    "role": "radiogroup, with items role=radio",
+    "name": "The group needs aria-label or aria-labelledby; each option takes its name from its label.",
     "keyboard": [
-      "Tab — entra en el grupo (a la opción seleccionada, o a la primera si no hay)",
-      "Flecha abajo / derecha — siguiente opción y la selecciona",
-      "Flecha arriba / izquierda — opción anterior y la selecciona",
-      "Space — selecciona la opción con foco"
+      "Tab — enters the group (on the selected option, or the first if none)",
+      "Down / Right arrow — next option, and selects it",
+      "Up / Left arrow — previous option, and selects it",
+      "Space — selects the focused option"
     ],
-    "focusIndicator": "Anillo doble sobre el radio: exterior de 4px con colors.accent.accent-alpha.8 e interior de 2px con colors.accent.accent.3 (capa focus-ring).",
-    "minTarget": "El radio mide 14 / 16 / 20 px: por debajo de 24x24 (WCAG 2.5.8). Hay que hacer pulsable también la etiqueta o añadir padding invisible.",
-    "contrastNote": "Borde del radio ≥ 3:1 contra el fondo (WCAG 1.4.11) y texto ≥ 4.5:1. No medido en Figma; el borde sin seleccionar usa neutral-alpha.7.",
+    "focusIndicator": "Double ring on the radio: 4px outer with colors.accent.accent-alpha.8 and 2px inner with colors.accent.accent.3 (focus-ring layer).",
+    "minTarget": "The radio is 14 / 16 / 20 px: below 24x24 (WCAG 2.5.8). Make the label clickable too or add invisible padding.",
+    "contrastNote": "Radio border ≥ 3:1 against the background (WCAG 1.4.11) and text ≥ 4.5:1. Not measured in Figma; the unselected border uses neutral-alpha.7.",
     "wcag": [
-      "1.3.1 Información y relaciones",
-      "1.4.3 Contraste (AA)",
-      "1.4.11 Contraste no textual",
-      "2.1.1 Teclado",
-      "2.4.7 Foco visible",
-      "2.5.8 Tamaño del objetivo",
-      "4.1.2 Nombre, función, valor"
+      "1.3.1 Info and Relationships",
+      "1.4.3 Contrast (AA)",
+      "1.4.11 Non-text Contrast",
+      "2.1.1 Keyboard",
+      "2.4.7 Focus Visible",
+      "2.5.8 Target Size",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "form": {
     "control": "radio",
     "label": {
-      "prop": "aria-label (grupo) + label (cada opción)",
+      "prop": "aria-label (group) + label (each option)",
       "position": "end",
       "required": true
     },
     "validation": null,
     "errorMessage": null,
-    "note": "Figma no define etiqueta de grupo, error ni campo requerido. Valor enviado: el de la opción seleccionada, según name."
+    "note": "Figma does not define a group label, error or required field. Submitted value: that of the selected option, according to name."
   },
   "content": {
     "label": {
       "maxLength": 60,
       "casing": "sentence",
-      "voice": "Opción en positivo, paralela a las demás"
+      "voice": "Option phrased positively, parallel to the others"
     }
   },
   "behavior": {
@@ -619,11 +619,11 @@
   },
   "testing": {
     "cases": [
-      "solo una opción está seleccionada a la vez",
-      "flechas mueven y seleccionan; Tab entra una sola vez",
-      "disabled en un item lo salta con las flechas; disabled en el grupo bloquea todo",
-      "pulsar la etiqueta selecciona la opción",
-      "el grupo sin aria-label falla el check de accesibilidad"
+      "only one option is selected at a time",
+      "arrows move and select; Tab enters only once",
+      "disabled on an item skips it with the arrows; disabled on the group blocks everything",
+      "pressing the label selects the option",
+      "the group without aria-label fails the accessibility check"
     ]
   },
   "anchors": {
@@ -645,17 +645,17 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "Los valores por defecto van marcados con ✦ («surface ✦», «2 ✦», «unchecked ✦», «default ✦»). El default del component set es `classic`.",
-      "El Radio Group de Figma solo tiene 3 ejes (size, variant, highContrast: 18 variantes) y 6 booleanos de visibilidad de opciones. La selección, el estado disabled y el texto son del Radio (851:29635, 144 variantes), que no tiene contrato propio: sus datos están en composition.item y en tokens.",
-      "La descripción del Radio Group en Figma es correcta; la de Checkbox Group es una copia suya y habla de «radio buttons».",
-      "Tokens leídos en size 2. Tamaños 1 y 3: solo radio, indicador, espaciado y estilo de texto.",
-      "El radio es circular, pero no se leyó su radio de esquina en Figma: no hay token de radius en el contrato.",
-      "highContrast solo cambia lo seleccionado: classic/surface usan accent.12 con indicador neutral.1; soft usa accent-alpha con indicador accent.12.",
-      "opacity en hover/active (0.88, 0.82, 0.92) fijo en Figma, sin variable. Es el único caso en que el contrato usa opacity; disabled nunca.",
-      "disabled se ve igual para seleccionado y no; el texto no cambia de color. classic mantiene shadows.shadow-1 también en disabled.",
-      "La anchura de 160px y la altura son de ejemplo. Figma limita a 6 opciones; en código no hay límite.",
-      "Faltan: etiqueta de grupo, orientación horizontal, estado de error y campo requerido.",
-      "El radio mide menos de 24px: área táctil por debajo de WCAG 2.5.8."
+      "Default values are marked with ✦ (\"surface ✦\", \"2 ✦\", \"unchecked ✦\", \"default ✦\"). The component set's default is `classic`.",
+      "Figma's Radio Group has only 3 axes (size, variant, highContrast: 18 variants) and 6 option-visibility booleans. Selection, the disabled state and the text belong to the Radio (851:29635, 144 variants), which has no contract of its own: its data is in composition.item and in tokens.",
+      "The Radio Group description in Figma is correct; the Checkbox Group one is a copy of it and talks about \"radio buttons\".",
+      "Tokens read at size 2. Sizes 1 and 3: only radio, indicator, spacing and text style.",
+      "The radio is circular, but its corner radius was not read in Figma: there is no radius token in the contract.",
+      "highContrast only changes what is selected: classic/surface use accent.12 with a neutral.1 indicator; soft uses accent-alpha with an accent.12 indicator.",
+      "opacity on hover/active (0.88, 0.82, 0.92) is fixed in Figma, with no variable. It is the only case where the contract uses opacity; disabled never does.",
+      "disabled looks the same for selected and unselected; the text does not change color. classic keeps shadows.shadow-1 also in disabled.",
+      "The 160px width and the height are examples. Figma limits to 6 options; in code there is no limit.",
+      "Missing: group label, horizontal orientation, error state and required field.",
+      "The radio is smaller than 24px: touch area below WCAG 2.5.8."
     ]
   }
 }

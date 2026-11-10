@@ -5,47 +5,47 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "input",
-  "description": "Campo de varias líneas para que la persona escriba un texto largo. Admite etiqueta visible y un valor que se puede desplazar dentro de la caja.",
+  "description": "Multi-line field for the user to write long text. Supports a visible label and a value that can scroll inside the box.",
   "guidance": {
     "dos": [
-      "Da siempre una etiqueta visible (`label`): el placeholder no sustituye a la etiqueta.",
-      "Usa el placeholder solo como ejemplo de contenido, corto: «Describe el problema con el mayor detalle posible».",
-      "Usa `variant=\"surface\"` por defecto; `classic` si el campo debe destacar con sombra; `soft` sobre fondos neutros.",
-      "Usa `size` según la densidad de la pantalla: 1 para notas compactas, 2 por defecto, 3 para textos principales.",
-      "Usa `readOnly` si el texto se puede copiar y `disabled` si no está disponible."
+      "Always provide a visible label (`label`): the placeholder does not replace the label.",
+      "Use the placeholder only as a short content example: \"Describe the problem in as much detail as possible\".",
+      "Use `variant=\"surface\"` by default; `classic` if the field should stand out with a shadow; `soft` on neutral backgrounds.",
+      "Choose `size` by screen density: 1 for compact notes, 2 by default, 3 for main texts.",
+      "Use `readOnly` if the text can be copied and `disabled` if it is unavailable."
     ],
     "donts": [
       {
-        "case": "Texto de una sola línea (nombre, correo, teléfono)",
+        "case": "Single-line text (name, email, phone)",
         "useInstead": "TextField",
-        "why": "Un área de texto ocupa más alto de lo necesario y no aporta nada a un dato corto."
+        "why": "A text area is taller than needed and adds nothing for a short value."
       },
       {
-        "case": "Elegir entre opciones cerradas",
+        "case": "Choosing among closed options",
         "useInstead": "Select o RadioGroup",
-        "why": "Escribir invita a errores de formato y no valida contra la lista."
+        "why": "Typing invites format errors and does not validate against the list."
       },
       {
-        "case": "Usar el placeholder como etiqueta",
-        "useInstead": "La prop label",
-        "why": "Desaparece al escribir y tiene poco contraste."
+        "case": "Using the placeholder as a label",
+        "useInstead": "The label prop",
+        "why": "It disappears when typing and has low contrast."
       },
       {
-        "case": "Editor de texto enriquecido (negritas, listas, enlaces)",
-        "useInstead": "Un editor específico (no hay componente en el sistema)",
-        "why": "TextArea solo gestiona texto plano; no tiene barra de formato ni selección enriquecida."
+        "case": "Rich text editor (bold, lists, links)",
+        "useInstead": "A dedicated editor (there is no component in the system)",
+        "why": "TextArea only handles plain text; it has no formatting toolbar or rich selection."
       }
     ],
     "related": [
       {
         "component": "TextField",
         "relation": "alternative",
-        "difference": "Una sola línea; la altura no crece ni se desplaza en vertical."
+        "difference": "Single line; the height neither grows nor scrolls vertically."
       },
       {
         "component": "Select",
         "relation": "alternative",
-        "difference": "Opciones cerradas."
+        "difference": "Closed options."
       }
     ]
   },
@@ -60,7 +60,7 @@
       "name": "variant",
       "type": "'classic' | 'surface' | 'soft'",
       "default": "surface",
-      "description": "Aspecto. surface = fondo claro con borde; classic = igual con sombra; soft = relleno tenue de acento sin borde.",
+      "description": "Appearance. surface = light background with border; classic = same with shadow; soft = faint accent fill with no border.",
       "bindings": {
         "figma": {
           "property": "variant",
@@ -72,7 +72,7 @@
       "name": "size",
       "type": "'1' | '2' | '3'",
       "default": "2",
-      "description": "Tamaño: altura 48 / 64 / 80 px, con su texto, radio y espaciado. El 2 es el valor por defecto.",
+      "description": "Size: height 48 / 64 / 80 px, with its text, radius and spacing. 2 is the default.",
       "bindings": {
         "figma": {
           "property": "size",
@@ -84,7 +84,7 @@
       "name": "disabled",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, no se puede enfocar ni editar. En Figma es el valor «disable» del eje `state`.",
+      "description": "If true, it cannot be focused or edited. In Figma it is the \"disable\" value of the `state` axis.",
       "bindings": {
         "figma": {
           "property": "state",
@@ -97,7 +97,7 @@
       "name": "readOnly",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, se ve el valor y se puede enfocar y copiar, pero no editar. En Figma es el valor «read-only» del eje `state`.",
+      "description": "If true, the value is visible and can be focused and copied, but not edited. In Figma it is the \"read-only\" value of the `state` axis.",
       "bindings": {
         "figma": {
           "property": "state",
@@ -110,7 +110,7 @@
       "name": "label",
       "type": "string | undefined",
       "default": null,
-      "description": "Etiqueta visible encima de la caja. Si no se indica, no se muestra (en Figma, el boolean `label` la oculta). Tamaño del texto según size.",
+      "description": "Visible label above the box. If omitted, it is not shown (in Figma, the `label` boolean hides it). Text size depends on size.",
       "bindings": {
         "figma": {
           "property": "⮑ ✏️ label",
@@ -122,7 +122,7 @@
       "name": "placeholder",
       "type": "string | undefined",
       "default": null,
-      "description": "Texto de ejemplo mientras la caja está vacía.",
+      "description": "Example text while the box is empty.",
       "bindings": {
         "figma": {
           "property": "✏️ placeholder",
@@ -134,7 +134,7 @@
       "name": "value",
       "type": "string",
       "default": "",
-      "description": "Texto escrito. En Figma, `state=filled` y `state=read-only` muestran este texto; `state=placeholder` y `state=active` muestran el placeholder.",
+      "description": "Typed text. In Figma, `state=filled` and `state=read-only` show this text; `state=placeholder` and `state=active` show the placeholder.",
       "bindings": {
         "figma": {
           "property": "✏️ text",
@@ -146,7 +146,7 @@
       "name": "onChange",
       "type": "(event: ChangeEvent<HTMLTextAreaElement>) => void",
       "default": null,
-      "description": "Se emite al escribir. Solo de código.",
+      "description": "Emitted when typing. Code only.",
       "bindings": {
         "figma": null
       }
@@ -160,25 +160,25 @@
     "controlled": [
       {
         "name": "disabled",
-        "description": "No se puede enfocar ni editar. Texto y fondo con tokens neutros; nunca con opacity.",
-        "aria": "disabled (atributo HTML nativo)"
+        "description": "Cannot be focused or edited. Text and background use neutral tokens; never opacity.",
+        "aria": "disabled (native HTML attribute)"
       },
       {
         "name": "readOnly",
-        "description": "Muestra el valor, se puede enfocar y copiar, no editar.",
-        "aria": "readonly (atributo HTML nativo)"
+        "description": "Shows the value; can be focused and copied, not edited.",
+        "aria": "readonly (native HTML attribute)"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "div",
-      "description": "Contenedor de la caja (borde, fondo, radio, sombra). El textarea vive dentro.",
+      "description": "Box container (border, background, radius, shadow). The textarea lives inside.",
       "figmaLayer": "root"
     },
     "label": {
       "element": "label",
-      "description": "Etiqueta visible encima de la caja. Asociada al textarea con htmlFor.",
+      "description": "Visible label above the box. Associated with the textarea via htmlFor.",
       "optional": true,
       "figmaLayer": "Label",
       "figmaToggle": {
@@ -192,7 +192,7 @@
     },
     "focusRing": {
       "element": "css",
-      "description": "No es un elemento: se pinta con :focus-visible. En Figma es una capa que se muestra con el boolean focusRing.",
+      "description": "Not an element: painted with :focus-visible. In Figma it is a layer shown with the focusRing boolean.",
       "optional": true,
       "figmaLayer": "focus-ring",
       "figmaToggle": {
@@ -203,7 +203,7 @@
     },
     "scrollBar": {
       "element": "css",
-      "description": "Barra de desplazamiento vertical del texto cuando no cabe en la caja. En código, la nativa del navegador (overflow: auto).",
+      "description": "Vertical scroll bar for the text when it does not fit in the box. In code, the browser's native one (overflow: auto).",
       "optional": true,
       "figmaLayer": "Scroll Bar",
       "figmaToggle": {
@@ -214,7 +214,7 @@
     },
     "resize": {
       "element": "css",
-      "description": "Asa de redimensionado en la esquina inferior. En Figma es una capa (resize) que se muestra con el boolean resize.",
+      "description": "Resize handle in the bottom corner. In Figma it is a layer (resize) shown with the resize boolean.",
       "optional": true,
       "figmaLayer": "resize",
       "figmaToggle": {
@@ -225,7 +225,7 @@
     },
     "textarea": {
       "element": "textarea",
-      "description": "Campo nativo. Muestra el placeholder si está vacío y el valor si está relleno. Enter inserta un salto de línea.",
+      "description": "Native field. Shows the placeholder when empty and the value when filled. Enter inserts a line break.",
       "figmaLayer": "input-container",
       "content": {
         "prop": "value"
@@ -252,26 +252,26 @@
       },
       "unit": "px",
       "token": null,
-      "note": "Sin token de altura en Figma: valores sueltos. Son alturas fijas; el texto que no cabe se desplaza dentro de la caja. Con etiqueta visible la altura total crece."
+      "note": "No height token in Figma: loose values. These are fixed heights; text that does not fit scrolls inside the box. With a visible label the total height grows."
     },
     "width": {
       "default": "fill",
       "modes": {
-        "hug": "No aplica.",
-        "fill": "Ocupa el ancho del contenedor. En Figma, 200px de ejemplo.",
-        "fixed": "Lo decide quien usa el componente."
+        "hug": "Not applicable.",
+        "fill": "Fills the container width. In Figma, 200px as an example.",
+        "fixed": "Decided by whoever uses the component."
       },
       "min": null,
       "max": null,
-      "note": "No hay tokens de ancho."
+      "note": "There are no width tokens."
     },
     "autoLayout": {
-      "direction": "VERTICAL (etiqueta encima de la caja); la caja es HORIZONTAL",
+      "direction": "VERTICAL (label above the box); the box is HORIZONTAL",
       "sizingHorizontal": "FILL",
       "sizingVertical": "HUG",
       "alignMain": "MIN",
       "alignCross": "CENTER",
-      "gap": "Entre etiqueta y caja: spacing.1 en size 1; spacing.2 en size 2 y 3 (copiado de TextField, no medido en Figma)"
+      "gap": "Between label and box: spacing.1 in size 1; spacing.2 in size 2 and 3 (copied from TextField, not measured in Figma)"
     }
   },
   "tokens": {
@@ -416,7 +416,7 @@
   "events": [
     {
       "name": "onChange",
-      "trigger": "Cada cambio del texto",
+      "trigger": "Every text change",
       "payload": "ChangeEvent<HTMLTextAreaElement>",
       "blockedWhen": [
         "disabled",
@@ -425,25 +425,25 @@
     }
   ],
   "a11y": {
-    "role": "textbox (implícito en un textarea)",
-    "name": "La etiqueta (label) asociada con htmlFor. Sin etiqueta visible, aria-label obligatorio.",
+    "role": "textbox (implicit in a textarea)",
+    "name": "The label (label) associated via htmlFor. With no visible label, aria-label is required.",
     "keyboard": [
-      "Tab — entra y sale",
-      "Texto — escribe",
-      "Enter — salto de línea",
-      "Flechas — mueven el cursor dentro del texto",
-      "Escape — no hace nada propio"
+      "Tab — enters and leaves",
+      "Text — types",
+      "Enter — line break",
+      "Arrows — move the cursor within the text",
+      "Escape — does nothing on its own"
     ],
-    "focusIndicator": "Anillo doble: exterior de 4px con colors.accent.accent-alpha.8 e interior de 2px con colors.accent.accent.3 (capa focusRing). Además el borde pasa a accent-alpha.8 en el estado active.",
-    "minTarget": "48px de alto en size 1 como mínimo (la caja entera es el objetivo); 64 y 80 en size 2 y 3.",
-    "contrastNote": "Texto ≥ 4.5:1 y borde del campo ≥ 3:1 contra el fondo (WCAG 1.4.11). No medido en Figma; el placeholder usa neutral-alpha.9, que conviene comprobar.",
+    "focusIndicator": "Double ring: 4px outer with colors.accent.accent-alpha.8 and 2px inner with colors.accent.accent.3 (focusRing layer). The border also changes to accent-alpha.8 in the active state.",
+    "minTarget": "At least 48px tall in size 1 (the whole box is the target); 64 and 80 in size 2 and 3.",
+    "contrastNote": "Text ≥ 4.5:1 and field border ≥ 3:1 against the background (WCAG 1.4.11). Not measured in Figma; the placeholder uses neutral-alpha.9, which should be checked.",
     "wcag": [
-      "1.3.1 Información y relaciones",
-      "1.4.3 Contraste (AA)",
-      "1.4.11 Contraste no textual",
-      "2.4.7 Foco visible",
-      "3.3.2 Etiquetas o instrucciones",
-      "4.1.2 Nombre, función, valor"
+      "1.3.1 Info and Relationships",
+      "1.4.3 Contrast (Minimum)",
+      "1.4.11 Non-text Contrast",
+      "2.4.7 Focus Visible",
+      "3.3.2 Labels or Instructions",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "form": {
@@ -455,33 +455,33 @@
     },
     "validation": null,
     "errorMessage": null,
-    "note": "Figma no define error, texto de ayuda ni estado inválido."
+    "note": "Figma defines no error, help text or invalid state."
   },
   "content": {
     "label": {
       "maxLength": 40,
       "casing": "sentence",
-      "voice": "Nombre del dato: «Descripción»"
+      "voice": "Name of the data: \"Description\""
     },
     "placeholder": {
       "maxLength": 80,
-      "voice": "Ejemplo de contenido: «Describe el problema con el mayor detalle posible»"
+      "voice": "Content example: \"Describe the problem in as much detail as possible\""
     }
   },
   "behavior": {
-    "overflow": "scroll vertical dentro de la caja; la altura es fija por size",
+    "overflow": "vertical scroll inside the box; height is fixed per size",
     "motion": [],
     "responsive": []
   },
   "testing": {
     "cases": [
-      "disabled no recibe foco ni emite onChange",
-      "readOnly recibe foco y no emite onChange",
-      "Enter inserta un salto de línea y no envía formularios",
-      "el texto que supera la altura muestra scroll vertical y no cambia la altura de la caja",
-      "la etiqueta está asociada al textarea (clic en la etiqueta enfoca el campo)",
-      "sin label visible, falta aria-label y el check de accesibilidad falla",
-      "cada variant × estado usa los tokens de tokens.bindings"
+      "disabled receives no focus and emits no onChange",
+      "readOnly receives focus and emits no onChange",
+      "Enter inserts a line break and does not submit forms",
+      "text exceeding the height shows vertical scroll and does not change the box height",
+      "the label is associated with the textarea (clicking the label focuses the field)",
+      "with no visible label, aria-label is missing and the accessibility check fails",
+      "each variant × state uses the tokens in tokens.bindings"
     ]
   },
   "anchors": {
@@ -503,27 +503,27 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "Defaults de Figma: el component set tiene size «1», variant «classic» y state «placeholder ✦» como default, pero los ✦ están en size «2», variant «surface» y state «placeholder». El contrato usa los marcados con ✦ (2, surface, placeholder); confirmar cuál manda.",
-      "Figma no tiene estado hover. Solo hay placeholder, active, filled, disable y read-only; hover queda sin diseñar.",
-      "placeholder y filled son el mismo componente con o sin valor; en Figma son estados distintos. active = enfocado, con cursor dibujado como texto.",
-      "disabled solo muestra el placeholder: no hay variante de un campo deshabilitado con valor.",
-      "Alturas 48 / 64 / 80 fijas, sin token. Con 3 tamaños no hay prop rows: Figma no define número de líneas. Decidir si la altura es fija (como aquí) o crece con el contenido (field-sizing), y si se añade una prop rows.",
-      "Asa de redimensionado (boolean resize, capa de 6×6px): no hay prop en código. Decidir si se expone como prop (p. ej. resize: none | vertical) o se deja al CSS nativo del navegador.",
-      "Barra de desplazamiento (boolean scrollBar): la instancia está oculta por defecto. En código se usa la nativa del navegador; confirmar que el diseño de la barra no se implementa a medida.",
-      "Padding horizontal leído en Figma (Spacing/1, Spacing/2, Spacing/3 según size). El padding vertical y el gap de la etiqueta no se han leído: el gap se copió de TextField.",
-      "Radio: size 1 y 2 usan Radius/2 (radius.2) y size 3 usa Radius/3 (radius.3). Leído en Figma.",
-      "Estilo de texto: el campo usa Typography/N/Regular (leído). La etiqueta usa text-style.N.medium copiado de TextField; no leído en TextArea.",
-      "Anillo de foco (focusRing): los valores 4px exterior y 2px interior se copian de TextField; no se han leído en la capa focus-ring de TextArea.",
-      "classic usa shadows.shadow-1 también en disabled (copiado de TextField; no comprobado en Figma para TextArea). En read-only no lleva sombra.",
-      "No hay error, texto de ayuda, ni campo requerido en Figma.",
-      "Contraste del placeholder (neutral-alpha.9) y del borde (neutral-alpha.5/.6) no medido.",
-      "anchors.code pendiente: no existe código de TextArea todavía. Se rellena al crear el componente.",
-      "Generado en la página «⏳ Text Area» (17:2047) como COMPONENT_SET 27:993 «TextArea» (45 variantes, sin defaultVariant asignado: la API de Figma lo deja de solo lectura). Anchor figma.node apunta a 27:993. El set original 17:2236 sigue en el archivo como referencia.",
-      "Sombra de classic (shadows.shadow-1): no hay variable ni estilo de efecto en el archivo; no se ha pintado.",
-      "Barra de desplazamiento (scrollBar) y asa de redimensionado (resize) creadas sin relleno: el contrato no tiene token para ellas.",
-      "Padding vertical: se enlaza a spacing.N igual que el horizontal (decisión propia; Figma no lo define en el contrato).",
-      "Se usan los tokens del archivo con nombres de tokens.json (colors/neutral/neutral-alpha/N, spacing/N, radius/N, text-style/N/regular|medium), no los de Radix del nodo fuente.",
-      "description, guidance, content y a11y son borrador redactado a partir del contrato de TextField; no vienen de Figma. Las decisiones (no uses, límite de placeholder de 80 caracteres) hay que confirmarlas."
+      "Figma defaults: the component set has size \"1\", variant \"classic\" and state \"placeholder ✦\" as default, but the ✦ marks are on size \"2\", variant \"surface\" and state \"placeholder\". The contract uses those marked with ✦ (2, surface, placeholder); confirm which prevails.",
+      "Figma has no hover state. There are only placeholder, active, filled, disable and read-only; hover is left undesigned.",
+      "placeholder and filled are the same component with or without a value; in Figma they are distinct states. active = focused, with the cursor drawn as text.",
+      "disabled only shows the placeholder: there is no variant of a disabled field with a value.",
+      "Fixed heights 48 / 64 / 80, no token. With 3 sizes there is no rows prop: Figma does not define a number of lines. Decide whether the height is fixed (as here) or grows with the content (field-sizing), and whether a rows prop is added.",
+      "Resize handle (resize boolean, 6×6px layer): there is no prop in code. Decide whether to expose it as a prop (e.g. resize: none | vertical) or leave it to the browser's native CSS.",
+      "Scroll bar (scrollBar boolean): the instance is hidden by default. In code the browser's native one is used; confirm that a custom scroll bar design is not implemented.",
+      "Horizontal padding read in Figma (Spacing/1, Spacing/2, Spacing/3 by size). Vertical padding and the label gap were not read: the gap was copied from TextField.",
+      "Radius: size 1 and 2 use Radius/2 (radius.2) and size 3 uses Radius/3 (radius.3). Read in Figma.",
+      "Text style: the field uses Typography/N/Regular (read). The label uses text-style.N.medium copied from TextField; not read in TextArea.",
+      "Focus ring (focusRing): the 4px outer and 2px inner values are copied from TextField; they were not read in the focus-ring layer of TextArea.",
+      "classic also uses shadows.shadow-1 in disabled (copied from TextField; not checked in Figma for TextArea). In read-only it has no shadow.",
+      "No error, help text or required field in Figma.",
+      "Placeholder contrast (neutral-alpha.9) and border contrast (neutral-alpha.5/.6) not measured.",
+      "anchors.code pending: there is no TextArea code yet. Fill in when the component is created.",
+      "Generated on the page \"⏳ Text Area\" (17:2047) as COMPONENT_SET 27:993 \"TextArea\" (45 variants, no defaultVariant assigned: the Figma API leaves it read-only). Anchor figma.node points to 27:993. The original set 17:2236 remains in the file as a reference.",
+      "classic shadow (shadows.shadow-1): there is no variable or effect style in the file; it was not painted.",
+      "Scroll bar (scrollBar) and resize handle (resize) created with no fill: the contract has no token for them.",
+      "Vertical padding: bound to spacing.N like the horizontal one (own decision; Figma does not define it in the contract).",
+      "The file's tokens are used with tokens.json names (colors/neutral/neutral-alpha/N, spacing/N, radius/N, text-style/N/regular|medium), not the Radix ones from the source node.",
+      "description, guidance, content and a11y are a draft written from the TextField contract; they do not come from Figma. The decisions (don'ts, 80-character placeholder limit) must be confirmed."
     ]
   }
 }

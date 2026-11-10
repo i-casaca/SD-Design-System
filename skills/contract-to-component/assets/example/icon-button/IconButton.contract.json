@@ -5,57 +5,57 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "action",
-  "description": "Botón cuadrado que solo muestra un icono y lanza una acción. Mismas variantes, colores y tamaños que Button, pero sin etiqueta: el nombre accesible va en `aria-label`, que es obligatorio.",
+  "description": "Square button that shows only an icon and triggers an action. Same variants, colors and sizes as Button, but with no label: the accessible name goes in `aria-label`, which is required.",
   "guidance": {
     "dos": [
-      "Da siempre `aria-label` con la acción («Borrar búsqueda», «Cerrar diálogo»).",
-      "Usa iconos del registro (`icons/registry.json`) y que el significado sea universal: X, Trash2, Plus, Search.",
-      "Dentro de un campo (TextField) usa `variant=\"ghost\"` y `color=\"neutral\"`.",
-      "Para acciones poco obvias, añade un Tooltip: un icono solo no siempre se entiende.",
-      "Para que dos IconButton parezcan una barra, usa el mismo `variant` y `size` en todos."
+      "Always provide `aria-label` with the action (\"Clear search\", \"Close dialog\").",
+      "Use icons from the registry (`icons/registry.json`) and make sure their meaning is universal: X, Trash2, Plus, Search.",
+      "Inside a field (TextField) use `variant=\"ghost\"` and `color=\"neutral\"`.",
+      "For non-obvious actions, add a Tooltip: an icon alone is not always understood.",
+      "To make two IconButtons look like a toolbar, use the same `variant` and `size` on all of them."
     ],
     "donts": [
       {
-        "case": "Acción con texto visible",
-        "useInstead": "Button (con `icon` si hace falta)",
-        "why": "Con texto el botón se entiende sin tooltip y es más fácil de pulsar."
+        "case": "Action with visible text",
+        "useInstead": "Button (with `icon` if needed)",
+        "why": "With text the button is understood without a tooltip and is easier to press."
       },
       {
-        "case": "IconButton sin aria-label",
-        "useInstead": "Siempre aria-label",
-        "why": "Sin nombre accesible el lector de pantalla solo dice «botón»."
+        "case": "IconButton without aria-label",
+        "useInstead": "Always aria-label",
+        "why": "Without an accessible name the screen reader only says \"button\"."
       },
       {
-        "case": "Icono decorativo que no hace nada",
+        "case": "Decorative icon that does nothing",
         "useInstead": "Icon",
-        "why": "Un botón sin acción engaña a quien navega con teclado."
+        "why": "A button with no action misleads people navigating by keyboard."
       },
       {
-        "case": "Estado que persiste (activado / desactivado)",
-        "useInstead": "Toggle o Checkbox",
-        "why": "Un botón ejecuta, no mantiene estado."
+        "case": "State that persists (on / off)",
+        "useInstead": "Toggle or Checkbox",
+        "why": "A button runs an action; it does not hold state."
       },
       {
-        "case": "Acción destructiva sin confirmación",
+        "case": "Destructive action without confirmation",
         "useInstead": "color='error' + AlertDialog",
-        "why": "Un icono pequeño se pulsa por error con más facilidad."
+        "why": "A small icon is more easily pressed by mistake."
       }
     ],
     "related": [
       {
         "component": "Button",
         "relation": "alternative",
-        "difference": "Lleva etiqueta de texto; IconButton solo icono."
+        "difference": "Has a text label; IconButton is icon only."
       },
       {
         "component": "Icon",
         "relation": "contains",
-        "difference": "Recibe el icono en el slot `icon`; el tamaño lo fija el size del botón."
+        "difference": "Receives the icon in the `icon` slot; the button's size sets the icon size."
       },
       {
         "component": "TextField",
         "relation": "contained-by",
-        "difference": "Lo usa como botón final del campo (borrar, mostrar contraseña)."
+        "difference": "Used as the field's trailing button (clear, show password)."
       }
     ]
   },
@@ -70,7 +70,7 @@
       "name": "variant",
       "type": "'classic' | 'solid' | 'soft' | 'surface' | 'outline' | 'ghost'",
       "default": "solid",
-      "description": "Énfasis visual. solid = relleno pleno; classic = relleno con degradado y borde; soft = relleno tenue; surface = borde con fondo suave; outline = solo borde; ghost = sin relleno ni borde hasta hover.",
+      "description": "Visual emphasis. solid = full fill; classic = fill with gradient and border; soft = subtle fill; surface = border with soft background; outline = border only; ghost = no fill or border until hover.",
       "bindings": {
         "figma": {
           "property": "variant",
@@ -82,7 +82,7 @@
       "name": "color",
       "type": "'accent' | 'neutral' | 'error'",
       "default": "accent",
-      "description": "Significado cromático. accent = color de marca; neutral = gris; error = acción destructiva.",
+      "description": "Color meaning. accent = brand color; neutral = gray; error = destructive action.",
       "bindings": {
         "figma": {
           "property": "color",
@@ -94,7 +94,7 @@
       "name": "size",
       "type": "'1' | '2' | '3' | '4'",
       "default": "2",
-      "description": "Tamaño físico del cuadrado: 24 / 32 / 40 / 48 px, con icono de 16 / 16 / 18 / 20 px y radio por tamaño. El 2 es el valor por defecto. Mismo size que Button: un IconButton size 2 mide lo mismo que un Button size 2 de alto.",
+      "description": "Physical size of the square: 24 / 32 / 40 / 48 px, with a 16 / 16 / 18 / 20 px icon and a radius per size. 2 is the default. Same size as Button: an IconButton size 2 has the same height as a Button size 2.",
       "bindings": {
         "figma": {
           "property": "size",
@@ -106,7 +106,7 @@
       "name": "highContrast",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, refuerza el contraste: usa el paso 12 de la escala en lugar del 9/11.",
+      "description": "If true, increases contrast: uses step 12 of the scale instead of 9/11.",
       "bindings": {
         "figma": {
           "property": "highContrast",
@@ -119,7 +119,7 @@
       "name": "loading",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, la acción está en curso: un spinner sustituye al icono, el tamaño no cambia y no se puede pulsar.",
+      "description": "If true, the action is in progress: a spinner replaces the icon, the size does not change and it cannot be pressed.",
       "bindings": {
         "figma": {
           "property": "loading",
@@ -132,7 +132,7 @@
       "name": "disabled",
       "type": "boolean",
       "default": false,
-      "description": "Si es true, el botón no es interactivo. En Figma es el valor «disable» del eje `state`.",
+      "description": "If true, the button is not interactive. In Figma it is the \"disable\" value of the `state` axis.",
       "bindings": {
         "figma": {
           "property": "state",
@@ -145,7 +145,7 @@
       "name": "icon",
       "type": "ReactNode",
       "required": true,
-      "description": "El icono. Único contenido visible del botón. Tamaño por size: 16 / 16 / 18 / 20 px. Decorativo: lo nombra aria-label del botón, no el icono.",
+      "description": "The icon. The only visible content of the button. Size by size: 16 / 16 / 18 / 20 px. Decorative: it is named by the button's aria-label, not by the icon.",
       "usage": "icon={<Plus />}",
       "bindings": {
         "figma": {
@@ -158,7 +158,7 @@
       "name": "aria-label",
       "type": "string",
       "required": true,
-      "description": "Nombre accesible. Obligatorio: el botón no tiene texto visible. Describe la acción («Borrar», «Cerrar»), no el icono («X»).",
+      "description": "Accessible name. Required: the button has no visible text. Describe the action (\"Clear\", \"Close\"), not the icon (\"X\").",
       "usage": "aria-label=\"Cerrar\"",
       "bindings": {
         "figma": null
@@ -168,7 +168,7 @@
       "name": "type",
       "type": "'button' | 'submit' | 'reset'",
       "default": "button",
-      "description": "Tipo nativo del botón. Solo de código. Usa 'submit' de forma explícita para enviar formularios.",
+      "description": "Native button type. Code only. Use 'submit' explicitly to submit forms.",
       "bindings": {
         "figma": null
       }
@@ -177,7 +177,7 @@
       "name": "onPress",
       "type": "(event: MouseEvent<HTMLButtonElement>) => void",
       "default": null,
-      "description": "Manejador de pulsación (ratón, teclado o toque). Solo de código.",
+      "description": "Press handler (mouse, keyboard or touch). Code only.",
       "bindings": {
         "figma": null
       }
@@ -192,25 +192,25 @@
     "controlled": [
       {
         "name": "loading",
-        "description": "La acción lanzada está en curso. No es interactivo y muestra un spinner en lugar del icono.",
+        "description": "The triggered action is in progress. Not interactive; shows a spinner instead of the icon.",
         "aria": "aria-busy='true'"
       },
       {
         "name": "disabled",
-        "description": "No es interactivo. La opción existe pero ahora no está disponible. Se pinta con tokens neutros (neutral-alpha), nunca con opacity.",
-        "aria": "disabled (atributo HTML nativo)"
+        "description": "Not interactive. The option exists but is not available right now. Painted with neutral tokens (neutral-alpha), never with opacity.",
+        "aria": "disabled (native HTML attribute)"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "button",
-      "description": "Elemento interactivo raíz. Siempre un <button> nativo, cuadrado.",
-      "figmaLayer": "Icon Button (cada variante del component set)"
+      "description": "Root interactive element. Always a native <button>, square.",
+      "figmaLayer": "Icon Button (each variant of the component set)"
     },
     "focusRing": {
       "element": "css",
-      "description": "No es un elemento: se pinta con :focus-visible. En Figma es una capa que se muestra con el boolean focusRing: borde exterior de 4px e interior de 2px.",
+      "description": "Not an element: painted with :focus-visible. In Figma it is a layer shown with the focusRing boolean: 4px outer border and 2px inner border.",
       "optional": true,
       "figmaLayer": "focus-ring",
       "figmaToggle": {
@@ -221,7 +221,7 @@
     },
     "icon": {
       "element": "slot",
-      "description": "Hueco del icono. Siempre presente salvo con loading.",
+      "description": "Icon slot. Always present except when loading.",
       "optional": false,
       "figmaLayer": "content-container › Design / blending-mode",
       "slot": {
@@ -237,9 +237,9 @@
     },
     "spinner": {
       "element": "svg",
-      "description": "Spinner. Solo con loading=true; sustituye al icono.",
+      "description": "Spinner. Only with loading=true; replaces the icon.",
       "optional": true,
-      "figmaLayer": "content-container › Spinner (16px en size 2)"
+      "figmaLayer": "content-container › Spinner (16px at size 2)"
     }
   },
   "composition": {
@@ -269,16 +269,16 @@
       },
       "unit": "px",
       "token": "tokens.space.button-height-{size}",
-      "note": "En Figma el IconButton no enlaza la altura a ninguna variable (24/32/40/48 sueltos); coincide con los tokens de altura de Button."
+      "note": "In Figma the IconButton does not bind the height to any variable (loose 24/32/40/48); it matches Button's height tokens."
     },
     "width": {
       "default": "fixed",
       "modes": {
-        "fixed": "Igual a la altura: siempre cuadrado. No hay hug ni fill."
+        "fixed": "Equal to the height: always square. No hug or fill."
       },
       "min": null,
       "max": null,
-      "note": "El ancho = altura (24 / 32 / 40 / 48). Si necesitas una zona táctil mayor, ponla con padding del contenedor, no cambies el size."
+      "note": "Width = height (24 / 32 / 40 / 48). If you need a larger touch area, add it with padding on the container; do not change the size."
     },
     "autoLayout": {
       "direction": "HORIZONTAL",
@@ -286,7 +286,7 @@
       "sizingVertical": "FIXED",
       "alignMain": "CENTER",
       "alignCross": "CENTER",
-      "gap": "No aplica (un solo hijo)"
+      "gap": "Not applicable (single child)"
     },
     "iconSize": {
       "values": {
@@ -631,7 +631,7 @@
   "events": [
     {
       "name": "onPress",
-      "trigger": "Clic, Enter, Espacio o toque",
+      "trigger": "Click, Enter, Space or tap",
       "payload": "MouseEvent<HTMLButtonElement>",
       "blockedWhen": [
         "disabled",
@@ -640,26 +640,26 @@
     }
   ],
   "a11y": {
-    "role": "button (implícito por el elemento <button>)",
-    "name": "`aria-label` obligatorio (o aria-labelledby). No hay texto visible.",
+    "role": "button (implicit from the <button> element)",
+    "name": "`aria-label` required (or aria-labelledby). There is no visible text.",
     "keyboard": [
-      "Enter — activa",
-      "Space — activa al soltar"
+      "Enter — activates",
+      "Space — activates on release"
     ],
-    "focusIndicator": "Anillo doble: exterior de 4px con colors.accent.accent-alpha.8 e interior de 2px con colors.accent.accent.3 (capa focus-ring en Figma).",
-    "minTarget": "24px en size 1 (mínimo de WCAG 2.5.8, sin margen); size 2 / 3 / 4 = 32 / 40 / 48. Dentro de un TextField size 2 el botón mide 24px.",
-    "contrastNote": "Icono sobre fondo ≥ 3:1 (WCAG 1.4.11, componentes de interfaz), salvo disabled. No medido en Figma: pendiente de verificar por variante.",
+    "focusIndicator": "Double ring: 4px outer with colors.accent.accent-alpha.8 and 2px inner with colors.accent.accent.3 (focus-ring layer in Figma).",
+    "minTarget": "24px at size 1 (WCAG 2.5.8 minimum, no margin); size 2 / 3 / 4 = 32 / 40 / 48. Inside a size 2 TextField the button is 24px.",
+    "contrastNote": "Icon against background ≥ 3:1 (WCAG 1.4.11, UI components), except disabled. Not measured in Figma: to be verified per variant.",
     "wcag": [
-      "1.4.11 Contraste no textual (AA)",
-      "2.1.1 Teclado",
-      "2.4.7 Foco visible",
-      "2.5.8 Tamaño del objetivo (mínimo)",
-      "4.1.2 Nombre, función, valor"
+      "1.4.11 Non-text Contrast (AA)",
+      "2.1.1 Keyboard",
+      "2.4.7 Focus Visible",
+      "2.5.8 Target Size (Minimum)",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "content": {
     "label": null,
-    "note": "Sin texto visible. El nombre accesible es aria-label: verbo + objeto, sin la palabra «botón»."
+    "note": "No visible text. The accessible name is aria-label: verb + object, without the word \"button\"."
   },
   "behavior": {
     "loading": {
@@ -680,13 +680,13 @@
   },
   "testing": {
     "cases": [
-      "sin aria-label el componente avisa en desarrollo (o no compila en TypeScript)",
-      "disabled y loading no emiten onPress",
-      "loading añade aria-busy, muestra el spinner y mantiene el tamaño",
-      "el icono usa el tamaño de layout.iconSize según size",
-      "highContrast usa el paso 12 en todas las variantes y colores",
-      "cada variant × color × estado usa los tokens de tokens.bindings",
-      "type por defecto es 'button'"
+      "without aria-label the component warns in development (or does not compile in TypeScript)",
+      "disabled and loading do not emit onPress",
+      "loading adds aria-busy, shows the spinner and keeps the size",
+      "the icon uses the size from layout.iconSize according to size",
+      "highContrast uses step 12 in all variants and colors",
+      "each variant × color × state uses the tokens from tokens.bindings",
+      "type defaults to 'button'"
     ]
   },
   "anchors": {
@@ -707,19 +707,19 @@
       "tokens.bindings"
     ],
     "needsReview": [
-      "Figma marca los valores por defecto con ✦ («solid ✦», «2 ✦», «default ✦»): el valor real va sin marca en el contrato.",
-      "El eje de Figma es «highContrast» aquí (en Button es «highConstrast», errata). Comprobado: en el IconButton está bien escrito.",
-      "Tokens de fondo, borde, sombra y opacity leídos de la capa content-container en size 2 para las 6 variantes × accent / neutral y, para error, solid y outline. Se asume que valen para el resto de sizes, y para error en classic / soft / surface / ghost (mismo patrón que Button).",
-      "El color del icono (iconColor) NO se pudo leer en la mayoría de variantes: el icono es una instancia y sus rellenos no son accesibles. Solo se confirmó solid + accent + default (tokens.colors.accent-contrast). El resto se copió de Button (text): es una suposición razonable, verificar a mano.",
-      "El color del icono en disabled (neutral-alpha.8) y el de highContrast también son suposiciones copiadas de Button.",
-      "El radio sí está enlazado y se verificó en los 4 sizes: radius.1-max a radius.4-max.",
-      "Anchos y altos (24 / 32 / 40 / 48) y tamaño del icono (16 / 16 / 18 / 20) están sueltos en Figma, sin variable. Los tokens tokens.space.button-height-N se usan por coincidencia de valor con Button.",
-      "loading=true solo existe en Figma junto a state=disable. El spinner mide 16px en size 2; no se verificó el de los otros sizes.",
-      "opacity en hover / active (0.88, 0.82, 0.92) está fija en Figma, sin variable, igual que en Button.",
-      "classic usa dos capas de degradado (blanco → transparente) sin variable. No están en tokens.",
-      "El anillo de foco se copió de Button (accent); no se leyó en IconButton.",
-      "Contraste y área táctil no medidos. Con 24px en size 1 se cumple 2.5.8 justo en el límite.",
-      "No existen en Figma: aria-label, type, onPress."
+      "Figma marks default values with ✦ (\"solid ✦\", \"2 ✦\", \"default ✦\"): the real value goes unmarked in the contract.",
+      "The Figma axis is \"highContrast\" here (in Button it is \"highConstrast\", a typo). Checked: in IconButton it is spelled correctly.",
+      "Background, border, shadow and opacity tokens read from the content-container layer at size 2 for the 6 variants × accent / neutral and, for error, solid and outline. Assumed to hold for the other sizes, and for error in classic / soft / surface / ghost (same pattern as Button).",
+      "The icon color (iconColor) could NOT be read in most variants: the icon is an instance and its fills are not accessible. Only solid + accent + default was confirmed (tokens.colors.accent-contrast). The rest was copied from Button (text): a reasonable assumption, verify by hand.",
+      "The icon color in disabled (neutral-alpha.8) and in highContrast are also assumptions copied from Button.",
+      "The radius is bound and was verified at all 4 sizes: radius.1-max to radius.4-max.",
+      "Widths and heights (24 / 32 / 40 / 48) and icon size (16 / 16 / 18 / 20) are loose in Figma, with no variable. The tokens tokens.space.button-height-N are used because the values match Button.",
+      "loading=true only exists in Figma together with state=disable. The spinner is 16px at size 2; the other sizes were not verified.",
+      "opacity on hover / active (0.88, 0.82, 0.92) is fixed in Figma, with no variable, same as in Button.",
+      "classic uses two gradient layers (white → transparent) with no variable. They are not in tokens.",
+      "The focus ring was copied from Button (accent); it was not read in IconButton.",
+      "Contrast and touch area not measured. At 24px in size 1, 2.5.8 is met right at the limit.",
+      "Not in Figma: aria-label, type, onPress."
     ]
   }
 }

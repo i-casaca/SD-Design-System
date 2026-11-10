@@ -5,52 +5,52 @@
   "version": "0.1.0",
   "status": "draft",
   "category": "overlay",
-  "description": "Diálogo modal de confirmación que interrumpe a la persona y espera una respuesta.",
+  "description": "Modal confirmation dialog that interrupts the user and waits for a response.",
   "guidance": {
     "dos": [
-      "Úsalo solo cuando la acción exige una respuesta explícita: confirmar o cancelar.",
-      "Incluye siempre un Title: se anuncia al abrirse y da nombre accesible al diálogo.",
-      "Haz que Action se vea claramente distinto de Cancel (en el diseño: rojo sólido frente a gris suave).",
-      "Si no hay Description, quita la parte y pasa aria-describedby={undefined} a Content.",
-      "Escribe Title y Action con verbo concreto: «Revocar acceso», no «Aceptar»."
+      "Use it only when the action requires an explicit response: confirm or cancel.",
+      "Always include a Title: it is announced on open and gives the dialog its accessible name.",
+      "Make Action look clearly different from Cancel (in the design: solid red versus soft gray).",
+      "If there is no Description, remove the part and pass aria-describedby={undefined} to Content.",
+      "Write Title and Action with a concrete verb: \"Revoke access\", not \"OK\"."
     ],
     "donts": [
       {
-        "case": "Contenido con formulario, imágenes o información que no exige una respuesta",
+        "case": "Content with a form, images or information that does not require a response",
         "useInstead": "Dialog",
-        "why": "Visualmente son idénticos; la diferencia es semántica y de comportamiento. AlertDialog es solo para confirmaciones."
+        "why": "They look identical; the difference is semantic and behavioral. AlertDialog is only for confirmations."
       },
       {
-        "case": "Avisar de algo sin pedir decisión",
-        "useInstead": "Un mensaje no modal (Callout o Toast, según el sistema)",
-        "why": "Un diálogo modal interrumpe; no debe usarse para informar."
+        "case": "Notifying about something without asking for a decision",
+        "useInstead": "A non-modal message (Callout or Toast, depending on the system)",
+        "why": "A modal dialog interrupts; it should not be used to inform."
       },
       {
-        "case": "Dejar Action y Cancel con el mismo peso visual",
-        "useInstead": "Action destacado, Cancel neutro",
-        "why": "La documentación pide que se distingan a simple vista."
+        "case": "Giving Action and Cancel the same visual weight",
+        "useInstead": "Prominent Action, neutral Cancel",
+        "why": "The documentation asks that they be distinguishable at a glance."
       }
     ],
     "related": [
       {
         "component": "Dialog",
         "relation": "alternative",
-        "difference": "Mismo aspecto, distinta semántica y comportamiento; para contenido que no es una confirmación."
+        "difference": "Same appearance, different semantics and behavior; for content that is not a confirmation."
       },
       {
         "component": "Button",
         "relation": "contains",
-        "difference": "Cancel y Action envuelven un control de este tipo."
+        "difference": "Cancel and Action wrap a control of this type."
       },
       {
         "component": "Heading",
         "relation": "contains",
-        "difference": "Title está basado en Heading."
+        "difference": "Title is based on Heading."
       },
       {
         "component": "Text",
         "relation": "contains",
-        "difference": "Description está basado en Text."
+        "difference": "Description is based on Text."
       }
     ]
   },
@@ -65,7 +65,7 @@
       "name": "open",
       "type": "boolean",
       "default": null,
-      "description": "Estado abierto controlado. Pertenece a Root.",
+      "description": "Controlled open state. Belongs to Root.",
       "bindings": {
         "figma": null
       }
@@ -74,7 +74,7 @@
       "name": "defaultOpen",
       "type": "boolean",
       "default": false,
-      "description": "Estado abierto inicial en uso no controlado. Pertenece a Root.",
+      "description": "Initial open state when uncontrolled. Belongs to Root.",
       "bindings": {
         "figma": null
       }
@@ -83,7 +83,7 @@
       "name": "onOpenChange",
       "type": "(open: boolean) => void",
       "default": null,
-      "description": "Se llama al abrir o cerrar. Pertenece a Root.",
+      "description": "Called on open or close. Belongs to Root.",
       "bindings": {
         "figma": null
       }
@@ -92,7 +92,7 @@
       "name": "size",
       "type": "'1' | '2' | '3' | '4'",
       "default": "3",
-      "description": "Escala del diálogo: controla padding, radio, tipografía y tamaño de los botones. En código admite valores responsivos. En Figma el valor por defecto lleva la marca ✦ («3 ✦»). Pertenece a Content.",
+      "description": "Dialog scale: controls padding, radius, typography and button size. In code it accepts responsive values. In Figma the default value carries the ✦ mark (\"3 ✦\"). Belongs to Content.",
       "bindings": {
         "figma": {
           "property": "size",
@@ -104,7 +104,7 @@
       "name": "inset",
       "type": "boolean",
       "default": false,
-      "description": "Solo de diseño: con true, el contenido del slot body ocupa todo el ancho, sin el padding horizontal del diálogo. No es una prop de Radix: en código se resuelve con el layout del propio contenido.",
+      "description": "Design only: with true, the body slot content takes the full width, without the dialog's horizontal padding. It is not a Radix prop: in code it is solved with the content's own layout.",
       "bindings": {
         "figma": {
           "property": "insetContent",
@@ -116,7 +116,7 @@
       "name": "title",
       "type": "ReactNode",
       "required": true,
-      "description": "Texto del Title. Se anuncia al abrir el diálogo.",
+      "description": "Title text. Announced when the dialog opens.",
       "bindings": {
         "figma": null
       }
@@ -125,7 +125,7 @@
       "name": "description",
       "type": "ReactNode | undefined",
       "default": null,
-      "description": "Texto de Description. Si no se muestra, quita la parte y pasa aria-describedby={undefined} a Content.",
+      "description": "Description text. If not shown, remove the part and pass aria-describedby={undefined} to Content.",
       "bindings": {
         "figma": {
           "property": "description",
@@ -137,7 +137,7 @@
       "name": "children",
       "type": "ReactNode | undefined",
       "default": null,
-      "description": "Contenido libre entre la descripción y los botones (slot body).",
+      "description": "Free content between the description and the buttons (body slot).",
       "bindings": {
         "figma": {
           "property": "content1",
@@ -149,7 +149,7 @@
       "name": "align",
       "type": "'start' | 'center'",
       "default": "center",
-      "description": "Alineación del diálogo. Pertenece a Content.",
+      "description": "Dialog alignment. Belongs to Content.",
       "bindings": {
         "figma": null
       }
@@ -158,7 +158,7 @@
       "name": "width",
       "type": "string",
       "default": null,
-      "description": "Ancho. Admite valores responsivos. Pertenece a Content.",
+      "description": "Width. Accepts responsive values. Belongs to Content.",
       "bindings": {
         "figma": null
       }
@@ -167,7 +167,7 @@
       "name": "minWidth",
       "type": "string",
       "default": null,
-      "description": "Ancho mínimo. Admite valores responsivos. Pertenece a Content.",
+      "description": "Minimum width. Accepts responsive values. Belongs to Content.",
       "bindings": {
         "figma": null
       }
@@ -176,7 +176,7 @@
       "name": "maxWidth",
       "type": "string",
       "default": "600px",
-      "description": "Ancho máximo. Admite valores responsivos. Pertenece a Content.",
+      "description": "Maximum width. Accepts responsive values. Belongs to Content.",
       "bindings": {
         "figma": null
       }
@@ -185,7 +185,7 @@
       "name": "height",
       "type": "string",
       "default": null,
-      "description": "Alto. Admite valores responsivos. Pertenece a Content.",
+      "description": "Height. Accepts responsive values. Belongs to Content.",
       "bindings": {
         "figma": null
       }
@@ -194,7 +194,7 @@
       "name": "minHeight",
       "type": "string",
       "default": null,
-      "description": "Alto mínimo. Admite valores responsivos. Pertenece a Content.",
+      "description": "Minimum height. Accepts responsive values. Belongs to Content.",
       "bindings": {
         "figma": null
       }
@@ -203,7 +203,7 @@
       "name": "maxHeight",
       "type": "string",
       "default": null,
-      "description": "Alto máximo. Admite valores responsivos. Pertenece a Content. El diseño limita a 690px.",
+      "description": "Maximum height. Accepts responsive values. Belongs to Content. The design caps it at 690px.",
       "bindings": {
         "figma": null
       }
@@ -212,7 +212,7 @@
       "name": "asChild",
       "type": "boolean",
       "default": false,
-      "description": "Delega el elemento raíz de Content en su hijo. Pertenece a Content.",
+      "description": "Delegates Content's root element to its child. Belongs to Content.",
       "bindings": {
         "figma": null
       }
@@ -227,20 +227,20 @@
     "controlled": [
       {
         "name": "open",
-        "description": "El diálogo está visible: el foco queda atrapado dentro y el resto de la página no es interactiva.",
-        "aria": "role='alertdialog'; Title y Description se anuncian al abrir"
+        "description": "The dialog is visible: focus is trapped inside and the rest of the page is not interactive.",
+        "aria": "role='alertdialog'; Title and Description are announced on open"
       }
     ]
   },
   "anatomy": {
     "root": {
       "element": "div",
-      "description": "Marco del diseño: deja 16px (spacing.4) alrededor del diálogo y aloja el backdrop. En código lo aportan el propio AlertDialog y la posición centrada de Content.",
+      "description": "Design frame: leaves 16px (spacing.4) around the dialog and hosts the backdrop. In code it is provided by AlertDialog itself and Content's centered position.",
       "figmaLayer": "Alert Dialog (variante)"
     },
     "backdrop": {
       "element": "div",
-      "description": "Capa que atenúa la página. Solo se muestra en Figma si backdrop=true.",
+      "description": "Layer that dims the page. Only shown in Figma if backdrop=true.",
       "optional": true,
       "figmaLayer": "backdrop",
       "figmaToggle": {
@@ -251,17 +251,17 @@
     },
     "content": {
       "element": "div",
-      "description": "Superficie del diálogo: fondo, borde de 1px, radio y sombra. Recibe el ref y el role alertdialog.",
+      "description": "Dialog surface: background, 1px border, radius and shadow. Receives the ref and the alertdialog role.",
       "figmaLayer": "modal-container"
     },
     "header": {
       "element": "div",
-      "description": "Agrupa Title y Description.",
+      "description": "Groups Title and Description.",
       "figmaLayer": "text-container"
     },
     "title": {
       "element": "Heading",
-      "description": "Título accesible, anunciado al abrir. Está basado en Heading.",
+      "description": "Accessible title, announced on open. Based on Heading.",
       "content": {
         "prop": "title"
       },
@@ -269,7 +269,7 @@
     },
     "description": {
       "element": "Text",
-      "description": "Descripción accesible, opcional. Está basada en Text.",
+      "description": "Accessible description, optional. Based on Text.",
       "optional": true,
       "content": {
         "prop": "description"
@@ -278,7 +278,7 @@
     },
     "body": {
       "element": "slot",
-      "description": "Hueco para contenido libre. El rectángulo discontinuo azul del diseño es solo un marcador: no se implementa.",
+      "description": "Slot for free content. The blue dashed rectangle in the design is only a placeholder: it is not implemented.",
       "optional": true,
       "slot": {
         "key": "body",
@@ -295,17 +295,17 @@
         "property": "content",
         "type": "BOOLEAN",
         "default": false,
-        "note": "Solo existe con insetContent=false; con insetContent=true el hueco siempre está."
+        "note": "Only exists with insetContent=false; with insetContent=true the slot is always present."
       }
     },
     "footer": {
       "element": "div",
-      "description": "Fila de acciones, alineada al final.",
+      "description": "Row of actions, aligned to the end.",
       "figmaLayer": "button-container"
     },
     "cancel": {
       "element": "AlertDialog.Cancel",
-      "description": "Envuelve el control que cierra el diálogo sin confirmar.",
+      "description": "Wraps the control that closes the dialog without confirming.",
       "slot": {
         "key": "cancel",
         "allowedComponents": [
@@ -319,7 +319,7 @@
     },
     "action": {
       "element": "AlertDialog.Action",
-      "description": "Envuelve el control que cierra el diálogo y confirma la acción.",
+      "description": "Wraps the control that closes the dialog and confirms the action.",
       "slot": {
         "key": "action",
         "allowedComponents": [
@@ -350,31 +350,31 @@
     "codeParts": [
       {
         "name": "AlertDialog.Root",
-        "description": "Contiene todas las partes. Sin representación visual."
+        "description": "Contains all the parts. No visual representation."
       },
       {
         "name": "AlertDialog.Trigger",
-        "description": "Envuelve el control que abre el diálogo."
+        "description": "Wraps the control that opens the dialog."
       },
       {
         "name": "AlertDialog.Content",
-        "description": "Cuerpo del diálogo (anatomy.content). Recibe las props de tamaño y ancho."
+        "description": "Dialog body (anatomy.content). Receives the size and width props."
       },
       {
         "name": "AlertDialog.Title",
-        "description": "Título accesible (anatomy.title)."
+        "description": "Accessible title (anatomy.title)."
       },
       {
         "name": "AlertDialog.Description",
-        "description": "Descripción accesible opcional (anatomy.description)."
+        "description": "Optional accessible description (anatomy.description)."
       },
       {
         "name": "AlertDialog.Cancel",
-        "description": "Cierra sin confirmar (anatomy.cancel)."
+        "description": "Closes without confirming (anatomy.cancel)."
       },
       {
         "name": "AlertDialog.Action",
-        "description": "Cierra y confirma (anatomy.action)."
+        "description": "Closes and confirms (anatomy.action)."
       }
     ],
     "asChild": true
@@ -389,13 +389,13 @@
     "width": {
       "default": "fixed",
       "modes": {
-        "hug": "No usado en el diseño.",
-        "fill": "Content ocupa el ancho disponible hasta maxWidth.",
-        "fixed": "En Figma, el marco mide 300 / 432 / 432 / 482 px según size 1 / 2 / 3 / 4, incluidos 16px de margen a cada lado: el diálogo mide 268 / 400 / 400 / 450 px."
+        "hug": "Not used in the design.",
+        "fill": "Content takes the available width up to maxWidth.",
+        "fixed": "In Figma, the frame measures 300 / 432 / 432 / 482 px for size 1 / 2 / 3 / 4, including 16px of margin on each side: the dialog measures 268 / 400 / 400 / 450 px."
       },
       "min": null,
       "max": 600,
-      "note": "maxWidth 600px por defecto en código y en el diseño. El diseño limita además la altura a 690px, con scroll vertical interno."
+      "note": "maxWidth 600px by default in code and in the design. The design also caps the height at 690px, with internal vertical scroll."
     },
     "autoLayout": {
       "direction": "VERTICAL",
@@ -403,13 +403,13 @@
       "sizingVertical": "HUG",
       "alignMain": "MIN",
       "alignCross": "MIN",
-      "gap": "según size: ver tokens.bindings.bySize.*.contentGap"
+      "gap": "per size: see tokens.bindings.bySize.*.contentGap"
     },
     "footer": {
       "direction": "HORIZONTAL",
       "alignMain": "MAX",
       "alignCross": "CENTER",
-      "gap": "según size: ver tokens.bindings.bySize.*.actionsGap"
+      "gap": "per size: see tokens.bindings.bySize.*.actionsGap"
     }
   },
   "tokens": {
@@ -547,57 +547,57 @@
   "events": [
     {
       "name": "onOpenChange",
-      "trigger": "Apertura o cierre: Trigger, Action, Cancel o Esc",
+      "trigger": "Open or close: Trigger, Action, Cancel or Esc",
       "payload": "boolean",
       "blockedWhen": []
     },
     {
       "name": "onEscapeKeyDown",
-      "trigger": "Tecla Esc con el diálogo abierto",
+      "trigger": "Esc key with the dialog open",
       "payload": "KeyboardEvent",
       "blockedWhen": []
     },
     {
       "name": "onOpenAutoFocus",
-      "trigger": "Al abrir, cuando el foco entra en Content",
+      "trigger": "On open, when focus enters Content",
       "payload": "Event",
       "blockedWhen": []
     },
     {
       "name": "onCloseAutoFocus",
-      "trigger": "Al cerrar, cuando el foco vuelve al Trigger",
+      "trigger": "On close, when focus returns to the Trigger",
       "payload": "Event",
       "blockedWhen": []
     }
   ],
   "a11y": {
-    "role": "alertdialog (patrón WAI-ARIA Alert and Message Dialogs)",
-    "name": "Title nombra el diálogo y Description lo describe; ambos se anuncian al abrir.",
+    "role": "alertdialog (WAI-ARIA Alert and Message Dialogs pattern)",
+    "name": "Title names the dialog and Description describes it; both are announced on open.",
     "keyboard": [
-      "Space / Enter — abren o cierran el diálogo desde el Trigger",
-      "Tab / Shift+Tab — mueven el foco al siguiente o anterior elemento enfocable dentro del diálogo (el foco queda atrapado)",
-      "Esc — cierra el diálogo y devuelve el foco al Trigger"
+      "Space / Enter — open or close the dialog from the Trigger",
+      "Tab / Shift+Tab — move focus to the next or previous focusable element inside the dialog (focus is trapped)",
+      "Esc — closes the dialog and returns focus to the Trigger"
     ],
-    "focusIndicator": "No definido en este nodo de Figma: añadir el estado de foco de Cancel y Action.",
-    "minTarget": "Botones de 24px (size 1) cumplen 24x24px (WCAG 2.5.8); 32px y 40px en el resto.",
-    "contrastNote": "Action: blanco sobre colors.semantic.error.9 = 3,91:1, por debajo de 4,5:1 (AA texto normal). Cancel: 5,22:1. Title y Description sobre panel.solid: 16,39:1.",
+    "focusIndicator": "Not defined in this Figma node: add the focus state for Cancel and Action.",
+    "minTarget": "24px buttons (size 1) meet 24x24px (WCAG 2.5.8); 32px and 40px for the rest.",
+    "contrastNote": "Action: white on colors.semantic.error.9 = 3.91:1, below 4.5:1 (AA normal text). Cancel: 5.22:1. Title and Description on panel.solid: 16.39:1.",
     "wcag": [
-      "1.4.3 Contraste (AA)",
-      "2.1.1 Teclado",
-      "2.4.3 Orden del foco",
-      "4.1.2 Nombre, función, valor"
+      "1.4.3 Contrast (Minimum)",
+      "2.1.1 Keyboard",
+      "2.4.3 Focus Order",
+      "4.1.2 Name, Role, Value"
     ]
   },
   "content": {
     "title": {
       "maxLength": 60,
       "casing": "sentence",
-      "voice": "Pregunta o acción concreta: «¿Revocar acceso?»"
+      "voice": "Concrete question or action: \"Revoke access?\""
     },
     "action": {
       "maxLength": 24,
       "casing": "sentence",
-      "voice": "Verbo + objeto: «Revocar acceso»"
+      "voice": "Verb + object: \"Revoke access\""
     }
   },
   "behavior": {
@@ -607,18 +607,18 @@
     "responsive": [
       {
         "breakpoint": "all",
-        "change": "size admite valores responsivos en código; el diseño solo define las cuatro escalas."
+        "change": "size accepts responsive values in code; the design only defines the four scales."
       }
     ]
   },
   "testing": {
     "cases": [
-      "Al abrir, el foco entra en el diálogo y queda atrapado",
-      "Esc cierra y devuelve el foco al Trigger",
-      "Title y Description están asociados al diálogo",
-      "Sin Description y con aria-describedby={undefined}, el diálogo no declara descripción",
-      "Action y Cancel cierran el diálogo",
-      "Las cuatro escalas de size coinciden con el diseño"
+      "On open, focus enters the dialog and is trapped",
+      "Esc closes and returns focus to the Trigger",
+      "Title and Description are associated with the dialog",
+      "Without Description and with aria-describedby={undefined}, the dialog declares no description",
+      "Action and Cancel close the dialog",
+      "The four size scales match the design"
     ]
   },
   "anchors": {
@@ -634,18 +634,18 @@
   "meta": {
     "source": "mixed",
     "needsReview": [
-      "props.open / defaultOpen / onOpenChange: no aparecen en la página de Radix Themes consultada; se incluyen por ser las props habituales de Root. Verificar.",
-      "Comportamiento de cierre al hacer clic fuera y foco inicial en Cancel: no confirmados en la documentación consultada.",
-      "props.children: el nombre exacto de la propiedad en Figma («content1») es el que expone el MCP; confirmar si es instance swap o slot.",
-      "props.title: el texto del Title es un override del Heading anidado, no una propiedad del componente.",
-      "props.inset: es de diseño; confirmar cómo lo resolvéis en código.",
-      "anatomy.cancel / action: required viene del diseño (siempre aparecen), la documentación no lo exige.",
-      "Estados hover, focus-visible y active de Cancel y Action: no están en este nodo.",
-      "Variante inset=true en los tamaños 1, 2 y 4 no se inspeccionó: se asume la misma estructura que size 3.",
-      "Figma incluye la variable Shadows/shadow-5, pero ninguno de los variantes inspeccionados la usa.",
-      "tokens.policy.forbidden vacío: el archivo de Radix usa escalas (Colors/Neutral/Neutral Alpha/3) sin separar primitivos de semánticos.",
-      "Borde de 1px del Content sin variable en Figma.",
-      "a11y.contrastNote: Action no llega a 4,5:1."
+      "props.open / defaultOpen / onOpenChange: they do not appear on the Radix Themes page consulted; included because they are the usual Root props. Verify.",
+      "Close behavior on outside click and initial focus on Cancel: not confirmed in the documentation consulted.",
+      "props.children: the exact name of the Figma property (\"content1\") is the one exposed by the MCP; confirm whether it is an instance swap or a slot.",
+      "props.title: the Title text is an override of the nested Heading, not a component property.",
+      "props.inset: design-only; confirm how you solve it in code.",
+      "anatomy.cancel / action: required comes from the design (they always appear); the documentation does not require it.",
+      "Hover, focus-visible and active states of Cancel and Action: not in this node.",
+      "The inset=true variant in sizes 1, 2 and 4 was not inspected: the same structure as size 3 is assumed.",
+      "Figma includes the variable Shadows/shadow-5, but none of the inspected variants uses it.",
+      "tokens.policy.forbidden is empty: the Radix file uses scales (Colors/Neutral/Neutral Alpha/3) without separating primitives from semantics.",
+      "Content's 1px border has no variable in Figma.",
+      "a11y.contrastNote: Action does not reach 4.5:1."
     ],
     "derivableFromSource": [
       "props.type",
